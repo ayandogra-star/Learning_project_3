@@ -1,0 +1,23 @@
+# VENDOR SERVICE AGREEMENT
+
+## PAYMENT TERMS
+
+Monthly Fee: $2,500
+Delivery Schedule: Net 30
+Invoice Date: Month End
+Payment Method: ACH Transfer
+
+## LIABILITY AND INSURANCE
+
+Each party maintains $1M professional liability insurance.
+Neither party shall be liable for lost profits or data.
+
+## IP RIGHTS
+
+All deliverables are owned by the Client upon payment.
+Vendor retains rights to pre-existing IP and methodologies.
+
+## CONFIDENTIALITY
+
+Term: 3 years from disclosure
+Permitted Disclosures: Only as required by law

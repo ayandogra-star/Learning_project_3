@@ -1,0 +1,108 @@
+{
+  "chunks": {
+    "0": {
+      "vector_id": 0,
+      "chunk_id": "file_1_p1_0",
+      "file_id": 1,
+      "content": "Contract Type: Software License Agreement\nContract Status: Active\nTotal Contract Value: $500,000\n\nThis agreement is entered into between Party A and Party B for the provision of cloud services.\n\nCompliance Requirements:\n- Data Residency Compliance: US Data Centers Required\n- Encryption Compliance: AES-256 Encryption Required\n- MFA Coverage: 100% for Admin Accounts\n\nRisk Management:\n- High Risk Issues Count: 2\n- Open Risks Count: 1\n- Average Time to Remediate: 5 days\n\nObligations:\n- Total Obligations Extracted: 12\n- Obligations Completion Rate: 85%\n\nPerformance Metrics:\n- Clause Extraction Accuracy: 95%\n- Average Processing Time: 2 seconds\n- Total Contracts Processed: 10\n\nFinancial Risk:\n- Revenue at Risk: $50,000\n- Compliance Score: 92%\n- Control Coverage Percentage: 88%\n- Incident Readiness Score: 87%\n\nUpcoming Expirations: 2026-12-31",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p1_0",
+        "page_number": 1,
+        "section_title": "SERVICE AGREEMENT",
+        "content_type": "text",
+        "source_filename": "test_contract.txt"
+      },
+      "content_length": 847,
+      "token_count": 213
+    },
+    "1": {
+      "vector_id": 1,
+      "chunk_id": "file_1_p1_0",
+      "file_id": 1,
+      "content": "Monthly Fee: $2,500\nDelivery Schedule: Net 30\nInvoice Date: Month End\nPayment Method: ACH Transfer",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p1_0",
+        "page_number": 1,
+        "section_title": "## PAYMENT TERMS",
+        "content_type": "text",
+        "source_filename": "test_contract2.txt"
+      },
+      "content_length": 98,
+      "token_count": 27
+    },
+    "2": {
+      "vector_id": 2,
+      "chunk_id": "file_1_p1_1",
+      "file_id": 1,
+      "content": "Each party maintains $1M professional liability insurance.\nNeither party shall be liable for lost profits or data.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p1_1",
+        "page_number": 1,
+        "section_title": "## LIABILITY AND INSURANCE",
+        "content_type": "text",
+        "source_filename": "test_contract2.txt"
+      },
+      "content_length": 114,
+      "token_count": 21
+    },
+    "3": {
+      "vector_id": 3,
+      "chunk_id": "file_1_p1_2",
+      "file_id": 1,
+      "content": "All deliverables are owned by the Client upon payment.\nVendor retains rights to pre-existing IP and methodologies.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p1_2",
+        "page_number": 1,
+        "section_title": "## IP RIGHTS",
+        "content_type": "text",
+        "source_filename": "test_contract2.txt"
+      },
+      "content_length": 114,
+      "token_count": 21
+    },
+    "4": {
+      "vector_id": 4,
+      "chunk_id": "file_1_p1_3",
+      "file_id": 1,
+      "content": "Term: 3 years from disclosure\nPermitted Disclosures: Only as required by law",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p1_3",
+        "page_number": 1,
+        "section_title": "## CONFIDENTIALITY",
+        "content_type": "text",
+        "source_filename": "test_contract2.txt"
+      },
+      "content_length": 76,
+      "token_count": 18
+    }
+  },
+  "file_mappings": {
+    "1": [
+      {
+        "chunk_id": "file_1_p1_0",
+        "vector_id": 0
+      },
+      {
+        "chunk_id": "file_1_p1_0",
+        "vector_id": 1
+      },
+      {
+        "chunk_id": "file_1_p1_1",
+        "vector_id": 2
+      },
+      {
+        "chunk_id": "file_1_p1_2",
+        "vector_id": 3
+      },
+      {
+        "chunk_id": "file_1_p1_3",
+        "vector_id": 4
+      }
+    ]
+  }
+}
