@@ -1,12 +1,16 @@
 """Contract analyzer service using Azure OpenAI GPT-4o for KPI extraction."""
 import json
 import os
+import logging
 from pathlib import Path
 from openai import AzureOpenAI
 from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
+
+# Configure logging
+logger = logging.getLogger(__name__)
 
 # Global client (lazy-loaded)
 _client = None
@@ -80,9 +84,14 @@ class ContractAnalyzer:
         Raises:
             ValueError: If API call fails or JSON parsing fails
         """
+        response_text = None
         try:
             system_prompt = ContractAnalyzer.load_system_prompt()
             client = get_azure_client()
+            
+            # Log API call for debugging
+            logger.debug(f"Sending contract text to Azure OpenAI (length: {len(parsed_pdf_text)} chars)")
+            logger.debug(f"Using deployment: {DEPLOYMENT_NAME}")
             
             # Send to Azure OpenAI with temperature=0 for deterministic extraction
             response = client.chat.completions.create(
@@ -94,11 +103,56 @@ class ContractAnalyzer:
                 temperature=0
             )
             
-            # Extract JSON response
+            # Extract JSON response - full response object details for debugging
+            logger.debug(f"Response object: model={response.model}, usage={response.usage}")
+            
             response_text = response.choices[0].message.content
             
+            # Check if response is empty
+            if not response_text or not response_text.strip():
+                logger.error("Empty response from Azure OpenAI API")
+                logger.error(f"Response object choices: {response.choices}")
+                raise ValueError(
+                    "Azure OpenAI returned an empty response. Possible causes:\n"
+                    "1. API key or endpoint misconfiguration\n"
+                    "2. Deployment name mismatch or deployment doesn't exist\n"
+                    "3. API rate limit or quota exceeded\n"
+                    "4. Temporary Azure service issues\n"
+                    "5. Content filter triggered (try with different input)\n"
+                    "Run: python test_azure_openai_diagnostic.py for more details"
+                )
+            
+            logger.debug(f"Response from Azure OpenAI (first 500 chars): {response_text[:500]}")
+            
+            # Extract JSON from response (handle markdown code fences)
+            # Sometimes the model wraps JSON in ```json ... ``` or just ```...```
+            json_str = response_text
+            if '```' in response_text:
+                # Extract content between code fences
+                try:
+                    # Try to extract content between ```json and ```
+                    if '```json' in response_text:
+                        start = response_text.find('```json') + 7
+                    else:
+                        start = response_text.find('```') + 3
+                    end = response_text.find('```', start)
+                    json_str = response_text[start:end].strip()
+                    logger.debug(f"Extracted JSON from markdown code fences: {json_str[:200]}")
+                except Exception as e:
+                    logger.warning(f"Could not extract JSON from markdown: {str(e)}")
+            
             # Parse and validate JSON
-            kpi_data = json.loads(response_text)
+            try:
+                kpi_data = json.loads(json_str)
+            except json.JSONDecodeError as e:
+                logger.error(f"JSON parsing error at position {e.pos}: {str(e)}")
+                logger.error(f"Raw response that failed to parse: {response_text[:1000]}")
+                raise ValueError(
+                    f"Invalid JSON response from Azure OpenAI: {str(e)}\n"
+                    f"Response preview: {response_text[:300]}\n"
+                    f"This could mean: 1) Model didn't return JSON, 2) Response was truncated, "
+                    f"3) Content filter intervention"
+                )
             
             # Ensure all 18 KPI fields are present
             required_fields = [
@@ -131,9 +185,19 @@ class ContractAnalyzer:
             # Return only the required fields in correct order
             ordered_kpis = {field: kpi_data.get(field, "Not Present") for field in required_fields}
             
+            logger.debug(f"Successfully extracted KPIs: {list(ordered_kpis.keys())}")
             return ordered_kpis
             
         except json.JSONDecodeError as e:
-            raise ValueError(f"Invalid JSON response from Azure OpenAI: {str(e)}")
+            logger.error(f"JSON parsing error: {str(e)}")
+            raise ValueError(
+                f"Invalid JSON response from Azure OpenAI: {str(e)}\n"
+                f"Response preview: {response_text[:300] if response_text else '[EMPTY]'}"
+            )
+        except ValueError as e:
+            # Re-raise ValueError with better context
+            logger.error(f"ValueError in extract_kpis: {str(e)}")
+            raise
         except Exception as e:
+            logger.error(f"Critical error in extract_kpis: {str(e)}", exc_info=True)
             raise ValueError(f"Error analyzing contract: {str(e)}")

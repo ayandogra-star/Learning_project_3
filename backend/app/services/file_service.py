@@ -57,7 +57,11 @@ class FileService:
         except Exception as e:
             # Log error but don't fail - return default KPIs
             import traceback
-            print(f"Error analyzing contract: {str(e)}")
+            error_msg = f"Error analyzing contract: {str(e)}"
+            print(f"{error_msg}\nTraceback:\n{traceback.format_exc()}")
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.error(f"{error_msg}", exc_info=True)
             print(f"Traceback: {traceback.format_exc()}")
             kpis = {
                 "totalContractsProcessed": "Not Present",
