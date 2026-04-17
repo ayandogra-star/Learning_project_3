@@ -81,12 +81,14 @@ backend/
 ## 📊 Feature Summary
 
 ### 1. Multi-Page Table Handling ✅
+
 - Detects tables spanning multiple pages
 - Merges fragments into single chunks
 - Preserves structure for embeddings
 - **File:** `backend/app/services/rag_document_processor.py` (TableMerger class)
 
 ### 2. Semantic Chunking ✅
+
 - Section-based splitting (not naive token counting)
 - Paragraph-aware boundaries
 - Optimal chunk size: 300-800 tokens
@@ -94,6 +96,7 @@ backend/
 - **File:** `backend/app/services/semantic_chunker.py`
 
 ### 3. Relevance Boosting ✅
+
 - Definition sections: 1.5x boost
 - Tables: 1.3x boost
 - Security keywords: 1.2x boost
@@ -101,6 +104,7 @@ backend/
 - **File:** `backend/app/services/vector_store.py`
 
 ### 4. LLM-Powered Generation ✅
+
 - Grounded in retrieved chunks (no hallucination)
 - Structured JSON responses
 - Supports term definitions and section explanations
@@ -108,6 +112,7 @@ backend/
 - **File:** `backend/app/services/contract_definition_generator.py`
 
 ### 5. REST API Layer ✅
+
 - 3 endpoints for different query types
 - Full request/response validation
 - Error handling with meaningful messages
@@ -118,12 +123,14 @@ backend/
 ## 🚀 Getting Started
 
 ### Step 1: Setup
+
 ```bash
 cd backend
 pip install -r requirements.txt
 ```
 
 ### Step 2: Configure
+
 ```bash
 # Create .env in backend/ with:
 AZURE_OPENAI_API_KEY=your_key
@@ -132,16 +139,19 @@ OPENAI_API_KEY=your_key
 ```
 
 ### Step 3: Test
+
 ```bash
 python test_rag_integration.py  # See: ✅ ALL TESTS PASSED
 ```
 
 ### Step 4: Run
+
 ```bash
 python -m uvicorn app.main:app --reload
 ```
 
 ### Step 5: Use
+
 ```bash
 # Upload contract
 curl -X POST http://localhost:8000/api/upload -F "file=@contract.pdf"
@@ -193,6 +203,7 @@ UPLOAD PDF
 ## 📂 File Organization
 
 ### Documentation Files
+
 ```
 Root Documentation:
 ├── RAG_IMPLEMENTATION_COMPLETE.md  [← Executive summary START HERE]
@@ -209,6 +220,7 @@ Existing  (for reference):
 ```
 
 ### Code Files
+
 ```
 backend/app/services/
 ├── contract_definition_generator.py  [NEW - 230 lines]
@@ -232,6 +244,7 @@ backend/
 ## ✨ Key Features
 
 ### Definition Extraction
+
 ```json
 POST /api/rag/define
 {
@@ -250,6 +263,7 @@ POST /api/rag/define
 ```
 
 ### Contract Analysis
+
 ```json
 POST /api/rag/query
 {
@@ -266,6 +280,7 @@ POST /api/rag/query
 ```
 
 ### Raw Retrieval
+
 ```
 GET /api/rag/retrieve?file_id=123&query=security
 →
@@ -285,6 +300,7 @@ GET /api/rag/retrieve?file_id=123&query=security
 ## 📊 Test Coverage
 
 ### Integration Tests (7/7 Passing ✅)
+
 - Document extraction and parsing
 - Semantic chunking algorithm
 - Table formatting and conversion
@@ -300,6 +316,7 @@ GET /api/rag/retrieve?file_id=123&query=security
 ## 🔧 Configuration Reference
 
 ### Environment Variables
+
 ```bash
 # Azure OpenAI (for /define and /query endpoints)
 AZURE_OPENAI_API_KEY=sk-...
@@ -312,6 +329,7 @@ OPENAI_API_KEY=sk-...
 ```
 
 ### Customizable Parameters
+
 - **Chunk size:** 300-800 tokens (configurable)
 - **Boost multipliers:** Definition 1.5x, Table 1.3x, Keywords 1.2x
 - **Top-K retrieval:** Default 5, max 20
@@ -323,27 +341,35 @@ OPENAI_API_KEY=sk-...
 ## 🎓 Learning Resources
 
 ### For Understanding Architecture
+
 → Read: [RAG_SYSTEM_DOCUMENTATION.md](RAG_SYSTEM_DOCUMENTATION.md)
+
 - System design principles
 - Algorithm explanations
 - Data flow diagrams
 - Performance analysis
 
 ### For Quick Implementation
+
 → Read: [RAG_QUICK_START.md](RAG_QUICK_START.md)
+
 - 5-minute setup
 - Basic examples
 - Troubleshooting
 
 ### For API Integration
+
 → Read: [RAG_API_USAGE_GUIDE.md](RAG_API_USAGE_GUIDE.md)
+
 - All endpoint definitions
 - Request/response examples
 - Error handling
 - Advanced patterns
 
 ### For Code Examples
+
 → Check: [backend/test_rag_integration.py](backend/test_rag_integration.py)
+
 - Reference implementations
 - All major components tested
 - Usage examples
@@ -353,6 +379,7 @@ OPENAI_API_KEY=sk-...
 ## ✅ Validation Checklist
 
 System has been validated for:
+
 - ✅ **No breaking changes** - All existing KPI extraction preserved
 - ✅ **Backward compatibility** - Existing endpoints unchanged
 - ✅ **Error handling** - Graceful degradation for all edge cases
@@ -368,31 +395,37 @@ System has been validated for:
 ## 🚀 Deployment Readiness
 
 **Fully Ready For:**
+
 - ✅ Production deployment
 - ✅ Integration with frontend
 - ✅ Testing with real contracts
 - ✅ User feedback collection
 
 **Pending (Optional):**
-- ⚠️  Frontend React components (API ready, UI not built)
-- ⚠️  Performance optimization (works, not optimized)
-- ⚠️  Production monitoring setup
-- ⚠️  Caching layer for common queries
+
+- ⚠️ Frontend React components (API ready, UI not built)
+- ⚠️ Performance optimization (works, not optimized)
+- ⚠️ Production monitoring setup
+- ⚠️ Caching layer for common queries
 
 ---
 
 ## 📞 Support Resources
 
 ### Quick Troubleshooting
+
 See [RAG_QUICK_START.md](RAG_QUICK_START.md#troubleshooting)
 
 ### Detailed Error Handling
+
 See [RAG_API_USAGE_GUIDE.md](RAG_API_USAGE_GUIDE.md#error-handling)
 
 ### Architecture Questions
+
 See [RAG_SYSTEM_DOCUMENTATION.md](RAG_SYSTEM_DOCUMENTATION.md)
 
 ### Code Reference
+
 See [backend/test_rag_integration.py](backend/test_rag_integration.py)
 
 ---
@@ -415,6 +448,7 @@ Code tests    → backend/test_rag_integration.py
 ## 🎉 Summary
 
 **What You Have:**
+
 - ✅ Fully functional RAG system (3 tested endpoints)
 - ✅ Advanced semantic chunking with table support
 - ✅ Relevance boosting for better search quality
@@ -424,6 +458,7 @@ Code tests    → backend/test_rag_integration.py
 - ✅ Production-ready code
 
 **What You Can Do:**
+
 1. Extract and explain contract terms
 2. Analyze compliance requirements
 3. Identify risks and liabilities
@@ -431,6 +466,7 @@ Code tests    → backend/test_rag_integration.py
 5. Get sources for all analysis (with confidence scores)
 
 **What's Next:**
+
 1. Frontend integration (React components to call endpoints)
 2. Real contract testing
 3. Performance optimization and caching
@@ -441,4 +477,3 @@ Code tests    → backend/test_rag_integration.py
 **Status:** ✅ **COMPLETE AND READY**
 
 Start with [RAG_IMPLEMENTATION_COMPLETE.md](RAG_IMPLEMENTATION_COMPLETE.md) for the full picture!
-

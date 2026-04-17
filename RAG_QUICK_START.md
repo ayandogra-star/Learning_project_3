@@ -18,6 +18,7 @@ pip install -r requirements.txt
 ```
 
 Key packages:
+
 - `faiss-cpu==1.7.4` - Vector similarity search
 - `tiktoken==0.5.2` - Token counting
 - `openai==1.43.0` - Embeddings
@@ -60,6 +61,7 @@ curl -X POST http://localhost:8000/api/upload \
 ```
 
 Response:
+
 ```json
 {
   "file_id": 123,
@@ -84,6 +86,7 @@ curl -X POST http://localhost:8000/api/rag/define \
 ```
 
 Response includes:
+
 - `definition` - Complete definition from contract
 - `key_elements` - Important components
 - `compliance_requirements` - Relevant regulations
@@ -104,6 +107,7 @@ curl -X POST http://localhost:8000/api/rag/query \
 ```
 
 Query types:
+
 - `definition` - Extract term definition
 - `section` - Find specific contract section
 - `compliance` - Identify compliance obligations
@@ -180,6 +184,7 @@ python test_rag_integration.py
 ```
 
 Expected output:
+
 ```
 ✅ Document Extraction: PASSED
 ✅ Semantic Chunking: PASSED
@@ -216,24 +221,30 @@ curl -X POST http://localhost:8000/api/rag/query \
 ## Key Features
 
 ### 1. Multi-Page Table Handling
+
 - Automatically detects and merges tables spanning multiple pages
 - Preserves table structure in embeddings
 - Formats as readable text for LLM context
 
 ### 2. Semantic Chunking
+
 - Section-based splitting (not naive token counting)
 - Paragraph-aware boundaries
 - Maintains document hierarchy
 - Target chunk size: 300-800 tokens
 
 ### 3. Relevance Boosting
+
 Automatically increases ranking priority for:
+
 - **Definition Sections** (1.5x) - Sections 2-3 with "means" or "defined as"
 - **Tables** (1.3x) - Structured data with high information density
 - **Security Keywords** (1.2x) - compliance, security, encryption, audit, etc.
 
 ### 4. LLM Generation
+
 Azure OpenAI GPT-4o powers:
+
 - Contextual term definitions
 - Compliance requirement extraction
 - Risk assessment
@@ -286,19 +297,22 @@ SYSTEM_PROMPT_WARNING = True   # Enforce "use only provided context"
 ## Troubleshooting
 
 ### Issue: "Vector store not initialized"
+
 ```
 Solution: Contract is still processing. Wait 10-30 seconds and retry.
 ```
 
 ### Issue: "Empty response from Azure OpenAI"
+
 ```
-Solution: 
+Solution:
 1. Check AZURE_OPENAI_API_KEY is set: echo $AZURE_OPENAI_API_KEY
 2. Verify endpoint format includes trailing slash
 3. Confirm deployment name matches Azure console
 ```
 
 ### Issue: "No relevant chunks found"
+
 ```
 Solution:
 1. Try more specific search terms
@@ -308,6 +322,7 @@ Solution:
 ```
 
 ### Issue: Slow Response Times
+
 ```
 Solution:
 1. Reduce top_k parameter (fewer chunks to process)
@@ -319,17 +334,17 @@ Solution:
 
 ## Performance Metrics
 
-| Operation | Time | Notes |
-|-----------|------|-------|
-| PDF Upload | 2-5s | Depends on file size |
-| Text Extraction | 1-3s | PDFPlumber parsing |
-| Table Merging | 500ms | Two-pass algorithm |
-| Semantic Chunking | 1-2s | Tiktoken counting + NLTK splitting |
-| Embedding Generation | 2-5s | OpenAI API batched |
-| Vector Indexing | 500ms | FAISS index build |
-| Definition Query | 1-2s | Retrieval + LLM generation |
-| Compliance Query | 800ms - 1.5s | Depends on LLM response |
-| Raw Retrieval | 50-100ms | FAISS search only |
+| Operation            | Time         | Notes                              |
+| -------------------- | ------------ | ---------------------------------- |
+| PDF Upload           | 2-5s         | Depends on file size               |
+| Text Extraction      | 1-3s         | PDFPlumber parsing                 |
+| Table Merging        | 500ms        | Two-pass algorithm                 |
+| Semantic Chunking    | 1-2s         | Tiktoken counting + NLTK splitting |
+| Embedding Generation | 2-5s         | OpenAI API batched                 |
+| Vector Indexing      | 500ms        | FAISS index build                  |
+| Definition Query     | 1-2s         | Retrieval + LLM generation         |
+| Compliance Query     | 800ms - 1.5s | Depends on LLM response            |
+| Raw Retrieval        | 50-100ms     | FAISS search only                  |
 
 ---
 
@@ -383,4 +398,3 @@ For issues or questions:
    ```bash
    python backend/test_azure_connection.py
    ```
-

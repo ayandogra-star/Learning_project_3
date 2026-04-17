@@ -60,6 +60,7 @@ This document describes the comprehensive RAG (Retrieval-Augmented Generation) s
 ### 1. Enhanced PDF Processing
 
 **Multi-Page Table Merging**
+
 - Detects tables that span multiple pages
 - Merges based on:
   - Column count consistency
@@ -68,6 +69,7 @@ This document describes the comprehensive RAG (Retrieval-Augmented Generation) s
 - Keeps merged tables intact in single chunks
 
 **Example:**
+
 ```python
 # PDF has 2-page table with headers
 Page 1:  Header Row + Data Rows 1-10
@@ -79,12 +81,14 @@ Result:  Single merged chunk with 20 rows
 ### 2. Semantic Chunking
 
 **Splitting Strategy**
+
 1. Split by section headings (Section 1.1, 1.2, etc.)
 2. Split by logical paragraphs (preserve meaning)
 3. Target: 300-800 tokens per chunk
 4. Never split tables (keep intact)
 
 **Heading Detection Patterns**
+
 - Markdown: `#, ##, ###, ...`
 - Numbered: `1.`, `2.1`, `3.2.1`
 - All-caps: `PAYMENT TERMS`
@@ -95,6 +99,7 @@ Result:  Single merged chunk with 20 rows
 Tables are converted to readable format for embeddings:
 
 **Key-Value Table (2 columns):**
+
 ```
 Table: page_1_table_0
 
@@ -105,6 +110,7 @@ Table: page_1_table_0
 ```
 
 **Multi-Column Table:**
+
 ```
 Table: page_3_table_1
 
@@ -119,14 +125,15 @@ Row 1:
 
 Retrieval is enhanced with contextual boosting:
 
-| Content Type | Boost | Reason |
-|--------------|-------|--------|
-| Tables | 1.3x | Structured, easily searchable |
-| Definition sections (2-3) | 1.5x | Critical contract terms |
-| Security/Compliance keywords | 1.2x | High importance |
-| Combined boost | Up to 2.0x | Maximum |
+| Content Type                 | Boost      | Reason                        |
+| ---------------------------- | ---------- | ----------------------------- |
+| Tables                       | 1.3x       | Structured, easily searchable |
+| Definition sections (2-3)    | 1.5x       | Critical contract terms       |
+| Security/Compliance keywords | 1.2x       | High importance               |
+| Combined boost               | Up to 2.0x | Maximum                       |
 
 **Boosting Algorithm:**
+
 ```python
 base_similarity = 1 / (1 + distance)
 boosted_score = base_similarity * boost_multiplier
@@ -139,6 +146,7 @@ boosted_score = base_similarity * boost_multiplier
 The system uses Azure OpenAI to generate structured definitions:
 
 **Request → Response Flow:**
+
 ```
 User Query: "What is Personal Information?"
      ↓
@@ -152,6 +160,7 @@ Return to user with source chunks
 ```
 
 **Response Format:**
+
 ```json
 {
   "term": "Personal Information",
@@ -175,11 +184,13 @@ Return to user with source chunks
 ```bash
 POST /api/upload
 ```
+
 - KPI extraction runs immediately
 - RAG pipeline runs in background
 - Returns both KPIs and RAG processing status
 
 **Response:**
+
 ```json
 {
   "id": 1,
@@ -196,6 +207,7 @@ POST /api/upload
 ```bash
 GET /api/contracts/{file_id}/analysis
 ```
+
 Returns extracted KPIs (unchanged from existing system)
 
 ---
@@ -214,6 +226,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 [
   {
@@ -248,6 +261,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "term": "Personal Information",
@@ -300,6 +314,7 @@ Content-Type: application/json
 Supports `query_type`: `definition` | `section` | `compliance` | `risk`
 
 **Response:**
+
 ```json
 {
   "query": "What are the termination conditions?",
@@ -423,8 +438,8 @@ Stored in `backend/app/vector_store/metadata.json`:
   },
   "file_mappings": {
     "1": [
-      {"chunk_id": "file_1_p1_0", "vector_id": 0},
-      {"chunk_id": "file_1_p1_1", "vector_id": 1}
+      { "chunk_id": "file_1_p1_0", "vector_id": 0 },
+      { "chunk_id": "file_1_p1_1", "vector_id": 1 }
     ]
   }
 }
@@ -433,6 +448,7 @@ Stored in `backend/app/vector_store/metadata.json`:
 ### Embedding Generation
 
 Uses OpenAI's `text-embedding-3-small`:
+
 - Dimension: 1536
 - Cost-effective and performant
 - Supports batch generation (future optimization)
@@ -445,24 +461,28 @@ Uses OpenAI's `text-embedding-3-small`:
 ### Edge Cases Handled
 
 1. **Empty PDFs**
+
    ```
    → Returns: "Not explicitly defined in the contract"
    → Status: completed with 0 chunks
    ```
 
 2. **Image-only PDFs**
+
    ```
    → PDFPlumber returns empty text
    → Returns: graceful error message
    ```
 
 3. **No Relevant Chunks Found**
+
    ```
    → Retrieval returns empty list
    → LLM returns: "Not found in provided context"
    ```
 
 4. **LLM Generation Failures**
+
    ```
    → Catches OpenAI API errors
    → Returns: error message with fallback format
@@ -546,15 +566,15 @@ print(json.dumps(definition, indent=2))
 
 ## Performance Characteristics
 
-| Operation | Time | Notes |
-|-----------|------|-------|
-| PDF Ingestion | 1-3s | Depends on PDF complexity |
-| Semantic Chunking | 0.5-1s | Linear in document size |
-| Embedding Generation | 2-5s | Batch embedding via OpenAI |
-| FAISS Indexing | 0.1-0.5s | Linear in chunk count |
-| Retrieval Query | 0.05s | Sub-100ms FAISS search |
-| LLM Generation | 1-2s | Azure OpenAI API latency |
-| **Total E2E** | **5-12s** | From upload to definition ready |
+| Operation            | Time      | Notes                           |
+| -------------------- | --------- | ------------------------------- |
+| PDF Ingestion        | 1-3s      | Depends on PDF complexity       |
+| Semantic Chunking    | 0.5-1s    | Linear in document size         |
+| Embedding Generation | 2-5s      | Batch embedding via OpenAI      |
+| FAISS Indexing       | 0.1-0.5s  | Linear in chunk count           |
+| Retrieval Query      | 0.05s     | Sub-100ms FAISS search          |
+| LLM Generation       | 1-2s      | Azure OpenAI API latency        |
+| **Total E2E**        | **5-12s** | From upload to definition ready |
 
 ---
 
@@ -585,19 +605,25 @@ print(json.dumps(definition, indent=2))
 ## Troubleshooting
 
 ### Issue: "No relevant chunks found"
-**Solution:** 
+
+**Solution:**
+
 1. Verify file was uploaded successfully
 2. Check vector store metadata: `ls backend/app/vector_store/`
 3. Ensure FAISS index has vectors: `python -c "import faiss; idx = faiss.read_index('backend/app/vector_store/faiss.index'); print(idx.ntotal)"`
 
 ### Issue: LLM returns truncated JSON
+
 **Solution:**
+
 - Handled automatically by markdown JSON extractor
 - Check Azure OpenAI token limits
 - Reduce top_k value
 
 ### Issue: Table merging behaves unexpectedly
+
 **Solution:**
+
 - Check table structure across pages (column count, headers)
 - Tables won't merge if column count differs
 - View extracted table data in metadata.json

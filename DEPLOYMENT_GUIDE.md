@@ -36,6 +36,7 @@ python test_compliance_analysis.py
 ```
 
 Expected output:
+
 ```
 ✅ TEST 1: Compliance Analyzer with Mock Data - PASSED
 ✅ TEST 2: Empty Chunks Handling - PASSED
@@ -63,12 +64,14 @@ AZURE_OPENAI_API_VERSION=2024-08-01-preview
 ### 4. Start Services
 
 **Terminal 1 - Backend:**
+
 ```bash
 cd backend
 python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 **Terminal 2 - Frontend:**
+
 ```bash
 cd frontend
 npm install  # Only if needed
@@ -87,6 +90,7 @@ npm run dev
 ## 📋 Complete Implementation Checklist
 
 ### Backend Setup
+
 - [x] `backend/app/services/compliance_analyzer.py` - Main service (250 lines)
   - [x] ComplianceAnalyzer class
   - [x] generate_compliance_analysis() method
@@ -114,6 +118,7 @@ npm run dev
   - ✅ No new dependencies needed
 
 ### Testing
+
 - [x] 6 integration tests created
 - [x] All tests passing (6/6)
 - [x] Mock data testing
@@ -121,6 +126,7 @@ npm run dev
 - [x] JSON serialization testing
 
 ### Frontend Setup
+
 - [x] Dashboard component updated
   - [x] complianceData state
   - [x] complianceLoading state
@@ -144,12 +150,14 @@ npm run dev
   - [x] Response parsing
 
 ### Documentation
+
 - [x] COMPLIANCE_ANALYSIS_GUIDE.md (500+ lines)
 - [x] COMPLIANCE_ANALYSIS_CHECKLIST.md (400+ lines)
 - [x] COMPLIANCE_ANALYSIS_STATUS.md (400+ lines)
 - [x] DEPLOYMENT_GUIDE.md (this file)
 
 ### Validation
+
 - [x] No breaking changes
 - [x] Backward compatibility verified
 - [x] All tests passing
@@ -187,6 +195,7 @@ VITE_API_URL=http://localhost:8000
 ### Environment Setup by Platform
 
 **macOS/Linux:**
+
 ```bash
 # Create .env file in backend directory
 cat > backend/.env << EOF
@@ -198,6 +207,7 @@ EOF
 ```
 
 **Windows (PowerShell):**
+
 ```powershell
 # Create .env file in backend directory
 $env:AZURE_OPENAI_API_KEY = "your_key"
@@ -210,6 +220,7 @@ $env:AZURE_OPENAI_ENDPOINT = "https://xxx.openai.azure.com/"
 ## 🧪 Testing Strategy
 
 ### Unit Tests
+
 ```bash
 # Run all tests
 cd backend
@@ -220,6 +231,7 @@ python -m pytest test_compliance_analysis.py::test_1_compliance_analyzer_with_mo
 ```
 
 ### Integration Test
+
 ```bash
 # Test endpoint with curl
 curl -X POST http://localhost:8000/api/compliance/analyze \
@@ -232,6 +244,7 @@ curl -X POST http://localhost:8000/api/compliance/analyze \
 ```
 
 ### Manual Test in Frontend
+
 1. Open browser dev tools (F12)
 2. Upload a contract
 3. Check Network tab for `/api/compliance/analyze` request
@@ -243,16 +256,17 @@ curl -X POST http://localhost:8000/api/compliance/analyze \
 
 ## 📊 Performance Expectations
 
-| Operation | Time | Notes |
-|-----------|------|-------|
-| PDF Upload | 0.5s | Depends on file size |
-| PDF to Text | 0.3s | Text extraction from PDF |
-| FAISS Retrieval | 0.1s | 7 chunks from vector store |
-| Azure OpenAI Call | 1-2s | LLM generation (varies) |
-| Dashboard Render | 0.3s | React component rendering |
-| **Total E2E** | **2-3s** | User sees results in ~3s |
+| Operation         | Time     | Notes                      |
+| ----------------- | -------- | -------------------------- |
+| PDF Upload        | 0.5s     | Depends on file size       |
+| PDF to Text       | 0.3s     | Text extraction from PDF   |
+| FAISS Retrieval   | 0.1s     | 7 chunks from vector store |
+| Azure OpenAI Call | 1-2s     | LLM generation (varies)    |
+| Dashboard Render  | 0.3s     | React component rendering  |
+| **Total E2E**     | **2-3s** | User sees results in ~3s   |
 
 **Performance Tips:**
+
 - Use smaller top_k for faster results (try 5 instead of 7)
 - Cache findings for duplicate contracts
 - Consider background processing for batch uploads
@@ -263,6 +277,7 @@ curl -X POST http://localhost:8000/api/compliance/analyze \
 ## 🔒 Security Considerations
 
 ### Credentials Management
+
 ```bash
 # DO: Store in environment variables
 export AZURE_OPENAI_API_KEY="xxx"
@@ -279,6 +294,7 @@ export AZURE_OPENAI_API_KEY="xxx"
 ```
 
 ### API Security
+
 ```bash
 # Add authentication to endpoints if needed
 # Example with FastAPI:
@@ -292,6 +308,7 @@ async def analyze_compliance(
 ```
 
 ### Data Privacy
+
 - Contracts may contain sensitive data
 - Consider encryption at rest
 - Implement access logging
@@ -303,7 +320,9 @@ async def analyze_compliance(
 ## 🚨 Troubleshooting
 
 ### Issue: "ModuleNotFoundError: No module named 'openai'"
+
 **Solution:**
+
 ```bash
 cd backend
 pip install -r requirements.txt
@@ -312,7 +331,9 @@ pip install openai pydantic fastapi
 ```
 
 ### Issue: "AZURE_OPENAI_API_KEY not found"
+
 **Solution:**
+
 ```bash
 # Check if .env file exists
 ls -la backend/.env
@@ -325,7 +346,9 @@ export AZURE_OPENAI_API_KEY="your_key"
 ```
 
 ### Issue: "File not found" error in compliance analysis
+
 **Solution:**
+
 ```bash
 # Check if file was uploaded
 curl http://localhost:8000/api/files
@@ -335,14 +358,18 @@ curl http://localhost:8000/api/files
 ```
 
 ### Issue: "Empty compliance findings"
+
 **Solution:**
+
 1. Check if contract has relevant compliance language
 2. Try increasing top_k parameter (e.g., 10 instead of 7)
 3. Check FAISS index has documents
 4. Check LLM response in backend logs
 
 ### Issue: "CORS errors" in browser
+
 **Solution:**
+
 ```python
 # In backend/app/main.py, add CORS middleware
 from fastapi.middleware.cors import CORSMiddleware
@@ -356,7 +383,9 @@ app.add_middleware(
 ```
 
 ### Issue: Slow response time
+
 **Solutions:**
+
 1. Reduce top_k parameter to 5
 2. Check Azure OpenAI quota
 3. Check network latency
@@ -368,6 +397,7 @@ app.add_middleware(
 ## 📈 Monitoring & Logging
 
 ### Backend Logging
+
 ```python
 import logging
 
@@ -381,16 +411,18 @@ logger.info(f"Found {len(findings)} compliance findings")
 ```
 
 ### Frontend Console
+
 ```javascript
 // Monitor API calls
-console.log('Compliance analysis request:', response);
-console.log('Findings received:', findings);
+console.log("Compliance analysis request:", response);
+console.log("Findings received:", findings);
 
 // Error tracking
-console.error('Compliance analysis error:', error);
+console.error("Compliance analysis error:", error);
 ```
 
 ### Azure OpenAI Monitoring
+
 - Monitor token usage in Azure portal
 - Set up cost alerts
 - Track API latency
@@ -403,6 +435,7 @@ console.error('Compliance analysis error:', error);
 ### POST /api/compliance/analyze
 
 **Request:**
+
 ```json
 {
   "file_id": 1,
@@ -412,11 +445,13 @@ console.error('Compliance analysis error:', error);
 ```
 
 **Parameters:**
+
 - `file_id` (required, int): Database ID of uploaded file
 - `include_quotes` (optional, bool): Include quoted text in response (default: true)
 - `top_k` (optional, int): Number of chunks to retrieve (default: 7)
 
 **Response (Success - 200):**
+
 ```json
 {
   "file_id": 1,
@@ -444,6 +479,7 @@ console.error('Compliance analysis error:', error);
 ```
 
 **Response (Error - 400):**
+
 ```json
 {
   "detail": "File not found in database"
@@ -451,6 +487,7 @@ console.error('Compliance analysis error:', error);
 ```
 
 **Response (Error - 500):**
+
 ```json
 {
   "detail": "Error analyzing compliance: Internal Server Error"
@@ -505,6 +542,7 @@ console.error('Compliance analysis error:', error);
 ## 📦 Deployment Checklist
 
 ### Pre-Deployment
+
 - [ ] All tests passing (6/6)
 - [ ] Environment variables set
 - [ ] Database configured
@@ -513,6 +551,7 @@ console.error('Compliance analysis error:', error);
 - [ ] User acceptance testing complete
 
 ### Deployment
+
 - [ ] Backend deployed
 - [ ] Frontend deployed
 - [ ] Health check passing
@@ -520,6 +559,7 @@ console.error('Compliance analysis error:', error);
 - [ ] Monitor logs for errors
 
 ### Post-Deployment
+
 - [ ] Verify compliance analysis works
 - [ ] Monitor Azure OpenAI usage
 - [ ] Collect user feedback
@@ -552,12 +592,14 @@ python -m uvicorn app.main:app  # Backend
 ## 📞 Support & Resources
 
 ### Quick Links
+
 - [COMPLIANCE_ANALYSIS_GUIDE.md](./COMPLIANCE_ANALYSIS_GUIDE.md) - In-depth documentation
 - [COMPLIANCE_ANALYSIS_CHECKLIST.md](./COMPLIANCE_ANALYSIS_CHECKLIST.md) - Feature checklist
 - [backend/test_compliance_analysis.py](./backend/test_compliance_analysis.py) - Test examples
 - [backend/app/services/compliance_analyzer.py](./backend/app/services/compliance_analyzer.py) - Service code
 
 ### Debugging Commands
+
 ```bash
 # Test API endpoint
 curl -X GET http://localhost:8000/api/files
@@ -575,13 +617,14 @@ tail -f backend.log
 ```
 
 ### Common Issues
-| Issue | Solution | Link |
-|-------|----------|------|
-| Missing credentials | Set .env variables | [Config](#-configuration) |
-| Tests failing | Run test file directly | [Testing](#-testing-strategy) |
-| Empty findings | Increase top_k or check contract | [Troubleshooting](#-troubleshooting) |
-| API errors | Check logs and endpoint path | [API Docs](#-api-documentation) |
-| Slow performance | Reduce top_k, check quota | [Performance](#-performance-expectations) |
+
+| Issue               | Solution                         | Link                                      |
+| ------------------- | -------------------------------- | ----------------------------------------- |
+| Missing credentials | Set .env variables               | [Config](#-configuration)                 |
+| Tests failing       | Run test file directly           | [Testing](#-testing-strategy)             |
+| Empty findings      | Increase top_k or check contract | [Troubleshooting](#-troubleshooting)      |
+| API errors          | Check logs and endpoint path     | [API Docs](#-api-documentation)           |
+| Slow performance    | Reduce top_k, check quota        | [Performance](#-performance-expectations) |
 
 ---
 
@@ -616,6 +659,7 @@ cd frontend && npm run build
 ## 🎉 Success Criteria
 
 ✅ **System is ready for production if:**
+
 - All 6 tests passing
 - Backend API responding
 - Frontend displaying compliance findings

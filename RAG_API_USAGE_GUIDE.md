@@ -43,6 +43,7 @@ Content-Type: application/json
 ```
 
 **Parameters:**
+
 - `term` (string, required): The contract term to define
 - `file_id` (integer, required): ID of the uploaded contract
 - `context` (string, optional): Additional context for more specific definitions
@@ -87,6 +88,7 @@ Content-Type: application/json
 ```
 
 **Response Fields:**
+
 - `term`: The defined term
 - `definition`: Comprehensive definition extracted from contract
 - `key_elements`: List of important components of the term
@@ -137,8 +139,8 @@ const response = await fetch("http://localhost:8000/api/rag/define", {
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
     term: "Indemnification",
-    file_id: 123
-  })
+    file_id: 123,
+  }),
 });
 
 const result = await response.json();
@@ -167,12 +169,14 @@ Content-Type: application/json
 ```
 
 **Parameters:**
+
 - `query` (string, required): Your question or search term
 - `file_id` (integer, required): ID of the uploaded contract
 - `query_type` (string, required): One of `definition`, `section`, `compliance`, `risk`
 - `top_k` (integer, optional): Number of results (default: 5, max: 20)
 
 **Query Types:**
+
 - `definition`: Extract and explain a definition
 - `section`: Find and explain a specific contract section
 - `compliance`: Identify compliance requirements and obligations
@@ -203,6 +207,7 @@ Content-Type: application/json
 ```
 
 **Response Fields:**
+
 - `query`: The original query
 - `query_type`: The query type used
 - `results`: Object with answer, related_sections, and confidence
@@ -252,8 +257,8 @@ const response = await fetch("http://localhost:8000/api/rag/query", {
     query: "What data protection measures are required?",
     file_id: 123,
     query_type: "compliance",
-    top_k: 5
-  })
+    top_k: 5,
+  }),
 });
 
 const result = await response.json();
@@ -274,6 +279,7 @@ GET /api/rag/retrieve?file_id=123&query=security&top_k=5
 ```
 
 **Parameters (Query String):**
+
 - `file_id` (integer, required): ID of the uploaded contract
 - `query` (string, required): Search term
 - `top_k` (integer, optional): Number of results (default: 5)
@@ -328,8 +334,8 @@ const termResponse = await fetch("http://localhost:8000/api/rag/define", {
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
     term: "Confidential Information",
-    file_id: 123
-  })
+    file_id: 123,
+  }),
 });
 const termDef = await termResponse.json();
 console.log("Definition:", termDef.definition);
@@ -340,8 +346,8 @@ const indemnifyResponse = await fetch("http://localhost:8000/api/rag/define", {
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
     term: "Indemnification",
-    file_id: 123
-  })
+    file_id: 123,
+  }),
 });
 const indemnifyDef = await indemnifyResponse.json();
 console.log("Definition:", indemnifyDef.definition);
@@ -356,8 +362,8 @@ const complianceResponse = await fetch("http://localhost:8000/api/rag/query", {
   body: JSON.stringify({
     query: "What GDPR compliance requirements apply?",
     file_id: 123,
-    query_type: "compliance"
-  })
+    query_type: "compliance",
+  }),
 });
 const compliance = await complianceResponse.json();
 console.log("Compliance Answer:", compliance.results.answer);
@@ -372,8 +378,8 @@ const riskResponse = await fetch("http://localhost:8000/api/rag/query", {
   body: JSON.stringify({
     query: "What are the liability limitations?",
     file_id: 123,
-    query_type: "risk"
-  })
+    query_type: "risk",
+  }),
 });
 const risks = await riskResponse.json();
 console.log("Risk Analysis:", risks.results.answer);
@@ -386,9 +392,11 @@ console.log("Risk Analysis:", risks.results.answer);
 All endpoints return appropriate HTTP status codes:
 
 ### 200 OK
+
 Successful query with results
 
 ### 400 Bad Request
+
 Missing or invalid parameters
 
 ```json
@@ -399,6 +407,7 @@ Missing or invalid parameters
 ```
 
 ### 404 Not Found
+
 File not found or not indexed
 
 ```json
@@ -409,6 +418,7 @@ File not found or not indexed
 ```
 
 ### 500 Internal Server Error
+
 Azure OpenAI failure, embedding failure, or other processing error
 
 ```json
@@ -434,7 +444,7 @@ try:
     )
     response.raise_for_status()
     result = response.json()
-    
+
 except requests.exceptions.HTTPError as e:
     if response.status_code == 404:
         print("Contract not found. Upload it first.")
@@ -442,7 +452,7 @@ except requests.exceptions.HTTPError as e:
         print("Invalid request:", response.json()["message"])
     else:
         print("Server error:", response.json()["details"])
-        
+
 except requests.exceptions.RequestException as e:
     print(f"Connection error: {e}")
 ```
@@ -478,13 +488,13 @@ async def extract_definitions(file_id, terms):
             json={"term": term, "file_id": file_id}
         )
         return response.json()
-    
+
     # Could use asyncio for true parallelism
     definitions = []
     for term in terms:
         result = get_definition(term)
         definitions.append(result)
-    
+
     return definitions
 
 # Usage
@@ -500,7 +510,7 @@ class ContractAnalyzer:
     def __init__(self, file_id, base_url="http://localhost:8000"):
         self.file_id = file_id
         self.base_url = base_url
-    
+
     def define_term(self, term):
         """Get term definition."""
         response = requests.post(
@@ -508,7 +518,7 @@ class ContractAnalyzer:
             json={"term": term, "file_id": self.file_id}
         )
         return response.json()
-    
+
     def analyze_compliance(self):
         """Analyze all compliance requirements."""
         response = requests.post(
@@ -521,7 +531,7 @@ class ContractAnalyzer:
             }
         )
         return response.json()
-    
+
     def identify_risks(self):
         """Identify all risks and liabilities."""
         response = requests.post(
@@ -534,14 +544,14 @@ class ContractAnalyzer:
             }
         )
         return response.json()
-    
+
     def get_full_analysis(self):
         """Get comprehensive contract analysis."""
         return {
             "compliance": self.analyze_compliance(),
             "risks": self.identify_risks(),
             "key_terms": [
-                self.define_term(term) 
+                self.define_term(term)
                 for term in ["Confidential Information", "Indemnification", "Liability Cap"]
             ]
         }
@@ -558,26 +568,33 @@ print("Risks:", analysis["risks"]["results"]["answer"])
 ## Troubleshooting
 
 ### "Vector store not initialized for file_id"
+
 **Cause:** Contract not yet processed through RAG pipeline
 **Solution:** Wait for contract upload to complete, then try again
 
 ### "Empty response from Azure OpenAI"
+
 **Cause:** API key issues or connection problem
-**Solution:** 
+**Solution:**
+
 - Verify `AZURE_OPENAI_API_KEY` is set and valid
 - Check `AZURE_OPENAI_ENDPOINT` format
 - Ensure deployment name matches configuration
 
 ### "No relevant chunks found"
+
 **Cause:** Query doesn't match contract content
-**Solution:** 
+**Solution:**
+
 - Try more general search terms
 - Break query into simpler components
 - Check that contract was uploaded successfully
 
 ### Slow Response Times
+
 **Cause:** FAISS index is large or network latency
 **Solution:**
+
 - Reduce `top_k` parameter
 - Optimize query terms
 - Consider using `/api/rag/retrieve` for just embedding distances
@@ -591,4 +608,3 @@ print("Risks:", analysis["risks"]["results"]["answer"])
 3. **Implement Batch Processing:** Process multiple contracts in parallel
 4. **Set up Monitoring:** Track API performance and error rates
 5. **Create Analytics Dashboard:** Monitor most-queried terms and patterns
-

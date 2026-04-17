@@ -12,6 +12,7 @@
 Your compliance analysis system has been **fully adapted to read chunks directly from the FAISS vector store** (metadata.json) instead of using mock data.
 
 ### Key Changes:
+
 ✅ **Vector store chunks now used** - Reads from `backend/app/vector_store/metadata.json`  
 ✅ **Full text content included** - No 500-character limit  
 ✅ **Real quotes extracted** - From actual uploaded PDFs  
@@ -55,6 +56,7 @@ RESULT: 6/6 PASSED
 ## 🔄 Architecture: Before vs After
 
 ### Before
+
 ```
 Upload PDF
    ↓
@@ -65,7 +67,8 @@ ComplianceAnalyzer receives mock data
 Generic findings with example quotes
 ```
 
-### After  
+### After
+
 ```
 Upload PDF
    ↓
@@ -85,9 +88,11 @@ Findings with ACTUAL quotes from PDF ✅
 ## 📝 Code Changes
 
 ### 1. Vector Store Return Format
+
 **File:** `backend/app/services/vector_store.py`
 
 Now returns **full content** for compliance analysis:
+
 ```python
 results.append({
     "vector_id": vector_id,
@@ -100,24 +105,26 @@ results.append({
 ```
 
 ### 2. Chunk Formatting
+
 **File:** `backend/app/services/compliance_analyzer.py`
 
 Updated `_format_chunks_as_context()` to handle real vector store chunks:
+
 ```python
 @staticmethod
 def _format_chunks_as_context(chunks: List[Dict[str, Any]]) -> str:
     """Format retrieved chunks from vector store as context for LLM."""
-    
+
     for idx, chunk in enumerate(chunks[:7], 1):
         # Extract from vector store format
         content = chunk.get("content", "")  # ✅ FULL CONTENT
-        
+
         # Get metadata
         metadata = chunk.get("metadata", {})
         section = metadata.get("section_title", "")
         page = metadata.get("page_number", "")
         chunk_id = chunk.get("chunk_id", "")
-        
+
         # Format with traceability
         header = f"[Section: {section} | Page {page} | ID: {chunk_id}]"
         context_parts.append(header)
@@ -125,17 +132,19 @@ def _format_chunks_as_context(chunks: List[Dict[str, Any]]) -> str:
 ```
 
 ### 3. Test Updates
+
 **File:** `backend/test_compliance_analysis.py` (now updated)
 
 New function to load real chunks:
+
 ```python
 def load_vector_store_chunks(limit: int = 7):
     """Load actual chunks from vector store metadata.json."""
     metadata_path = Path(__file__).parent / "app" / "vector_store" / "metadata.json"
-    
+
     with open(metadata_path, "r") as f:
         metadata = json.load(f)
-    
+
     # Convert to chunk list format
     chunks_list = []
     for vector_id_str in sorted(chunks_dict.keys())[:limit]:
@@ -147,7 +156,7 @@ def load_vector_store_chunks(limit: int = 7):
             "metadata": chunk_data.get("metadata", {}),
             "content_type": chunk_data.get("content_type", "text"),
         })
-    
+
     return chunks_list
 ```
 
@@ -229,6 +238,7 @@ The system now reads chunks in this format from `metadata.json`:
 ```
 
 **Key fields:**
+
 - `content` - **Full text from PDF** (not truncated)
 - `metadata.section_title` - Contract section
 - `metadata.page_number` - Page in PDF
@@ -238,27 +248,29 @@ The system now reads chunks in this format from `metadata.json`:
 
 ## ✨ Benefits of Vector Store Integration
 
-| Aspect | Before | After |
-|--------|--------|-------|
-| **Data Source** | Mock hardcoded data | Real uploaded PDFs |
-| **Content Qty** | 500-char preview | Full text from PDF |
-| **Quotes** | Generic examples | Actual verbatim text |
-| **Traceability** | None | Chunk ID + page number |
-| **Relevance** | Random | FAISS ranked #1-7 |
-| **Accuracy** | Low | High (real contracts) |
-| **Scalability** | Limited | Unlimited PDFs |
+| Aspect           | Before              | After                  |
+| ---------------- | ------------------- | ---------------------- |
+| **Data Source**  | Mock hardcoded data | Real uploaded PDFs     |
+| **Content Qty**  | 500-char preview    | Full text from PDF     |
+| **Quotes**       | Generic examples    | Actual verbatim text   |
+| **Traceability** | None                | Chunk ID + page number |
+| **Relevance**    | Random              | FAISS ranked #1-7      |
+| **Accuracy**     | Low                 | High (real contracts)  |
+| **Scalability**  | Limited             | Unlimited PDFs         |
 
 ---
 
 ## 🚀 How to Use
 
 ### 1. Upload a Contract
+
 ```bash
 # Frontend upload form
 Select PDF → Upload → Processing...
 ```
 
 ### 2. Request Compliance Analysis
+
 ```bash
 curl -X POST http://localhost:8000/api/compliance/analyze \
   -H "Content-Type: application/json" \
@@ -270,6 +282,7 @@ curl -X POST http://localhost:8000/api/compliance/analyze \
 ```
 
 ### 3. Get Results with Real Quotes
+
 ```json
 {
   "file_id": 1,
@@ -307,12 +320,14 @@ curl -X POST http://localhost:8000/api/compliance/analyze \
 ## 🧪 Testing
 
 ### Run Tests
+
 ```bash
 cd backend
 python test_compliance_analysis.py
 ```
 
 ### What Gets Tested
+
 1. ✅ Loads real chunks from metadata.json
 2. ✅ Processes chunks through compliance analyzer
 3. ✅ Extracts actual quotes from PDF content
@@ -321,6 +336,7 @@ python test_compliance_analysis.py
 6. ✅ Validates JSON serialization
 
 ### Test Output
+
 ```
 Loading 7 chunks from vector store...
 ✓ Chunk 1: file_1_p1_0 - "Information Security and Technology Risk..."
@@ -339,12 +355,14 @@ Generating compliance findings...
 ## 📈 Why This Matters
 
 ### Before (Mock Data)
+
 - Compliance findings were generic demonstrations
 - No actual contract language analyzed
 - Quotes were examples, not real
 - System didn't actually use uploaded PDFs
 
 ### After (Real Vector Store Chunks)
+
 - ✅ Actual PDF content analyzed
 - ✅ Real quotes extracted from contracts
 - ✅ Findings grounded in actual language
@@ -369,6 +387,7 @@ When the system returns a compliance finding:
 ```
 
 You can trace this to:
+
 - **Chunk ID:** `file_1_p4_3` (File 1, Page 4, Chunk 3)
 - **Section:** "Access Control" (from metadata)
 - **Page:** 4
@@ -384,7 +403,7 @@ This ensures transparency and verifiability.
 ✅ backend/app/services/vector_store.py
    └─ Added "content" (full text) to search results
 
-✅ backend/app/services/compliance_analyzer.py  
+✅ backend/app/services/compliance_analyzer.py
    └─ Updated _format_chunks_as_context() for real chunks
 
 ✅ backend/test_compliance_analysis.py (UPDATED)
@@ -414,6 +433,7 @@ This ensures transparency and verifiability.
 ## 🎯 Summary
 
 **The compliance analysis system now:**
+
 1. ✅ Reads real chunks from uploaded PDFs in the vector store
 2. ✅ Uses full text content (no 500-char limit)
 3. ✅ Extracts actual quotes from contracts
@@ -422,6 +442,7 @@ This ensures transparency and verifiability.
 6. ✅ Passes all 6 integration tests
 
 **You can now:**
+
 - Upload any contract PDF
 - Get real compliance analysis with actual quotes
 - Trust the findings are grounded in the actual contract text
@@ -432,4 +453,3 @@ This ensures transparency and verifiability.
 **Status: ✅ COMPLETE & PRODUCTION READY**
 
 The compliance analysis feature now uses real vector store chunks from uploaded PDFs, providing accurate, traceable, and production-quality compliance findings!
-

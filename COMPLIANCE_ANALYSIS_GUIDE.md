@@ -15,6 +15,7 @@ The Compliance Analysis feature extends your contract analysis system to automat
 Located in: [backend/app/services/compliance_analyzer.py](../backend/app/services/compliance_analyzer.py)
 
 **Evaluates 5 compliance areas:**
+
 1. Network Authentication & Authorization Protocols
 2. Multi-Factor Authentication (MFA) Enforcement
 3. Logging and Monitoring Requirements
@@ -26,6 +27,7 @@ Located in: [backend/app/services/compliance_analyzer.py](../backend/app/service
 **Endpoint:** `POST /api/compliance/analyze`
 
 **Request:**
+
 ```json
 {
   "file_id": 123,
@@ -34,7 +36,8 @@ Located in: [backend/app/services/compliance_analyzer.py](../backend/app/service
 }
 ```
 
-**Response:** 
+**Response:**
+
 ```json
 {
   "file_id": 123,
@@ -108,6 +111,7 @@ Frontend displays as table
 ### Key Components
 
 **1. ComplianceAnalyzer Service** (backend/app/services/compliance_analyzer.py)
+
 - `generate_compliance_analysis()` - Main method
 - `_format_chunks_as_context()` - Context preparation
 - `_validate_compliance_response()` - Response validation
@@ -115,21 +119,25 @@ Frontend displays as table
 - `_empty_compliance_response()` - Graceful fallback
 
 **2. API Route** (backend/app/routes/files.py)
+
 - `analyze_contract_compliance()` - Endpoint handler
 - `_calculate_compliance_summary()` - Summary calculation
 
 **3. Schemas** (backend/app/schemas.py)
+
 - `ComplianceFinding` - Single finding structure
 - `ComplianceAnalysisRequest` - Request validation
 - `ComplianceAnalysisResponse` - Response structure
 
 **4. Frontend Components** (frontend/src/components/Dashboard.jsx)
+
 - Compliance table rendering
 - File selection for analysis
 - Stats display
 - Status badges
 
 **5. API Client** (frontend/src/services/api.js)
+
 - `analyzeCompliance()` - API call wrapper
 
 ---
@@ -143,6 +151,7 @@ User uploads PDF via existing upload flow - no changes needed.
 ### Step 2: Dashboard Loads
 
 Dashboard automatically:
+
 1. Fetches uploaded contracts
 2. Selects the first contract
 3. **Calls compliance analysis endpoint**
@@ -150,7 +159,9 @@ Dashboard automatically:
 ### Step 3: Compliance Analysis Runs
 
 Backend:
+
 1. Retrieves top-7 relevant chunks from FAISS using query:
+
    ```
    "authentication authorization MFA encryption logging monitoring incident response data protection"
    ```
@@ -158,6 +169,7 @@ Backend:
 2. Formats chunks as context for LLM
 
 3. Calls Azure OpenAI GPT-4o with system prompt:
+
    ```
    Evaluate contract using ONLY provided context.
    Do NOT hallucinate.
@@ -173,6 +185,7 @@ Backend:
 ### Step 4: Results Display
 
 Frontend renders compliance table with:
+
 - Color-coded status badges
 - Confidence progress bars
 - Verbatim quotes from contract
@@ -181,6 +194,7 @@ Frontend renders compliance table with:
 ### Step 5: User Interacts
 
 Users can:
+
 - Click different contracts to analyze compliance
 - Expand quotes to read full text
 - Use compliance data for risk assessment
@@ -222,16 +236,13 @@ findings = ComplianceAnalyzer.generate_compliance_analysis(chunks)
 ### Frontend - API Call
 
 ```javascript
-import { fileAPI } from '../services/api';
+import { fileAPI } from "../services/api";
 
 // Analyze compliance for a file
-const response = await fileAPI.analyzeCompliance(
-  fileId,
-  {
-    includeQuotes: true,
-    topK: 7
-  }
-);
+const response = await fileAPI.analyzeCompliance(fileId, {
+  includeQuotes: true,
+  topK: 7,
+});
 
 const findings = response.data.findings;
 const summary = response.data.summary;
@@ -253,7 +264,7 @@ Already integrated! When Dashboard component loads:
 // Dashboard.jsx auto-runs on mount:
 useEffect(() => {
   // ... fetch files ...
-  
+
   // Automatically analyze first file
   if (filesRes.data.length > 0) {
     await analyzeCompliance(filesRes.data[0].id);
@@ -271,26 +282,31 @@ const handleFileSelect = async (fileId) => {
 ## Compliance Questions Explained
 
 ### 1. Network Authentication & Authorization Protocols
+
 **What we check:** Does contract specify modern protocols (SAML 2.0, OAuth 2.0)?
 **Evidence:** Section 6.7 requirements
 **Status:** Fully Compliant if all modern protocols required
 
 ### 2. Multi-Factor Authentication (MFA) Enforcement
+
 **What we check:** Is MFA required for privileged/production access?
 **Evidence:** Section 6.2 requirements
 **Status:** Fully Compliant if MFA enforced for admin + production
 
 ### 3. Logging and Monitoring Requirements
+
 **What we check:** Are security logs required? Retention period?
 **Evidence:** Section 12 requirements
 **Status:** Fully Compliant if logs collected, retained, monitored
 
 ### 4. Incident Response and Breach Notification
+
 **What we check:** IR plan maintained? Notification timeframe?
 **Evidence:** Section 15 requirements
 **Status:** Fully Compliant if IR plan + 72h notification exists
 
 ### 5. Data Encryption and Key Management
+
 **What we check:** TLS/AES encryption required? Key rotation?
 **Evidence:** Section 7 requirements
 **Status:** Fully Compliant if TLS 1.2+ + AES-256 + rotation specified
@@ -299,18 +315,20 @@ const handleFileSelect = async (fileId) => {
 
 ## Response State Mapping
 
-| State | Criteria | Confidence Impact |
-|-------|----------|-------------------|
-| **Fully Compliant** | All requirements met with specific details | High: 75-100% |
-| **Partially Compliant** | Some requirements met, gaps exist | Medium: 40-74% |
-| **Non-Compliant** | Missing evidence in contract | Low: 0-39% |
+| State                   | Criteria                                   | Confidence Impact |
+| ----------------------- | ------------------------------------------ | ----------------- |
+| **Fully Compliant**     | All requirements met with specific details | High: 75-100%     |
+| **Partially Compliant** | Some requirements met, gaps exist          | Medium: 40-74%    |
+| **Non-Compliant**       | Missing evidence in contract               | Low: 0-39%        |
 
 ---
 
 ## Error Handling
 
 ### Missing Credentials
+
 If `AZURE_OPENAI_API_KEY` not set:
+
 - LLM generation skipped
 - Returns all questions as Non-Compliant
 - Confidence: 0%
@@ -318,18 +336,23 @@ If `AZURE_OPENAI_API_KEY` not set:
 - **System continues gracefully**
 
 ### Empty Chunks
+
 If no relevant sections retrieved:
+
 - Returns all 5 questions as Non-Compliant
 - Confidence: 0%
 - Message: "No evidence found in contract context"
 
 ### Invalid JSON Response
+
 If LLM returns malformed JSON:
+
 - Attempts markdown extraction
 - Falls back to empty non-compliant response
 - Logs error for debugging
 
 ### API Errors
+
 - 400: Invalid file_id → Returns 400 with message
 - 404: File not found → Returns 404
 - 500: Processing error → Returns 500 with error details
@@ -338,18 +361,19 @@ If LLM returns malformed JSON:
 
 ## Performance
 
-| Operation | Time | Notes |
-|-----------|------|-------|
-| Chunk retrieval | ~100ms | FAISS search |
-| LLM generation | 1-3s | Azure OpenAI API call |
-| Response validation | <50ms | JSON parsing |
-| **Total** | **1-3.5s** | Acceptable for dashboard |
+| Operation           | Time       | Notes                    |
+| ------------------- | ---------- | ------------------------ |
+| Chunk retrieval     | ~100ms     | FAISS search             |
+| LLM generation      | 1-3s       | Azure OpenAI API call    |
+| Response validation | <50ms      | JSON parsing             |
+| **Total**           | **1-3.5s** | Acceptable for dashboard |
 
 ---
 
 ## Files Modified/Created
 
 ### Backend
+
 ```
 ✅ CREATED: backend/app/services/compliance_analyzer.py (250 lines)
 ✅ MODIFIED: backend/app/routes/files.py (+90 lines)
@@ -358,12 +382,14 @@ If LLM returns malformed JSON:
 ```
 
 ### Frontend
+
 ```
 ✅ MODIFIED: frontend/src/components/Dashboard.jsx (+300 lines)
 ✅ MODIFIED: frontend/src/services/api.js (+20 lines)
 ```
 
 ### Dependencies
+
 ```
 ✅ All existing dependencies cover compliance analyzer
    (openai, pydantic, fastapi already included)
@@ -374,12 +400,14 @@ If LLM returns malformed JSON:
 ## Testing
 
 ### Run Tests
+
 ```bash
 cd backend
 python test_compliance_analysis.py
 ```
 
 **6 Tests (All Passing ✅):**
+
 1. ✅ Compliance Analysis Generation
 2. ✅ Empty Chunks Handling
 3. ✅ Compliance Questions Verification
@@ -412,18 +440,21 @@ curl -X POST http://localhost:8000/api/compliance/analyze \
 ## Integration with Existing System
 
 ### No Breaking Changes ✅
+
 - Existing KPI extraction **untouched**
 - Existing PDF upload flow **unchanged**
 - Existing RAG endpoints **fully functional**
 - Backward compatible **100%**
 
 ### Existing Features Reused ✅
+
 - **FAISS vector store** - Retrieves compliant sections
 - **File upload flow** - No modifications
 - **Dashboard structure** - Compliance table added alongside KPIs
 - **RAG pipeline** - Retrieves chunks for context
 
 ### New Capabilities ✅
+
 - 5-area compliance evaluation
 - LLM-powered analysis
 - Evidence-based findings
@@ -501,7 +532,8 @@ retrieved_chunks = rag_pipeline.retrieve_chunks(
 
 ### Q: "No relevant chunks found" → All Non-Compliant
 
-**A:** This is expected if contract doesn't mention compliance keywords. 
+**A:** This is expected if contract doesn't mention compliance keywords.
+
 - Try uploading a security-focused contract
 - Check that contract has sections on authentication, encryption, logging
 - Increase `top_k` parameter (default: 7)
@@ -509,6 +541,7 @@ retrieved_chunks = rag_pipeline.retrieve_chunks(
 ### Q: LLM response parsing fails
 
 **A:** Ensure Azure OpenAI credentials set in `.env`:
+
 ```bash
 AZURE_OPENAI_API_KEY=sk-...
 AZURE_OPENAI_ENDPOINT=https://xxx.openai.azure.com/
@@ -517,6 +550,7 @@ AZURE_OPENAI_ENDPOINT=https://xxx.openai.azure.com/
 ### Q: Compliance scores too low
 
 **A:** This may indicate:
+
 1. Contract doesn't explicitly state compliance requirements
 2. Requirements scattered across document (need more context chunks)
 3. Requirements use different terminology than questions
@@ -526,6 +560,7 @@ AZURE_OPENAI_ENDPOINT=https://xxx.openai.azure.com/
 ### Q: Frontend compliance table not appearing
 
 **A:** Check:
+
 1. Backend endpoint returns 200 status
 2. API response includes `findings` array
 3. Browser console for JavaScript errors

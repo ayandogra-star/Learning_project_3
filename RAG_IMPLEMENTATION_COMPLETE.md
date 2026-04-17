@@ -69,7 +69,7 @@ The Retrieval-Augmented Generation (RAG) system has been **fully implemented and
 ```python
 # In schemas.py
 ContractDefinitionRequest
-ContractDefinitionResponse  
+ContractDefinitionResponse
 RAGQueryRequest
 RAGQueryResponse
 ```
@@ -81,35 +81,34 @@ Each with full field documentation and optional/required validation.
 ## Technical Architecture
 
 ```yaml
-Data Flow:
-  PDF Upload
-    ↓
+Data Flow: PDF Upload
+  ↓
   PDFParser (existing, preserved)
-    ↓ ├─→ KPI Extraction (existing, untouched)
-    ↓ └─→ RAGDocumentProcessor (new)
-         ├─→ TableMerger (multi-page detection)
-         ├─→ SemanticChunker (section-aware)
-         │   ├─→ TableFormatter (structure preservation)
-         │   └─→ Relevance Boost Scorer
-         ├─→ EmbeddingService (OpenAI embeddings)
-         └─→ VectorStore (FAISS indexing with boosting)
+  ↓ ├─→ KPI Extraction (existing, untouched)
+  ↓ └─→ RAGDocumentProcessor (new)
+  ├─→ TableMerger (multi-page detection)
+  ├─→ SemanticChunker (section-aware)
+  │   ├─→ TableFormatter (structure preservation)
+  │   └─→ Relevance Boost Scorer
+  ├─→ EmbeddingService (OpenAI embeddings)
+  └─→ VectorStore (FAISS indexing with boosting)
 
-Query Flow:
-  User Query
-    ↓
+Query Flow: User Query
+  ↓
   EmbeddingService (embed query)
-    ↓
+  ↓
   VectorStore.search() (FAISS + boosting)
-    ↓
+  ↓
   ContractDefinitionGenerator (if /define endpoint)
-    │ └─→ Azure OpenAI GPT-4o
-    ↓
+  │ └─→ Azure OpenAI GPT-4o
+  ↓
   Structured Response
-    (definition, risk_implications, 
-     compliance_requirements, confidence, source_chunks)
+  (definition, risk_implications,
+  compliance_requirements, confidence, source_chunks)
 ```
 
 **Key Design Principles:**
+
 - ✅ Dual-pipeline: KPI (sync) + RAG (async)
 - ✅ Backward compatible: Existing endpoints unchanged
 - ✅ Modular: Separate service classes with clean interfaces
@@ -126,6 +125,7 @@ Query Flow:
 **Problem Solved:** Tables spanning multiple pages were being split incorrectly
 
 **Solution:**
+
 ```python
 class TableMerger:
     def merge_multipage_tables(self, tables, page_mapping):
@@ -134,14 +134,15 @@ class TableMerger:
         # 2. Post-process to identify continuations
         # 3. Merge using column consistency + header matching
         pass
-    
+
     def _is_table_continuation(self, table1, table2):
-        # Check: column count match? headers similar? 
+        # Check: column count match? headers similar?
         # Returns: boolean + confidence score
         pass
 ```
 
 **Benefits:**
+
 - Multi-page tables merged into single chunks
 - 300-800 token optimal size maintained
 - Preserved for embedding → better semantic search
@@ -151,6 +152,7 @@ class TableMerger:
 **Problem Solved:** Fixed-size token chunking destroyed document semantics
 
 **Solution:**
+
 ```python
 # Chunk by meaning, not tokens:
 1. Split by headings (section boundaries)
@@ -161,6 +163,7 @@ class TableMerger:
 ```
 
 **Chunk Types Created:**
+
 - Section headers with content
 - Paragraphs (definition sections, clauses)
 - Formatted tables (converted to readable text)
@@ -171,23 +174,24 @@ class TableMerger:
 **Problem Solved:** Generic semantic search ranked all chunks equally
 
 **Solution:**
+
 ```python
 def _get_relevance_boost(chunk):
     boost = 1.0
-    
+
     # Rule 1: Definition sections
     if chunk.is_definition_section():
         boost *= 1.5
-    
+
     # Rule 2: Table chunks
     if chunk.content_type == "table":
         boost *= 1.3
-    
+
     # Rule 3: Security keywords
     security_keywords = ["encryption", "audit", "compliance", ...]
     if any(kw in chunk.content for kw in security_keywords):
         boost *= 1.2
-    
+
     return min(boost, 2.0)  # Cap at 2.0x
 
 # In search():
@@ -204,27 +208,28 @@ def _get_relevance_boost(chunk):
 **Problem Solved:** Need structured analysis without hallucination
 
 **Solution:**
-```python
+
+````python
 @staticmethod
 def generate_definition(query, chunks, file_id):
     # Build context from top-5 chunks
     context = _format_chunks_as_context(chunks)  # ~2000 tokens
-    
+
     # System prompt enforces grounding
     system = "Use ONLY provided context. Do NOT hallucinate."
-    
+
     # Call Azure OpenAI GPT-4o
     response = client.chat.completions.create(
         model="gpt-4o",
         messages=[system_msg, user_msg],
         temperature=0  # Deterministic
     )
-    
+
     # Extract JSON from markdown-wrapped response
     json_text = response.choices[0].message.content
     if '```' in json_text:
         json_text = extract_between_markers(json_text)
-    
+
     # Parse and return structured response
     return json.loads(json_text)
 
@@ -238,9 +243,10 @@ def generate_definition(query, chunks, file_id):
     "related_sections": [...],
     "confidence": 0.92
 }
-```
+````
 
 **Benefits:**
+
 - Consistent JSON structure
 - Grounded in document (retrieved chunks included)
 - Confidence scoring
@@ -251,6 +257,7 @@ def generate_definition(query, chunks, file_id):
 ## Integration Points
 
 ### File Service Integration
+
 ```python
 # backend/app/services/file_service.py
 # Already calls RAGPipeline on upload:
@@ -258,10 +265,10 @@ def generate_definition(query, chunks, file_id):
 async def process_file(file):
     # 1. Extract KPI (existing)
     kpi_result = await contract_analyzer.analyze(text)
-    
+
     # 2. Process RAG (new)
     rag_result = rag_pipeline.process_text_content(text, file_id)
-    
+
     return {
         "file_id": file_id,
         "kpi_extracted": len(kpi_result),
@@ -270,6 +277,7 @@ async def process_file(file):
 ```
 
 ### Route Integration
+
 ```python
 # backend/app/routes/files.py
 # Added 3 new endpoints:
@@ -281,6 +289,7 @@ async def process_file(file):
 ```
 
 ### Database/Storage
+
 ```
 Vector Store:
   backend/app/vector_store/
@@ -303,6 +312,7 @@ Session State:
 ### Define a Term
 
 **Request:**
+
 ```bash
 POST /api/rag/define
 {
@@ -312,6 +322,7 @@ POST /api/rag/define
 ```
 
 **Response:**
+
 ```json
 {
   "term": "Personal Information",
@@ -346,6 +357,7 @@ POST /api/rag/define
 ### Query Compliance
 
 **Request:**
+
 ```bash
 POST /api/rag/query
 {
@@ -357,6 +369,7 @@ POST /api/rag/query
 ```
 
 **Response:**
+
 ```json
 {
   "query": "What GDPR requirements apply?",
@@ -398,6 +411,7 @@ TEST 7: Error Handling             ✅ PASS
 ```
 
 **Run Tests:**
+
 ```bash
 python backend/test_rag_integration.py
 ```
@@ -417,6 +431,7 @@ python backend/test_rag_integration.py
 ## Documentation Created
 
 ### 1. [RAG_SYSTEM_DOCUMENTATION.md](RAG_SYSTEM_DOCUMENTATION.md) (500+ lines)
+
 - Complete system architecture and design decisions
 - Semantic chunking algorithm with examples
 - Table merging heuristics and multi-page detection
@@ -427,6 +442,7 @@ python backend/test_rag_integration.py
 - Future optimization opportunities
 
 ### 2. [RAG_API_USAGE_GUIDE.md](RAG_API_USAGE_GUIDE.md) (400+ lines)
+
 - All 3 endpoint definitions with request/response examples
 - Complete cURL, Python, JavaScript examples
 - Error handling and status codes
@@ -437,6 +453,7 @@ python backend/test_rag_integration.py
 - Troubleshooting guide
 
 ### 3. [RAG_QUICK_START.md](RAG_QUICK_START.md) (300+ lines)
+
 - 5-minute setup guide
 - Installation and configuration
 - Core workflow walkthrough
@@ -447,6 +464,7 @@ python backend/test_rag_integration.py
 - Production checklist
 
 ### 4. [test_rag_integration.py](backend/test_rag_integration.py) (300 lines)
+
 - Executable integration test suite
 - Tests all major components
 - Validates error handling
@@ -457,17 +475,18 @@ python backend/test_rag_integration.py
 
 ## Performance Metrics
 
-| Operation | Time | Notes |
-|-----------|------|-------|
-| Document Upload | 2-5s | PDFPlumber + Table Merging |
-| Semantic Chunking | 1-2s | Section+Paragraph splitting |
-| Embedding Generation | 2-5s | OpenAI API batched |
-| Vector Indexing | 500ms | FAISS index build |
-| **Definition Query** | **1-2s** | Retrieval + LLM gen |
-| **Compliance Query** | **800ms - 1.5s** | Complexity-dependent |
-| Raw Retrieval | 50-100ms | FAISS search only |
+| Operation            | Time             | Notes                       |
+| -------------------- | ---------------- | --------------------------- |
+| Document Upload      | 2-5s             | PDFPlumber + Table Merging  |
+| Semantic Chunking    | 1-2s             | Section+Paragraph splitting |
+| Embedding Generation | 2-5s             | OpenAI API batched          |
+| Vector Indexing      | 500ms            | FAISS index build           |
+| **Definition Query** | **1-2s**         | Retrieval + LLM gen         |
+| **Compliance Query** | **800ms - 1.5s** | Complexity-dependent        |
+| Raw Retrieval        | 50-100ms         | FAISS search only           |
 
 **Scalability:**
+
 - Vector dimensions: 1536 (fixed)
 - Index type: FAISS HNSW (hierarchical, fast)
 - Typical corpus: 1000-5000 chunks per contract
@@ -513,17 +532,17 @@ MAX_TOKENS = 1000
 
 ## File Modifications Summary
 
-| File | Changes | Status |
-|------|---------|--------|
-| rag_document_processor.py | Added TableMerger class (90 lines) | ✅ Enhanced |
-| semantic_chunker.py | TableFormatter + boosting (260 lines) | ✅ Rewritten |
-| vector_store.py | Search boosting algorithm (40 lines) | ✅ Enhanced |
-| **contract_definition_generator.py** | **NEW FILE (230 lines)** | ✅ Created |
-| routes/files.py | Added 3 RAG endpoints (180 lines) | ✅ Enhanced |
-| schemas.py | Added 4 Pydantic models | ✅ Enhanced |
-| file_service.py | Already integrated | ✅ Unchanged |
-| contract_analyzer.py | Unchanged (KPI safe) | ✅ Preserved |
-| pdf_parser.py | Unchanged | ✅ Preserved |
+| File                                 | Changes                               | Status       |
+| ------------------------------------ | ------------------------------------- | ------------ |
+| rag_document_processor.py            | Added TableMerger class (90 lines)    | ✅ Enhanced  |
+| semantic_chunker.py                  | TableFormatter + boosting (260 lines) | ✅ Rewritten |
+| vector_store.py                      | Search boosting algorithm (40 lines)  | ✅ Enhanced  |
+| **contract_definition_generator.py** | **NEW FILE (230 lines)**              | ✅ Created   |
+| routes/files.py                      | Added 3 RAG endpoints (180 lines)     | ✅ Enhanced  |
+| schemas.py                           | Added 4 Pydantic models               | ✅ Enhanced  |
+| file_service.py                      | Already integrated                    | ✅ Unchanged |
+| contract_analyzer.py                 | Unchanged (KPI safe)                  | ✅ Preserved |
+| pdf_parser.py                        | Unchanged                             | ✅ Preserved |
 
 ---
 
@@ -536,35 +555,39 @@ MAX_TOKENS = 1000
 - [x] ✅ No breaking changes verified
 - [x] ✅ Backward compatibility confirmed
 - [x] ✅ Environment configuration documented
-- [ ] ⚠️  Frontend components (not started - React UI)
-- [ ] ⚠️  Performance optimization (works but not optimized)
-- [ ] ⚠️  Production monitoring setup
+- [ ] ⚠️ Frontend components (not started - React UI)
+- [ ] ⚠️ Performance optimization (works but not optimized)
+- [ ] ⚠️ Production monitoring setup
 
 ---
 
 ## Next Steps for Users
 
 1. **Setup Environment**
+
    ```bash
    cp .env.example .env
    # Add Azure OpenAI + OpenAI API keys
    ```
 
 2. **Start Backend**
+
    ```bash
    python -m uvicorn app.main:app --reload
    ```
 
 3. **Run Tests**
+
    ```bash
    python test_rag_integration.py  # Should see 7/7 passed
    ```
 
 4. **Try First Query**
+
    ```bash
    # Upload a contract
    curl -X POST http://localhost:8000/api/upload -F "file=@contract.pdf"
-   
+
    # Define a term
    curl -X POST http://localhost:8000/api/rag/define \
      -H "Content-Type: application/json" \
@@ -611,24 +634,28 @@ MAX_TOKENS = 1000
 ## Success Metrics
 
 **Code Quality:**
+
 - ✅ Type hints throughout
 - ✅ Comprehensive docstrings
 - ✅ Error handling with graceful degradation
 - ✅ Separation of concerns (clean interfaces)
 
 **Functionality:**
+
 - ✅ 3 REST endpoints fully functional
 - ✅ 4 Pydantic models for validation
 - ✅ Integration tests 7/7 passing
 - ✅ No breaking changes verified
 
 **Documentation:**
+
 - ✅ 500+ lines system docs
 - ✅ 400+ lines API guide with examples
 - ✅ 300+ lines quick start
 - ✅ 300 lines integration tests as reference
 
 **Production Readiness:**
+
 - ✅ Error handling comprehensive
 - ✅ Environment configuration clear
 - ✅ Performance baseline established
@@ -641,10 +668,10 @@ MAX_TOKENS = 1000
 The RAG system is **fully implemented, tested, and documented**. It adds powerful semantic search and LLM-driven contract analysis to the existing KPI extraction platform without introducing any breaking changes.
 
 **Key Achievement:** Transformed single-purpose KPI tool into hybrid intelligence platform with:
+
 - Semantic search across contracts
 - AI-powered term extraction
 - Compliance requirement analysis
 - Risk identification and assessment
 
 **Ready for:** Production deployment, frontend integration, performance optimization, and user feedback iteration.
-

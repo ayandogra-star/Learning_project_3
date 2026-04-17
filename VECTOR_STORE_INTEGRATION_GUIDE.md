@@ -20,13 +20,15 @@ The compliance analysis system has been **adapted to read chunks directly from t
 ## 🔄 Integration Flow
 
 ### Before (Mock Data)
+
 ```
 Mock Chunks → ComplianceAnalyzer → Findings (Generic)
 ```
 
 ### After (Real Vector Store)
+
 ```
-PDF Upload → RAG Pipeline → FAISS + metadata.json 
+PDF Upload → RAG Pipeline → FAISS + metadata.json
                                 ↓
                         Vector Store Chunks
                                 ↓
@@ -38,6 +40,7 @@ PDF Upload → RAG Pipeline → FAISS + metadata.json
 ## 📁 Files Modified
 
 ### 1. **`backend/app/services/vector_store.py`**
+
 ✅ Updated search results to include **full content** (not just preview)
 
 ```python
@@ -47,9 +50,11 @@ PDF Upload → RAG Pipeline → FAISS + metadata.json
 ```
 
 ### 2. **`backend/app/services/compliance_analyzer.py`**
+
 ✅ Updated `_format_chunks_as_context()` to handle real vector store chunks
 
 **Key improvements:**
+
 - Reads full content from chunks
 - Extracts section titles and page numbers from metadata
 - Fallback to content_preview if full content unavailable
@@ -60,7 +65,7 @@ PDF Upload → RAG Pipeline → FAISS + metadata.json
 def _format_chunks_as_context(chunks: List[Dict[str, Any]]) -> str:
     """
     Format retrieved chunks from vector store as context for LLM compliance analysis.
-    
+
     Vector store chunks contain:
     - 'content': Full text from PDF
     - 'metadata': {section_title, page_number, chunk_id}
@@ -72,9 +77,11 @@ def _format_chunks_as_context(chunks: List[Dict[str, Any]]) -> str:
 ```
 
 ### 3. **`backend/test_compliance_analysis_updated.py`** (NEW)
+
 ✅ New test file that reads from actual vector store
 
 **Features:**
+
 - `load_vector_store_chunks()` - Reads from metadata.json
 - Tests with real contract text (not mocks)
 - Demonstrates quote extraction from actual PDFs
@@ -85,9 +92,11 @@ def _format_chunks_as_context(chunks: List[Dict[str, Any]]) -> str:
 ## 🔗 How It Works End-to-End
 
 ### Step 1: PDF Upload
+
 User uploads a contract PDF via the frontend
 
 ### Step 2: RAG Processing
+
 ```
 PDF → RAGPipeline.process_document()
   ├─ Extract text and tables from PDF
@@ -97,7 +106,9 @@ PDF → RAGPipeline.process_document()
 ```
 
 ### Step 3: Compliance Request
+
 Frontend calls: `POST /api/compliance/analyze`
+
 ```json
 {
   "file_id": 1,
@@ -107,6 +118,7 @@ Frontend calls: `POST /api/compliance/analyze`
 ```
 
 ### Step 4: Chunk Retrieval (FROM VECTOR STORE)
+
 ```python
 # backend/app/routes/files.py
 rag_pipeline = RAGPipeline()
@@ -131,6 +143,7 @@ retrieved_chunks = rag_pipeline.retrieve_chunks(
 ```
 
 ### Step 5: Compliance Analysis (USES REAL CHUNKS)
+
 ```python
 # backend/app/services/compliance_analyzer.py
 findings = ComplianceAnalyzer.generate_compliance_analysis(retrieved_chunks)
@@ -143,7 +156,9 @@ findings = ComplianceAnalyzer.generate_compliance_analysis(retrieved_chunks)
 ```
 
 ### Step 6: Dashboard Display
+
 Frontend displays:
+
 - Compliance status badges
 - Confidence scores
 - **Actual quotes from the contract** (not generic examples)
@@ -175,23 +190,28 @@ Findings with REAL QUOTES extracted:
 ## 🎯 Key Improvements
 
 ### 1. **Real Data Instead of Mock**
+
 - ❌ Before: Mock chunks with generic text
 - ✅ After: Real contract chunks from uploaded PDFs
 
 ### 2. **Full Content for Analysis**
+
 - ❌ Before: 500-character preview
 - ✅ After: Complete text from each chunk (100% of content)
 
 ### 3. **Proper Quote Extraction**
+
 - ❌ Before: Generic quoted examples
 - ✅ After: Actual verbatim quotes from the contract
 
 ### 4. **Traceability**
+
 - ✅ Chunk IDs show source (e.g., "file_1_p4_1" = File 1, Page 4, Chunk 1)
 - ✅ Page numbers included
 - ✅ Section titles preserved
 
 ### 5. **Query-Based Retrieval**
+
 - ✅ Compliance-specific query for relevant sections
 - ✅ FAISS similarity search finds best matches
 - ✅ Top 7 chunks by relevance
@@ -239,6 +259,7 @@ The system now reads chunks directly from `backend/app/vector_store/metadata.jso
 ## 🔌 API Endpoint Flow
 
 ### Request
+
 ```bash
 POST /api/compliance/analyze
 {
@@ -249,6 +270,7 @@ POST /api/compliance/analyze
 ```
 
 ### Processing
+
 ```python
 # 1. Initialize RAG pipeline
 rag_pipeline = RAGPipeline()
@@ -277,6 +299,7 @@ ComplianceAnalysisResponse(
 ```
 
 ### Response
+
 ```json
 {
   "file_id": 1,
@@ -310,12 +333,14 @@ ComplianceAnalysisResponse(
 ### New Test File: `test_compliance_analysis_updated.py`
 
 Run the updated tests:
+
 ```bash
 cd backend
 python test_compliance_analysis_updated.py
 ```
 
 **What it tests:**
+
 1. ✅ Loads chunks from actual metadata.json
 2. ✅ Compliance findings generated from real PDF content
 3. ✅ Quote extraction from actual contract text
@@ -324,6 +349,7 @@ python test_compliance_analysis_updated.py
 6. ✅ Summary statistics
 
 **Test Results:**
+
 ```
 ✓ Loaded 7 chunks from vector store metadata.json
 ✓ Generated compliance findings from REAL chunks
@@ -338,11 +364,13 @@ python test_compliance_analysis_updated.py
 ## 🚀 How to Use
 
 ### 1. Upload a Contract
+
 ```
 Frontend → Upload PDF → RAGPipeline processes → Chunks stored in metadata.json
 ```
 
 ### 2. Request Compliance Analysis
+
 ```bash
 curl -X POST http://localhost:8000/api/compliance/analyze \
   -H "Content-Type: application/json" \
@@ -350,6 +378,7 @@ curl -X POST http://localhost:8000/api/compliance/analyze \
 ```
 
 ### 3. Get Results with Real Quotes
+
 ```json
 {
   "findings": [
@@ -422,6 +451,7 @@ curl -X POST http://localhost:8000/api/compliance/analyze \
 ## 🔧 Code Changes Summary
 
 ### vector_store.py
+
 ```diff
 - "content_preview": chunk_meta.get("content", "")[:200],
 + "content": chunk_meta.get("content", ""),  # Full content
@@ -429,6 +459,7 @@ curl -X POST http://localhost:8000/api/compliance/analyze \
 ```
 
 ### compliance_analyzer.py
+
 ```diff
 - content = chunk.get("content", "")[:500]  # Truncated
 + content = chunk.get("content", "")  # Full content
@@ -439,6 +470,7 @@ curl -X POST http://localhost:8000/api/compliance/analyze \
 ```
 
 ### Backend Routes (files.py)
+
 ```python
 # Already correctly using RAGPipeline.retrieve_chunks()
 # Now receives chunks with FULL content instead of previews
@@ -453,14 +485,14 @@ retrieved_chunks = rag_pipeline.retrieve_chunks(
 
 ## ✨ Benefits
 
-| Feature | Before | After |
-|---------|--------|-------|
-| **Data Source** | Mock hardcoded chunks | Real vector store chunks |
-| **Content Length** | 500 chars (preview) | Full text from PDF |
-| **Quotes** | Generic examples | Actual verbatim from contract |
-| **Traceability** | None | Chunk ID, page number, section |
-| **Relevance** | Random selection | FAISS similarity ranked |
-| **Accuracy** | Limited | High (real contract data) |
+| Feature            | Before                | After                          |
+| ------------------ | --------------------- | ------------------------------ |
+| **Data Source**    | Mock hardcoded chunks | Real vector store chunks       |
+| **Content Length** | 500 chars (preview)   | Full text from PDF             |
+| **Quotes**         | Generic examples      | Actual verbatim from contract  |
+| **Traceability**   | None                  | Chunk ID, page number, section |
+| **Relevance**      | Random selection      | FAISS similarity ranked        |
+| **Accuracy**       | Limited               | High (real contract data)      |
 
 ---
 
@@ -490,19 +522,25 @@ retrieved_chunks = rag_pipeline.retrieve_chunks(
 ## 📞 Troubleshooting
 
 ### Issue: "No chunks found in vector store"
-**Solution:** 
+
+**Solution:**
+
 - Upload a contract first to populate metadata.json
 - Check if vector_store directory exists
 - Verify RAG pipeline processed the PDF correctly
 
 ### Issue: Empty compliance findings
+
 **Solution:**
+
 - Increase `top_k` parameter (try 10 instead of 7)
 - Ensure contract has relevant compliance language
 - Check Azure OpenAI credentials are set
 
 ### Issue: Quotes not appearing
+
 **Solution:**
+
 - Full content now returned from vector store
 - Set `include_quotes: true` in request
 - Verify PDF has extractable text (not images)
@@ -511,13 +549,13 @@ retrieved_chunks = rag_pipeline.retrieve_chunks(
 
 ## 📊 Performance
 
-| Metric | Value |
-|--------|-------|
-| Chunks loaded | 7 (configurable) |
+| Metric            | Value                   |
+| ----------------- | ----------------------- |
+| Chunks loaded     | 7 (configurable)        |
 | Content per chunk | Full text (not limited) |
-| Quote extraction | Real from PDF |
-| Response time | 2-3 seconds |
-| Accuracy | High (real data) |
+| Quote extraction  | Real from PDF           |
+| Response time     | 2-3 seconds             |
+| Accuracy          | High (real data)        |
 
 ---
 
@@ -527,4 +565,3 @@ retrieved_chunks = rag_pipeline.retrieve_chunks(
 **Quote Extraction: ✅ FUNCTIONING**
 
 The compliance analysis system now reads real chunks from uploaded PDFs in the vector store instead of using mock data!
-
