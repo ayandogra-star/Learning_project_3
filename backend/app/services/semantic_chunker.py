@@ -4,6 +4,80 @@ import tiktoken
 from typing import List, Dict, Any
 
 
+class TableFormatter:
+    """Convert table data to readable text format for embeddings."""
+    
+    @staticmethod
+    def format_table_to_text(table_data: List[List[str]], table_id: str = "") -> str:
+        """
+        Convert table to readable text format.
+        
+        Example:
+            Input:  [['Name', 'Value'], ['Security', 'AES-256'], ['MFA', 'Enabled']]
+            Output: "Table {table_id}:\n* Name: Value\n* Security: AES-256\n* MFA: Enabled"
+        
+        Args:
+            table_data: Table rows/columns (2D list)
+            table_id: Optional table identifier
+            
+        Returns:
+            Formatted text representation of table
+        """
+        if not table_data or not table_data[0]:
+            return ""
+        
+        formatted_parts = []
+        if table_id:
+            formatted_parts.append(f"Table: {table_id}\n")
+        
+        # Detect if it's a key-value table (2 columns)
+        if len(table_data[0]) == 2:
+            # Key-value format
+            for row_idx, row in enumerate(table_data):
+                if row_idx == 0:
+                    # Skip header row
+                    continue
+                key = str(row[0]).strip() if row[0] else ""
+                value = str(row[1]).strip() if len(row) > 1 and row[1] else ""
+                
+                if key:
+                    formatted_parts.append(f"* {key}: {value}")
+        else:
+            # Multi-column table - convert to readable format
+            headers = [str(h).strip() for h in table_data[0]] if table_data else []
+            
+            for row_idx, row in enumerate(table_data[1:], 1):
+                row_lines = [f"Row {row_idx}:"]
+                for col_idx, cell in enumerate(row):
+                    header = headers[col_idx] if col_idx < len(headers) else f"Col{col_idx}"
+                    cell_text = str(cell).strip() if cell else ""
+                    if cell_text:
+                        row_lines.append(f"  {header}: {cell_text}")
+                formatted_parts.append("\n".join(row_lines))
+        
+        return "\n".join(formatted_parts)
+    
+    @staticmethod
+    def extract_table_keywords(table_data: List[List[str]]) -> List[str]:
+        """
+        Extract keywords from table for relevance boosting.
+        
+        Args:
+            table_data: Table data
+            
+        Returns:
+            List of key terms in table
+        """
+        keywords = []
+        for row in table_data:
+            for cell in row:
+                text = str(cell).strip().lower()
+                if text and len(text) > 3:
+                    keywords.extend(text.split())
+        
+        return list(set(keywords))[:20]  # Return top 20 unique keywords
+
+
 class RAGChunk:
     """Semantic chunk for RAG with metadata."""
     
@@ -27,6 +101,7 @@ class RAGChunk:
         self.char_range = char_range  # (start, end) character positions
         self.token_count = token_count or self.count_tokens(content)
         self.embedding = None  # To be filled by EmbeddingService
+        self.relevance_boost = 1.0  # For retrieval boosting
     
     @staticmethod
     def count_tokens(text: str) -> int:
@@ -65,7 +140,8 @@ class SemanticChunker:
     
     Rules:
     - Preserve logical sections (headings, numbered sections)
-    - Keep tables intact
+    - Keep tables intact (never split across chunks)
+    - Handle multi-page tables
     - Target chunk size: 300-800 tokens
     - Preserve metadata for traceability
     """
@@ -124,6 +200,11 @@ class SemanticChunker:
                     source_filename=source_filename,
                     char_range=(0, len(section_content)),
                 )
+                
+                # Apply boosting for definition sections
+                if SemanticChunker._is_definition_section(section_title, section_content):
+                    chunk.relevance_boost = 1.5
+                
                 chunks.append(chunk)
                 chunk_counter += 1
         
@@ -135,7 +216,154 @@ class SemanticChunker:
         page_number: int,
         table_id: str,
         source_filename: str,
+        page_range: tuple = None,
     ) -> RAGChunk:
+        """
+        Create a chunk for a table (keep intact, never split).
+        
+        Args:
+            table_data: Table rows/columns
+            page_number: Page number (or start page if multi-page)
+            table_id: Table identifier
+            source_filename: Source PDF filename
+            page_range: Optional (start_page, end_page) tuple for multi-page tables
+            
+        Returns:
+            RAGChunk representing the table
+        """
+        # Format table to readable text
+        formatted_text = TableFormatter.format_table_to_text(table_data, table_id)
+        
+        chunk = RAGChunk(
+            chunk_id=table_id,
+            content=formatted_text,
+            page_number=page_number,
+            section_title=f"Table: {table_id}",
+            content_type="table",
+            source_filename=source_filename,
+            char_range=(0, len(formatted_text)),
+        )
+        
+        # Tables get relevance boost - they're important
+        chunk.relevance_boost = 1.3
+        
+        # Additional boost if table contains security or compliance keywords
+        keywords = TableFormatter.extract_table_keywords(table_data)
+        if any(kw in ' '.join(keywords).lower() for kw in ['security', 'compliance', 'encrypt', 'mfa', 'data']):
+            chunk.relevance_boost = 1.5
+        
+        return chunk
+    
+    @staticmethod
+    def _split_by_headings(text: str) -> List[tuple]:
+        """
+        Split text by section headings.
+        
+        Returns list of (section_title, section_content) tuples.
+        """
+        sections = []
+        current_section = None
+        current_content = []
+        
+        lines = text.split('\n')
+        
+        for line in lines:
+            # Check if line is a heading
+            if SemanticChunker.HEADING_PATTERN.match(line.strip()) and len(line.strip()) < 100:
+                # Save previous section
+                if current_section is not None:
+                    sections.append((current_section, '\n'.join(current_content).strip()))
+                
+                current_section = line.strip()
+                current_content = []
+            else:
+                current_content.append(line)
+        
+        # Don't forget last section
+        if current_section is not None:
+            sections.append((current_section, '\n'.join(current_content).strip()))
+        elif current_content:
+            sections.append(("", '\n'.join(current_content).strip()))
+        
+        # Filter empty sections
+        return [(title, content) for title, content in sections if content.strip()]
+    
+    @staticmethod
+    def _split_by_paragraphs(
+        text: str,
+        page_number: int,
+        source_filename: str,
+        section_title: str,
+        start_counter: int,
+        chunk_id_prefix: str,
+    ) -> List[RAGChunk]:
+        """Split section by paragraphs if it's too large."""
+        chunks = []
+        paragraphs = [p.strip() for p in text.split('\n\n') if p.strip()]
+        
+        current_chunk_content = []
+        current_token_count = 0
+        chunk_counter = start_counter
+        
+        for para in paragraphs:
+            para_tokens = RAGChunk.count_tokens(para)
+            
+            # Check if adding this paragraph would exceed max tokens
+            if current_token_count + para_tokens > SemanticChunker.MAX_CHUNK_TOKENS and current_chunk_content:
+                # Save current chunk
+                chunk_id = f"{chunk_id_prefix}_{chunk_counter}"
+                chunk_content = '\n\n'.join(current_chunk_content)
+                chunk = RAGChunk(
+                    chunk_id=chunk_id,
+                    content=chunk_content,
+                    page_number=page_number,
+                    section_title=section_title,
+                    content_type="text",
+                    source_filename=source_filename,
+                )
+                chunks.append(chunk)
+                chunk_counter += 1
+                
+                # Reset for next chunk
+                current_chunk_content = [para]
+                current_token_count = para_tokens
+            else:
+                # Add to current chunk
+                current_chunk_content.append(para)
+                current_token_count += para_tokens
+        
+        # Don't forget last chunk
+        if current_chunk_content:
+            chunk_id = f"{chunk_id_prefix}_{chunk_counter}"
+            chunk_content = '\n\n'.join(current_chunk_content)
+            chunk = RAGChunk(
+                chunk_id=chunk_id,
+                content=chunk_content,
+                page_number=page_number,
+                section_title=section_title,
+                content_type="text",
+                source_filename=source_filename,
+            )
+            chunks.append(chunk)
+        
+        return chunks
+    
+    @staticmethod
+    def _is_definition_section(section_title: str, content: str) -> bool:
+        """Check if section is likely a definitions section (for relevance boosting)."""
+        definition_keywords = ['definition', 'defined', 'means', 'interpretation', 'glossary']
+        section_lower = section_title.lower() if section_title else ""
+        content_lower = content[:200].lower() if content else ""
+        
+        # Boost if section title contains definition keywords
+        if any(kw in section_lower for kw in definition_keywords):
+            return True
+        
+        # Boost if section number is 2 or 3 (typically definitions)
+        if section_lower.startswith(('2.', '3.', '§2', '§3')):
+            return True
+        
+        return False
         """
         Create a chunk for a table (keep intact).
         

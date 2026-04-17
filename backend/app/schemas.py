@@ -107,3 +107,67 @@ class RAGSearchRequest(BaseModel):
     query: str = Field(..., description="Search query")
     top_k: int = Field(default=5, description="Number of results to return")
     file_id: Optional[int] = Field(default=None, description="Optional file ID to filter by")
+
+
+class ContractDefinitionRequest(BaseModel):
+    """Request to define a contract term."""
+    term: str = Field(..., description="Term to define")
+    file_id: int = Field(..., description="File ID to search within")
+    context: Optional[str] = Field(default=None, description="Additional context")
+
+
+class ContractDefinitionResponse(BaseModel):
+    """Response with contract term definition."""
+    term: str = Field(..., description="Term that was defined")
+    definition: str = Field(..., description="Definition of the term")
+    key_elements: List[str] = Field(default_factory=list, description="Key elements of the term")
+    risk_implications: str = Field(default="No risks identified", description="Risk implications")
+    compliance_requirements: List[str] = Field(default_factory=list, description="Compliance requirements")
+    related_sections: List[str] = Field(default_factory=list, description="Related contract sections")
+    confidence: str = Field(default="medium", description="Confidence level: high|medium|low")
+    file_id: Optional[int] = Field(default=None, description="File ID searched")
+    chunks_used: int = Field(default=0, description="Number of chunks used for generation")
+    source_chunks: List[Dict[str, Any]] = Field(default_factory=list, description="Source chunks used")
+    message: Optional[str] = Field(default=None, description="Additional message")
+
+
+class RAGQueryRequest(BaseModel):
+    """Generic RAG query request."""
+    query: str = Field(..., description="Query or term to search for")
+    file_id: int = Field(..., description="File ID to search within")
+    query_type: str = Field(default="definition", description="Type: definition|section|compliance|risk")
+    top_k: int = Field(default=5, description="Number of chunks to retrieve")
+
+
+class RAGQueryResponse(BaseModel):
+    """Generic RAG query response."""
+    query: str = Field(..., description="Original query")
+    query_type: str = Field(..., description="Type of query")
+    results: Dict[str, Any] = Field(..., description="Query results")
+    retrieved_chunks: int = Field(..., description="Number of chunks retrieved")
+    metadata: Dict[str, Any] = Field(default_factory=dict, description="Metadata")
+
+
+class ComplianceFinding(BaseModel):
+    """Single compliance finding."""
+    compliance_question: str = Field(..., description="The compliance requirement evaluated")
+    compliance_state: str = Field(..., description="Fully Compliant | Partially Compliant | Non-Compliant")
+    confidence: int = Field(..., description="Confidence score 0-100")
+    relevant_quotes: List[str] = Field(default_factory=list, description="Verbatim quotes from contract")
+    rationale: str = Field(..., description="Reasoning for compliance state")
+
+
+class ComplianceAnalysisRequest(BaseModel):
+    """Request for compliance analysis."""
+    file_id: int = Field(..., description="File ID to analyze")
+    include_quotes: bool = Field(default=True, description="Include supporting quotes")
+    top_k: int = Field(default=7, description="Number of chunks to retrieve for analysis")
+
+
+class ComplianceAnalysisResponse(BaseModel):
+    """Response with compliance analysis findings."""
+    file_id: int = Field(..., description="File ID analyzed")
+    analysis_timestamp: str = Field(..., description="Timestamp of analysis")
+    findings: List[ComplianceFinding] = Field(..., description="Compliance findings")
+    summary: Dict[str, Any] = Field(default_factory=dict, description="Summary statistics")
+    message: str = Field(default="Compliance analysis completed", description="Response message")

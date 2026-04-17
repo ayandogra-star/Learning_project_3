@@ -53,6 +53,33 @@ export const fileAPI = {
   },
 
   /**
+   * Analyze compliance for a contract
+   * @param {number} fileId - The file ID to analyze
+   * @param {Object} options - Optional configuration
+   * @returns {Promise} Compliance analysis results
+   */
+  analyzeCompliance: async (fileId, options = {}) => {
+    return apiClient.post('/api/compliance/analyze', {
+      file_id: fileId,
+      include_quotes: options.includeQuotes !== undefined ? options.includeQuotes : true,
+      top_k: options.topK || 7,
+    });
+  },
+
+  /**
+   * Define a contract term using RAG
+   * @param {string} term - The term to define
+   * @param {number} fileId - The file ID to search within
+   * @returns {Promise} Term definition
+   */
+  defineTerm: async (term, fileId) => {
+    return apiClient.post('/api/rag/define', {
+      term,
+      file_id: fileId,
+    });
+  },
+
+  /**
    * Health check
    * @returns {Promise} Health status
    */

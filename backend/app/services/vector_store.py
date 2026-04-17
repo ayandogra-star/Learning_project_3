@@ -114,7 +114,12 @@ class VectorStore:
     
     def search(self, query_embedding: List[float], k: int = 5, file_id: int = None) -> List[Dict[str, Any]]:
         """
-        Search for similar chunks.
+        Search for similar chunks with relevance boosting.
+        
+        Boosting rules:
+        - Tables: 1.3x boost (highly structured content)
+        - Definition sections: 1.5x boost
+        - Security/compliance keywords: 1.5x boost
         
         Args:
             query_embedding: Query embedding vector
@@ -132,7 +137,7 @@ class VectorStore:
             query_array = np.array([query_embedding], dtype=np.float32)
             
             # Search FAISS index
-            distances, indices = self.index.search(query_array, min(k, self.index.ntotal))
+            distances, indices = self.index.search(query_array, min(k * 2, self.index.ntotal))  # Get more to apply boosting
             
             results = []
             for distance, vector_id in zip(distances[0], indices[0]):
@@ -146,19 +151,70 @@ class VectorStore:
                     if file_id and chunk_meta["file_id"] != file_id:
                         continue
                     
+                    # Calculate base similarity score
+                    base_similarity = 1 / (1 + float(distance))
+                    
+                    # Apply relevance boosting
+                    boost_multiplier = self._get_relevance_boost(chunk_meta, query_embedding)
+                    boosted_similarity = base_similarity * boost_multiplier
+                    
                     results.append({
                         "vector_id": vector_id,
                         "chunk_id": chunk_meta["chunk_id"],
                         "file_id": chunk_meta["file_id"],
                         "similarity_distance": float(distance),
-                        "similarity_score": 1 / (1 + float(distance)),  # Convert distance to similarity
+                        "similarity_score": base_similarity,
+                        "boosted_similarity_score": boosted_similarity,
+                        "boost_multiplier": boost_multiplier,
                         "metadata": chunk_meta.get("metadata", {}),
+                        "content": chunk_meta.get("content", ""),  # Return full content for compliance analysis
+                        "content_preview": chunk_meta.get("content", "")[:200],
                     })
+            
+            # Sort by boosted similarity score
+            results.sort(key=lambda x: x["boosted_similarity_score"], reverse=True)
             
             return results[:k]
             
         except Exception as e:
             raise ValueError(f"Error searching vector store: {str(e)}")
+    
+    def _get_relevance_boost(self, chunk_meta: Dict[str, Any], query_embedding: List[float]) -> float:
+        """
+        Calculate relevance boost multiplier for a chunk.
+        
+        Boosting rules:
+        - Tables: 1.3x (structured content is valuable)
+        - Definition sections: 1.5x (Section 2-3 are key)
+        - Security/compliance keywords: 1.5x
+        - Query contains "definition|defined|means": 1.8x for def sections
+        """
+        boost = 1.0
+        
+        # Check content type
+        content_type = chunk_meta.get("content_type", "")
+        if content_type == "table":
+            boost *= 1.3
+        
+        # Check if section is definitions-related
+        section_title = chunk_meta.get("metadata", {}).get("section_title", "")
+        if section_title:
+            section_lower = section_title.lower()
+            if any(kw in section_lower for kw in ["definition", "defined", "means", "glossary", "interpretation"]):
+                boost *= 1.5
+            # Prioritize section 2-3 (typically definitions)
+            elif section_lower.startswith(("2.", "3.", "section 2", "section 3", "§2", "§3")):
+                boost *= 1.4
+        
+        # Check for security/compliance keywords in metadata
+        content = chunk_meta.get("content", "").lower()
+        security_keywords = ["security", "compliance", "encryption", "mfa", "data residency", 
+                           "breach", "incident", "liability", "confidential", "proprietary"]
+        if any(kw in content for kw in security_keywords):
+            boost *= 1.2
+        
+        # Cap boost at 2.0x
+        return min(boost, 2.0)
     
     def get_file_chunks(self, file_id: int) -> List[Dict[str, Any]]:
         """Get all chunks for a file."""

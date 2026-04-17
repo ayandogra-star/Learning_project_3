@@ -2,9 +2,13 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException, BackgroundTasks, Path, Query
 from app.services.file_service import FileService
 from app.services.rag_pipeline import RAGPipeline
+from app.services.contract_definition_generator import ContractDefinitionGenerator
+from app.services.compliance_analyzer import ComplianceAnalyzer
 from app.schemas import (
     FileUploadResponse, DashboardMetrics, FileMetadataResponse, AnalyzedContractResponse,
-    RAGChunkResponse, RAGRetrievalResponse, RAGProcessingResponse, RAGSearchRequest
+    RAGChunkResponse, RAGRetrievalResponse, RAGProcessingResponse, RAGSearchRequest,
+    ContractDefinitionRequest, ContractDefinitionResponse, RAGQueryRequest, RAGQueryResponse,
+    ComplianceAnalysisRequest, ComplianceAnalysisResponse, ComplianceFinding
 )
 from datetime import datetime
 from typing import List
@@ -180,3 +184,215 @@ async def retrieve_chunks(
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
+@router.post("/rag/define", response_model=ContractDefinitionResponse)
+async def define_contract_term(request: ContractDefinitionRequest):
+    """
+    Get definition of a contract term using RAG.
+    
+    Retrieves relevant sections and uses LLM to generate a definition.
+    
+    Args:
+        request: ContractDefinitionRequest with term and file_id
+        
+    Returns:
+        ContractDefinitionResponse with detailed definition
+    """
+    try:
+        # Retrieve relevant chunks
+        rag_pipeline = RAGPipeline()
+        retrieved_chunks = rag_pipeline.retrieve_chunks(
+            query=request.term,
+            file_id=request.file_id,
+            top_k=8
+        )
+        
+        if not retrieved_chunks:
+            return ContractDefinitionResponse(
+                term=request.term,
+                definition="Not explicitly defined in the contract",
+                confidence="low",
+                file_id=request.file_id,
+                chunks_used=0,
+                message=f"No relevant sections found for '{request.term}'"
+            )
+        
+        # Generate definition using LLM
+        definition_response = ContractDefinitionGenerator.generate_definition(
+            query=request.term,
+            retrieved_chunks=retrieved_chunks,
+            file_id=request.file_id
+        )
+        
+        # Convert to schema
+        return ContractDefinitionResponse(**definition_response)
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/rag/query", response_model=RAGQueryResponse)
+async def query_rag_system(request: RAGQueryRequest):
+    """
+    Generic RAG query endpoint for contract analysis.
+    
+    Supports query types: definition|section|compliance|risk
+    
+    Args:
+        request: RAGQueryRequest with query, file_id, and query_type
+        
+    Returns:
+        RAGQueryResponse with results
+    """
+    try:
+        # Retrieve relevant chunks
+        rag_pipeline = RAGPipeline()
+        retrieved_chunks = rag_pipeline.retrieve_chunks(
+            query=request.query,
+            file_id=request.file_id,
+            top_k=request.top_k
+        )
+        
+        if not retrieved_chunks:
+            return RAGQueryResponse(
+                query=request.query,
+                query_type=request.query_type,
+                results={"message": f"No relevant sections found for '{request.query}'"},
+                retrieved_chunks=0
+            )
+        
+        # Generate response based on query type
+        if request.query_type == "definition":
+            results = ContractDefinitionGenerator.generate_definition(
+                query=request.query,
+                retrieved_chunks=retrieved_chunks,
+                file_id=request.file_id
+            )
+        elif request.query_type == "section":
+            results = ContractDefinitionGenerator.generate_section_explanation(
+                section_query=request.query,
+                retrieved_chunks=retrieved_chunks
+            )
+        else:
+            # Default: return raw chunks
+            results = {
+                "chunks": [
+                    {
+                        "chunk_id": chunk.get("chunk_id"),
+                        "content": chunk.get("content", ""),
+                        "page_number": chunk.get("metadata", {}).get("page_number"),
+                        "similarity_score": chunk.get("boosted_similarity_score", chunk.get("similarity_score"))
+                    }
+                    for chunk in retrieved_chunks
+                ]
+            }
+        
+        return RAGQueryResponse(
+            query=request.query,
+            query_type=request.query_type,
+            results=results,
+            retrieved_chunks=len(retrieved_chunks),
+            metadata={
+                "file_id": request.file_id,
+                "top_k": request.top_k
+            }
+        )
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/compliance/analyze", response_model=ComplianceAnalysisResponse)
+async def analyze_contract_compliance(request: ComplianceAnalysisRequest):
+    """
+    Perform compliance analysis on a contract.
+    
+    Retrieves relevant chunks and evaluates compliance across key areas:
+    - Network Authentication & Authorization
+    - MFA Enforcement
+    - Logging and Monitoring
+    - Incident Response
+    - Data Encryption and Key Management
+    
+    Args:
+        request: ComplianceAnalysisRequest with file_id
+        
+    Returns:
+        ComplianceAnalysisResponse with compliance findings
+        
+    Raises:
+        HTTPException: If analysis fails or file not found
+    """
+    try:
+        rag_pipeline = RAGPipeline()
+        
+        # Build search query to retrieve relevant compliance sections
+        compliance_query = "authentication authorization MFA encryption logging monitoring incident response data protection"
+        
+        # Retrieve relevant chunks
+        retrieved_chunks = rag_pipeline.retrieve_chunks(
+            query=compliance_query,
+            file_id=request.file_id,
+            top_k=request.top_k
+        )
+        
+        if not retrieved_chunks:
+            # Return non-compliant response if no chunks found
+            findings = ComplianceAnalyzer.generate_compliance_analysis([])
+        else:
+            # Generate compliance analysis from retrieved chunks
+            findings = ComplianceAnalyzer.generate_compliance_analysis(retrieved_chunks)
+        
+        # Calculate summary statistics
+        summary = _calculate_compliance_summary(findings)
+        
+        return ComplianceAnalysisResponse(
+            file_id=request.file_id,
+            analysis_timestamp=datetime.utcnow().isoformat(),
+            findings=findings,
+            summary=summary,
+            message="Compliance analysis completed successfully"
+        )
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Compliance analysis failed: {str(e)}"
+        )
+
+
+def _calculate_compliance_summary(findings: List[dict]) -> dict:
+    """
+    Calculate summary statistics from compliance findings.
+    
+    Args:
+        findings: List of compliance findings
+        
+    Returns:
+        Dictionary with summary statistics
+    """
+    total = len(findings)
+    fully_compliant = sum(
+        1 for f in findings 
+        if f.get("compliance_state") == "Fully Compliant"
+    )
+    partially_compliant = sum(
+        1 for f in findings 
+        if f.get("compliance_state") == "Partially Compliant"
+    )
+    non_compliant = sum(
+        1 for f in findings 
+        if f.get("compliance_state") == "Non-Compliant"
+    )
+    avg_confidence = sum(
+        f.get("confidence", 0) for f in findings
+    ) / total if total > 0 else 0
+    
+    return {
+        "total_requirements": total,
+        "fully_compliant": fully_compliant,
+        "partially_compliant": partially_compliant,
+        "non_compliant": non_compliant,
+        "average_confidence": round(avg_confidence, 2),
+        "compliance_percentage": round((fully_compliant / total * 100) if total > 0 else 0, 1)
+    }

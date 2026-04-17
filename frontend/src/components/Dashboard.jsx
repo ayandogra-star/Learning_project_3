@@ -8,6 +8,9 @@ function Dashboard() {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [complianceData, setComplianceData] = useState(null);
+  const [complianceLoading, setComplianceLoading] = useState(false);
+  const [selectedFileId, setSelectedFileId] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,6 +22,14 @@ function Dashboard() {
 
         setMetrics(metricsRes.data);
         setFiles(filesRes.data);
+        
+        // If we have files, select the first one and analyze compliance
+        if (filesRes.data.length > 0) {
+          const fileId = filesRes.data[0].id;
+          setSelectedFileId(fileId);
+          await analyzeCompliance(fileId);
+        }
+        
         setError(null);
       } catch (err) {
         setError('Failed to load dashboard data. Please try again.');
@@ -30,6 +41,25 @@ function Dashboard() {
 
     fetchData();
   }, []);
+
+  const analyzeCompliance = async (fileId) => {
+    setComplianceLoading(true);
+    try {
+      const response = await fileAPI.analyzeCompliance(fileId);
+      setComplianceData(response.data);
+      setError(null);
+    } catch (err) {
+      console.error('Compliance analysis error:', err);
+      setError('Failed to analyze compliance.');
+    } finally {
+      setComplianceLoading(false);
+    }
+  };
+
+  const handleFileSelect = async (fileId) => {
+    setSelectedFileId(fileId);
+    await analyzeCompliance(fileId);
+  };
 
   if (loading) {
     return (
@@ -194,6 +224,174 @@ function Dashboard() {
           </div>
         ))}
 
+        {/* Compliance Analysis Section */}
+        {complianceData && (
+          <div className="bg-white rounded-lg shadow overflow-hidden animate-fade-in mt-12">
+            <div className="px-6 py-4 border-b bg-gradient-to-r from-blue-50 to-indigo-50">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900">
+                    🛡️ Compliance Analysis
+                  </h2>
+                  <p className="text-sm text-gray-600 mt-1">
+                    Security and compliance requirements evaluation
+                  </p>
+                </div>
+                {complianceData.summary && (
+                  <div className="text-right">
+                    <div className="text-3xl font-bold text-blue-600">
+                      {complianceData.summary.compliance_percentage}%
+                    </div>
+                    <div className="text-sm text-gray-600">Compliance Score</div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Compliance Summary Stats */}
+            {complianceData.summary && (
+              <div className="grid grid-cols-4 gap-4 px-6 py-4 bg-gray-50 border-b">
+                <div>
+                  <div className="text-2xl font-bold text-green-600">
+                    {complianceData.summary.fully_compliant}
+                  </div>
+                  <div className="text-xs text-gray-600">Fully Compliant</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-yellow-600">
+                    {complianceData.summary.partially_compliant}
+                  </div>
+                  <div className="text-xs text-gray-600">Partially Compliant</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-red-600">
+                    {complianceData.summary.non_compliant}
+                  </div>
+                  <div className="text-xs text-gray-600">Non-Compliant</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-blue-600">
+                    {complianceData.summary.average_confidence}%
+                  </div>
+                  <div className="text-xs text-gray-600">Avg Confidence</div>
+                </div>
+              </div>
+            )}
+
+            {/* Compliance Findings Table */}
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50 border-b">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+                      Compliance Question
+                    </th>
+                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+                      Status
+                    </th>
+                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+                      Confidence
+                    </th>
+                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+                      Rationale
+                    </th>
+                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+                      Quotes
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y">
+                  {complianceData.findings && complianceData.findings.map((finding, idx) => (
+                    <tr key={idx} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                        {finding.compliance_question}
+                      </td>
+                      <td className="px-6 py-4 text-sm">
+                        <span
+                          className={`px-3 py-1 rounded-full text-xs font-semibold inline-flex items-center gap-1 ${
+                            finding.compliance_state === 'Fully Compliant'
+                              ? 'bg-green-100 text-green-800'
+                              : finding.compliance_state === 'Partially Compliant'
+                              ? 'bg-yellow-100 text-yellow-800'
+                              : 'bg-red-100 text-red-800'
+                          }`}
+                        >
+                          {finding.compliance_state === 'Fully Compliant' && '✓'}
+                          {finding.compliance_state === 'Partially Compliant' && '⚠'}
+                          {finding.compliance_state === 'Non-Compliant' && '✗'}
+                          {finding.compliance_state}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-900 font-semibold">
+                        <div className="flex items-center gap-2">
+                          <div className="w-16 bg-gray-200 rounded-full h-2">
+                            <div
+                              className={`h-2 rounded-full ${
+                                finding.confidence >= 80
+                                  ? 'bg-green-500'
+                                  : finding.confidence >= 50
+                                  ? 'bg-yellow-500'
+                                  : 'bg-red-500'
+                              }`}
+                              style={{ width: `${finding.confidence}%` }}
+                            />
+                          </div>
+                          {finding.confidence}%
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-700">
+                        <span className="line-clamp-2">{finding.rationale}</span>
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-600">
+                        {finding.relevant_quotes && finding.relevant_quotes.length > 0 ? (
+                          <div className="space-y-1">
+                            {finding.relevant_quotes.slice(0, 2).map((quote, qIdx) => (
+                              <div
+                                key={qIdx}
+                                className="text-xs italic bg-blue-50 p-2 rounded border-l-2 border-blue-300 line-clamp-1"
+                                title={quote}
+                              >
+                                "{quote.substring(0, 50)}..."
+                              </div>
+                            ))}
+                            {finding.relevant_quotes.length > 2 && (
+                              <div className="text-xs text-blue-600 font-semibold">
+                                +{finding.relevant_quotes.length - 2} more
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <span className="text-gray-400">No quotes</span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* Compliance Loading State */}
+        {complianceLoading && (
+          <div className="bg-white rounded-lg shadow overflow-hidden mt-12 p-8 text-center">
+            <svg
+              className="w-8 h-8 text-blue-500 spinner mx-auto mb-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <p className="text-gray-600">Analyzing compliance requirements...</p>
+          </div>
+        )}
+
         {/* Files List */}
         {files.length > 0 && (
           <div className="bg-white rounded-lg shadow overflow-hidden animate-fade-in mt-12">
@@ -224,7 +422,10 @@ function Dashboard() {
                   {files.map((file) => (
                     <tr
                       key={file.id}
-                      className="hover:bg-gray-50 transition-colors"
+                      onClick={() => handleFileSelect(file.id)}
+                      className={`cursor-pointer hover:bg-blue-50 transition-colors ${
+                        selectedFileId === file.id ? 'bg-blue-50 border-l-4 border-l-blue-500' : ''
+                      }`}
                     >
                       <td className="px-6 py-4 text-sm text-gray-900">
                         <div className="flex items-center gap-3">
@@ -241,7 +442,14 @@ function Dashboard() {
                               d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
                             />
                           </svg>
-                          {file.filename}
+                          <div>
+                            <div className="font-medium">{file.filename}</div>
+                            {selectedFileId === file.id && (
+                              <div className="text-xs text-blue-600 font-semibold mt-1">
+                                ✓ Currently selected
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-600">

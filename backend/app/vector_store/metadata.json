@@ -4,81 +4,2145 @@
       "vector_id": 0,
       "chunk_id": "file_1_p1_0",
       "file_id": 1,
-      "content": "Contract Type: Software License Agreement\nContract Status: Active\nTotal Contract Value: $500,000\n\nThis agreement is entered into between Party A and Party B for the provision of cloud services.\n\nCompliance Requirements:\n- Data Residency Compliance: US Data Centers Required\n- Encryption Compliance: AES-256 Encryption Required\n- MFA Coverage: 100% for Admin Accounts\n\nRisk Management:\n- High Risk Issues Count: 2\n- Open Risks Count: 1\n- Average Time to Remediate: 5 days\n\nObligations:\n- Total Obligations Extracted: 12\n- Obligations Completion Rate: 85%\n\nPerformance Metrics:\n- Clause Extraction Accuracy: 95%\n- Average Processing Time: 2 seconds\n- Total Contracts Processed: 10\n\nFinancial Risk:\n- Revenue at Risk: $50,000\n- Compliance Score: 92%\n- Control Coverage Percentage: 88%\n- Incident Readiness Score: 87%\n\nUpcoming Expirations: 2026-12-31",
+      "content": "Information Security and Technology Risk Addendum\nThis Information Security and Technology Risk Addendum (this \u201cAddendum\u201d) is entered into as of January 15,\n2026 (the \u201cAddendum Effective Date\u201d) by and between Redwood Peak Financial, Inc., a Delaware corporation\n(\u201cCompany\u201d), and Nimbus Ridge Technologies, LLC, a California limited liability company (\u201cVendor\u201d). This\nAddendum is incorporated into and forms part of the Master Services Agreement dated January 10, 2026 (the\n\u201cAgreement\u201d). Capitalized terms not defined in this Addendum have the meanings given in the Agreement.",
       "content_type": "text",
       "metadata": {
         "chunk_id": "file_1_p1_0",
         "page_number": 1,
-        "section_title": "SERVICE AGREEMENT",
+        "section_title": null,
         "content_type": "text",
-        "source_filename": "test_contract.txt"
+        "source_filename": "Sample Contract.pdf"
       },
-      "content_length": 847,
-      "token_count": 213
+      "content_length": 575,
+      "token_count": 121
     },
     "1": {
       "vector_id": 1,
-      "chunk_id": "file_1_p1_0",
-      "file_id": 1,
-      "content": "Monthly Fee: $2,500\nDelivery Schedule: Net 30\nInvoice Date: Month End\nPayment Method: ACH Transfer",
-      "content_type": "text",
-      "metadata": {
-        "chunk_id": "file_1_p1_0",
-        "page_number": 1,
-        "section_title": "## PAYMENT TERMS",
-        "content_type": "text",
-        "source_filename": "test_contract2.txt"
-      },
-      "content_length": 98,
-      "token_count": 27
-    },
-    "2": {
-      "vector_id": 2,
       "chunk_id": "file_1_p1_1",
       "file_id": 1,
-      "content": "Each party maintains $1M professional liability insurance.\nNeither party shall be liable for lost profits or data.",
+      "content": "If there is a conflict between this Addendum and the Agreement relating to information security, confidentiality,\nprivacy, audit, incident response, or audit/assurance deliverables, this Addendum controls for that subject\nmatter.",
       "content_type": "text",
       "metadata": {
         "chunk_id": "file_1_p1_1",
         "page_number": 1,
-        "section_title": "## LIABILITY AND INSURANCE",
+        "section_title": "1. Order of Precedence",
         "content_type": "text",
-        "source_filename": "test_contract2.txt"
+        "source_filename": "Sample Contract.pdf"
       },
-      "content_length": 114,
-      "token_count": 21
+      "content_length": 229,
+      "token_count": 44
     },
-    "3": {
-      "vector_id": 3,
+    "2": {
+      "vector_id": 2,
       "chunk_id": "file_1_p1_2",
       "file_id": 1,
-      "content": "All deliverables are owned by the Client upon payment.\nVendor retains rights to pre-existing IP and methodologies.",
+      "content": "2.1 Scope. This Addendum applies to Vendor\u2019s provision of the services described in the Agreement (the\n\u201cServices\u201d) and to all systems, networks, applications, endpoints, facilities, personnel, and Subprocessors used\nto store, process, transmit, or otherwise access Company Data (the \u201cIn-Scope Environment\u201d).\n2.2 Service Description (semi-structured). The parties intend the following summary to describe the\noperational scope for security purposes (to be updated as needed by written agreement):\nField Value\nService name NimbusVault Cloud File Collaboration\nService type SaaS\nHosting model Multi-tenant\nHosting provider(s) Amazon Web Services (AWS)\nPrimary regions US-West (Oregon), US-East (N. Virginia)\nAuthorized data locations United States only\nCustomer/admin access method SSO (SAML 2.0) and local administrative accounts (restricted)\nSupport model 24x7 for Sev 1/Sev 2; business hours for general tickets\nProduction access Restricted; just-in-time elevation via bastion and approval workflow\nSubprocessors (high level) AWS (hosting), Twilio (SMS), SendGrid (email), Sentry (error monitoring)\n2.3 Data Categories (semi-structured). The parties classify Company Data as follows:",
       "content_type": "text",
       "metadata": {
         "chunk_id": "file_1_p1_2",
         "page_number": 1,
-        "section_title": "## IP RIGHTS",
+        "section_title": "2. Scope and Covered Environments",
         "content_type": "text",
-        "source_filename": "test_contract2.txt"
+        "source_filename": "Sample Contract.pdf"
       },
-      "content_length": 114,
-      "token_count": 21
+      "content_length": 1183,
+      "token_count": 259
+    },
+    "3": {
+      "vector_id": 3,
+      "chunk_id": "file_1_p2_0",
+      "file_id": 1,
+      "content": "Included?\nData Category Examples Special Handling\n(Y/N)\npricing, contracts, internal financial encrypt at rest/in transit;\nBusiness confidential Y\nreports limited access\nemployee names, emails, phone access logs; least privilege;\nPersonal Information Y\nnumbers breach notice\nSensitive Personal not permitted; block/filters\nN SSN, precise geolocation\nInformation where feasible\nAPI tokens for SSO provisioning, admin vaulting; rotation; restricted\nCredentials/secrets Y\nrecovery codes viewing\nPayment card data\nN PAN, cardholder data not permitted\n(PCI)\nHealth data (PHI) N medical records not permitted\nSource code N repos, build artifacts not applicable\nOther regulated data N none not applicable\n2.4 In-Scope Components and Records (semi-structured). For clarity in audit and IRM reviews, the\nfollowing components and records are included in-scope to the extent they store, process, transmit, or provide\nadministrative access to Company Data:\nIncluded In-\nComponent/Record Type Notes\nScope?\nProduction application services Y NimbusVault production workloads\nProduction databases/storage Y object storage and relational DB\nIdentity provider and SSO\nY SAML SSO + admin auth\nintegration\nBastion/jump host / ZTNA\nY administrative pathway\ngateway\nEnd-user devices used for\nY Vendor-admin managed devices only\nadministration",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p2_0",
+        "page_number": 2,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1320,
+      "token_count": 276
     },
     "4": {
       "vector_id": 4,
-      "chunk_id": "file_1_p1_3",
+      "chunk_id": "page_1_table_0",
       "file_id": 1,
-      "content": "Term: 3 years from disclosure\nPermitted Disclosures: Only as required by law",
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_1_table_0",
+        "page_number": 2,
+        "section_title": "Table: page_1_table_0",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "5": {
+      "vector_id": 5,
+      "chunk_id": "page_2_table_0",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_2_table_0",
+        "page_number": 2,
+        "section_title": "Table: page_2_table_0",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "6": {
+      "vector_id": 6,
+      "chunk_id": "file_1_p3_0",
+      "file_id": 1,
+      "content": "Included In-\nComponent/Record Type Notes\nScope?\nSecurity logs (auth, admin, data\nY see Section 11 and Section 12\naccess)\nBackups and snapshots Y retention and deletion rules apply\nmust not contain Company Data except as expressly\nNon-production environments Y (limited)\napproved in writing",
       "content_type": "text",
       "metadata": {
-        "chunk_id": "file_1_p1_3",
-        "page_number": 1,
-        "section_title": "## CONFIDENTIALITY",
+        "chunk_id": "file_1_p3_0",
+        "page_number": 3,
+        "section_title": null,
         "content_type": "text",
-        "source_filename": "test_contract2.txt"
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 289,
+      "token_count": 62
+    },
+    "7": {
+      "vector_id": 7,
+      "chunk_id": "file_1_p3_1",
+      "file_id": 1,
+      "content": "3.1 \u201cCompany Data\u201d means all data or information (including Personal Information) that Company or its\ncustomers/users provides or makes available to Vendor, or that Vendor accesses, collects, receives, stores,\ntransmits, generates, or processes on Company\u2019s behalf in connection with the Agreement, including\nauthentication data, keys/tokens, and security telemetry relating to Company\u2019s environment.\n3.2 \u201cPersonal Information\u201d has the meaning in applicable privacy law, including the California Consumer\nPrivacy Act, as amended (\u201cCCPA\u201d).\n3.3 \u201cSecurity Incident\u201d means any actual or reasonably suspected (a) unauthorized access to, acquisition of,\ndisclosure of, alteration of, loss of, or destruction of Company Data; (b) compromise of Vendor\u2019s or\nSubprocessor\u2019s In-Scope Environment; (c) ransomware, extortion, or malware event impacting the Services or\nCompany Data; or (d) material weakness that is reasonably likely to result in (a)\u2013(c).\n3.4 \u201cSecurity Documentation\u201d means Vendor policies, procedures, standards, audit/certification reports,\nsummaries of penetration tests, vulnerability management metrics, incident response plans, BC/DR plans, and\nother materials reasonably necessary to validate compliance with this Addendum.\n3.5 \u201cSubprocessor\u201d means any third party (including Vendor Affiliates) that processes Company Data on\nVendor\u2019s behalf.\n3.6 \u201cConfidential Information\u201d includes Company Data and any Security Documentation or findings\nexchanged under this Addendum.\n3.7 \u201cRisk Acceptance\u201d means Company\u2019s written acceptance of a defined security risk associated with a\ndocumented noncompliance with this Addendum, subject to (a) a defined scope, (b) compensating controls, (c)\na time-bound remediation plan, and (d) an expiration date.\n3.8 \u201cVendor Personnel\u201d means Vendor employees, contractors, and agents who access Company Data or\nadminister the In-Scope Environment.\n3.9 \u201cAuthentication Data\u201d means passwords, passphrases, MFA secrets, recovery codes, API tokens, session\ntokens, and cryptographic keys used to authenticate or authorize access.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p3_1",
+        "page_number": 3,
+        "section_title": "3. Definitions",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 2062,
+      "token_count": 442
+    },
+    "8": {
+      "vector_id": 8,
+      "chunk_id": "file_1_p3_2",
+      "file_id": 1,
+      "content": "4.1 Security Program. Vendor will maintain and follow a written information security program aligned to\nrecognized standards (e.g., ISO/IEC 27001, NIST CSF, or equivalent), appropriate to the Services and\nCompany Data.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p3_2",
+        "page_number": 3,
+        "section_title": "4. Security Governance and Program Requirements",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 218,
+      "token_count": 50
+    },
+    "9": {
+      "vector_id": 9,
+      "chunk_id": "file_1_p4_0",
+      "file_id": 1,
+      "content": "4.2 Security Ownership. Vendor will maintain a designated security leader responsible for oversight of the\nprogram and for compliance with this Addendum.\n4.3 Policy Framework. Vendor will maintain policies and procedures addressing, at minimum: asset\nmanagement; access control; cryptography; physical and environmental security; operations security;\ncommunications security; secure development (if applicable); supplier relationships; incident management;\nbusiness continuity; records management; and compliance.\n4.4 Risk Assessment. Vendor will perform and document risk assessments at least annually and upon material\nchanges to the In-Scope Environment.\n4.5 Exception Management. Vendor will maintain an exception process for deviations from security standards\n(including Exhibit G), with documented business justification, risk assessment, compensating controls, owner\napproval, and planned remediation dates.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p4_0",
+        "page_number": 4,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 914,
+      "token_count": 159
+    },
+    "10": {
+      "vector_id": 10,
+      "chunk_id": "file_1_p4_1",
+      "file_id": 1,
+      "content": "5.1 Baseline. Vendor will implement and maintain safeguards designed to protect confidentiality, integrity, and\navailability of Company Data, including the minimum controls in this Addendum and the Security Schedule in\nExhibit G.\n5.2 No Material Degradation. Vendor will not materially reduce the effectiveness of safeguards applicable to\nCompany Data during the Term.\n5.3 Control Objectives.\nObjective Outcome\nConfidentiality Company Data accessed only by authorized users for authorized purposes\nIntegrity Company Data and systems protected from unauthorized modification\nAvailability Services resilient; recovery processes meet agreed objectives\nAccountability Actions affecting Company Data traceable via logs and controls",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p4_1",
+        "page_number": 4,
+        "section_title": "5. Control Baseline and Minimum Security Requirements",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 726,
+      "token_count": 128
+    },
+    "11": {
+      "vector_id": 11,
+      "chunk_id": "file_1_p4_2",
+      "file_id": 1,
+      "content": "6.1 Least Privilege. Vendor will implement least-privilege access and role-based access controls (RBAC) for\nthe In-Scope Environment.\n6.2 MFA. Vendor will enforce multi-factor authentication (MFA) for (a) privileged accounts, (b) remote access,\nand (c) all access to production environments.\n6.3 Privileged Access Management. Vendor will control and monitor privileged access, including: (a)\nprohibiting shared privileged accounts except where technically necessary and logged; (b) implementing just-in-\ntime access or time-bound elevation where feasible; and (c) logging privileged session activity.\n6.4 Account Lifecycle. Vendor will revoke access within 24 hours after personnel termination or role change\nthat removes the need for access.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p4_2",
+        "page_number": 4,
+        "section_title": "6. Identity, Access, Authentication, and Password Management",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 742,
+      "token_count": 158
+    },
+    "12": {
+      "vector_id": 12,
+      "chunk_id": "page_2_table_1",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_2_table_1",
+        "page_number": 4,
+        "section_title": "Table: page_2_table_1",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "13": {
+      "vector_id": 13,
+      "chunk_id": "file_1_p5_0",
+      "file_id": 1,
+      "content": "6.5 Access Reviews. Vendor will conduct privileged access reviews at least quarterly and general access\nreviews at least semi-annually.\n6.6 Password Management Standard. Vendor will maintain and enforce a written password standard for any\npassword-based authentication used for the Services or the In-Scope Environment (including administrative\naccounts and \u201cbreak-glass\u201d accounts). At a minimum, Vendor will: (a) require passwords/passphrases of at least\n14 characters for administrative accounts and at least 12 characters for other accounts, or, where supported,\nenforce equivalent strength via modern authentication controls; (b) prohibit the use of default vendor passwords\nand prohibit known-compromised passwords through screening controls; (c) require secure storage of\npasswords using salted hashing for any stored credentials and prohibit plaintext storage; (d) implement account\nlockout or rate limiting to mitigate brute force attacks; (e) prohibit password sharing, and prohibit reuse of\nprivileged passwords across systems; (f) store administrative passwords and recovery codes only in a\ncentralized approved vault with access logging; and (g) rotate \u201cbreak-glass\u201d credentials at least every 90 days\nand upon any suspected compromise or personnel change affecting authorized custodians.\n6.7 Authentication and Authorization Protocols. Vendor will use modern protocols for authentication and\nauthorization for the Services as follows: (a) End-user authentication. SAML 2.0 SSO is supported and is the\ndefault for Company; local user accounts (if enabled) must enforce MFA and password controls consistent with\nSection 6.6. (b) API authentication. API access will use OAuth 2.0 bearer tokens or signed tokens, with\nscoped permissions and configurable expiration. (c) Administrative access. Administrative access to\nproduction will occur only via the approved bastion/secure gateway with MFA and session logging. (d)\nAuthorization. Vendor will enforce RBAC within the application and administrative tooling and will document\nthe role model for Company upon request.\nAuthentication/Authorization Summary Table.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p5_0",
+        "page_number": 5,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 2120,
+      "token_count": 418
+    },
+    "14": {
+      "vector_id": 14,
+      "chunk_id": "file_1_p5_1",
+      "file_id": 1,
+      "content": "Access Type Protocol/Method Authorization Model Logging\nRequired\nEnd-user UI SAML 2.0 SSO Y RBAC (tenant roles) auth + role changes\nLocal UI accounts (if\npassword + MFA Y RBAC auth + role changes\nenabled)\nN/A (token- token issuance + API calls\nAPI access OAuth 2.0 tokens scopes/claims\nbased) (where feasible)\nVendor admin to least privilege + JIT\nbastion + MFA Y session logs + admin actions\nproduction elevation",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p5_1",
+        "page_number": 5,
+        "section_title": "MFA",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 413,
+      "token_count": 105
+    },
+    "15": {
+      "vector_id": 15,
+      "chunk_id": "file_1_p5_2",
+      "file_id": 1,
+      "content": "7.1 Encryption. Vendor will encrypt Company Data in transit and at rest.\n7.2 Data in Transit Requirements (TLS). Vendor will enforce encryption in transit for all external and\ninternal transmissions of Company Data over untrusted networks, including: (a) Company-to-Service\nconnections (web and API); (b) Service-to-Subprocessor transmissions (e.g., email/SMS providers) to the extent\nthey carry Company Data; and (c) administrative connections to production systems. Vendor will use TLS 1.2\nor higher (TLS 1.3 where feasible), will not knowingly enable insecure cipher suites, and will manage\ncertificates using documented procedures.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p5_2",
+        "page_number": 5,
+        "section_title": "7. Encryption and Key Management",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 635,
+      "token_count": 138
+    },
+    "16": {
+      "vector_id": 16,
+      "chunk_id": "page_4_table_0",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_4_table_0",
+        "page_number": 5,
+        "section_title": "Table: page_4_table_0",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "17": {
+      "vector_id": 17,
+      "chunk_id": "file_1_p6_0",
+      "file_id": 1,
+      "content": "7.3 Key Rotation. Vendor will rotate encryption keys at least annually and upon suspected compromise.\n7.4 Secrets Management. Vendor will use a centralized secrets vault and prohibit hardcoding secrets.\nCrypto/Key \u201cchart\u201d.\nItem Requirement Minimum Standard\nTLS In transit encryption TLS 1.2+ (prefer 1.3)\nAt rest Storage encryption AES-256 (or equivalent)\nKey access Restricted least privilege + MFA\nKey rotation Regular annual + on compromise\nSecret storage Centralized KMS-backed secrets vault",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p6_0",
+        "page_number": 6,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 495,
+      "token_count": 104
+    },
+    "18": {
+      "vector_id": 18,
+      "chunk_id": "file_1_p6_1",
+      "file_id": 1,
+      "content": "8.1 Segmentation. Vendor will segment environments to reduce blast radius (e.g., separate production from\nnon-production, restrict east-west traffic).\n8.2 Remote Administration. Vendor will restrict administrative access through controlled pathways (e.g.,\nbastion hosts, secure jump boxes, ZTNA), with MFA and logging.\n8.3 Malware Protection (EDR/Anti-Malware). Vendor will implement and maintain malware protection\ncontrols appropriate to the In-Scope Environment, including: (a) endpoint detection and response (EDR) or anti-\nmalware on all Vendor-managed endpoints used to administer production and on in-scope servers where\nfeasible; (b) automatic signature/agent updates and tamper protection; (c) alerting to security operations for\nmalware detections and suspicious execution; (d) documented response procedures, including\nisolation/quarantine, eradication, and post-incident review; and (e) periodic verification of agent coverage for\nin-scope endpoints.\nMalware/EDR Coverage Table (contractual minimums).\nMonitoring/Alertin\nAsset Type Coverage Requirement Evidence Example\ng\nEDR console coverage\nVendor admin workstations 100% EDR coverage real-time alerts\nreport\nBastion/jump hosts EDR where feasible real-time alerts host agent inventory\nProduction malware controls appropriate to\nalerting integrated security tooling summary\nservers/containers platform",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p6_1",
+        "page_number": 6,
+        "section_title": "8. Network Security, Segmentation, and Malware Protection",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1364,
+      "token_count": 291
+    },
+    "19": {
+      "vector_id": 19,
+      "chunk_id": "page_5_table_0",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_5_table_0",
+        "page_number": 6,
+        "section_title": "Table: page_5_table_0",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "20": {
+      "vector_id": 20,
+      "chunk_id": "page_6_table_0",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_6_table_0",
+        "page_number": 6,
+        "section_title": "Table: page_6_table_0",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "21": {
+      "vector_id": 21,
+      "chunk_id": "file_1_p7_0",
+      "file_id": 1,
+      "content": "Monitoring/Alertin\nAsset Type Coverage Requirement Evidence Example\ng\nEmail ingress/egress\nanti-phishing/malware filtering alerting + quarantine email security settings\n(Vendor)",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p7_0",
+        "page_number": 7,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 177,
+      "token_count": 38
+    },
+    "22": {
+      "vector_id": 22,
+      "chunk_id": "file_1_p7_1",
+      "file_id": 1,
+      "content": "9.1 Asset Inventory. Vendor will maintain an inventory of in-scope assets, including cloud\naccounts/subscriptions, production workloads, databases, and security tooling. The inventory will identify\nenvironment (prod/non-prod), owner, and criticality.\n9.2 Inventory Review. Vendor will review and reconcile the in-scope asset inventory at least quarterly and\nupon material changes.\n9.3 Secure Configuration Baselines. Vendor will maintain secure configuration baselines (e.g., CIS\nbenchmarks or equivalent) for in-scope systems and will remediate material drift in a timely manner.\nAsset Inventory Minimum Fields (semi-structured).\nField Example\nAsset ID aws-prod-eks-01\nAsset type Kubernetes cluster\nEnvironment Production\nData sensitivity Company Data (Confidential + Personal Information)\nOwner Platform Engineering\nRegion us-west-2\nLast reviewed Dec 31, 2025",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p7_1",
+        "page_number": 7,
+        "section_title": "9. IT Asset Management and Secure Configuration",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 861,
+      "token_count": 181
+    },
+    "23": {
+      "vector_id": 23,
+      "chunk_id": "file_1_p7_2",
+      "file_id": 1,
+      "content": "Vendor will maintain secure SDLC practices and change management for production changes affecting\nCompany Data.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p7_2",
+        "page_number": 7,
+        "section_title": "10. Secure Development and Change Management (if applicable)",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 111,
+      "token_count": 18
+    },
+    "24": {
+      "vector_id": 24,
+      "chunk_id": "file_1_p7_3",
+      "file_id": 1,
+      "content": "Vendor will scan for vulnerabilities, remediate based on risk, and meet the remediation SLAs in Exhibit G.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p7_3",
+        "page_number": 7,
+        "section_title": "11. Vulnerability Management",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 106,
+      "token_count": 23
+    },
+    "25": {
+      "vector_id": 25,
+      "chunk_id": "file_1_p7_4",
+      "file_id": 1,
+      "content": "12.1 Logging. Vendor will collect and retain security-relevant logs for systems processing Company Data,\nincluding authentication, authorization, privileged actions, and access to production data where feasible.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p7_4",
+        "page_number": 7,
+        "section_title": "12. Logging, Monitoring, Records Management, and Retention",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 211,
+      "token_count": 36
+    },
+    "26": {
+      "vector_id": 26,
+      "chunk_id": "page_6_table_1",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_6_table_1",
+        "page_number": 7,
+        "section_title": "Table: page_6_table_1",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "27": {
+      "vector_id": 27,
+      "chunk_id": "file_1_p8_0",
+      "file_id": 1,
+      "content": "12.2 Log Retention. Vendor will retain security logs for at least 180 days, unless a longer period is required by\nlaw or mutually agreed for a specific investigation or legal hold.\n12.3 Monitoring. Vendor will monitor for anomalous activity and maintain alerting for material events\naffecting Company Data.\n12.4 Records Management. Vendor will maintain a records management program covering Company Data,\nSecurity Documentation, and security logs, including: (a) documented retention periods and disposal methods;\n(b) procedures to preserve records subject to legal hold or investigation; (c) access controls and auditability for\nrecords; and (d) deletion and disposal consistent with Section 13 (Return/Deletion) and Exhibit G (DATA\ncontrols).\nRecords Retention Schedule (sample, contractual minimums).\nMinimum Storage Location\nRecord Type Notes\nRetention (typical)\nSecurity logs (auth/admin/data extend for investigations/legal\n180 days SIEM/log platform\naccess) holds\nIncident reports and RCA 3 years GRC/IR repository includes corrective actions\nAccess review evidence 2 years GRC repository privileged reviews quarterly\nAsset inventory snapshots 2 years CMDB exports quarterly reviews\nvendor management\nSubprocessor diligence artifacts 3 years contracts, reports summaries\nrepository",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p8_0",
+        "page_number": 8,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1288,
+      "token_count": 256
+    },
+    "28": {
+      "vector_id": 28,
+      "chunk_id": "file_1_p8_1",
+      "file_id": 1,
+      "content": "13.1 Minimization. Vendor will collect and process only the minimum Company Data necessary to perform the\nServices.\n13.2 Hosting Location Commitment. Vendor will store and process Company Data only in the United States\n(including primary hosting, disaster recovery, backups, and log storage), and will not relocate Company Data\noutside the United States without Company\u2019s prior written consent.\n13.3 Location Controls. Vendor will maintain technical and organizational controls designed to enforce the\nhosting location commitment, including: region restrictions within cloud accounts, configuration\nguardrails/policies, and periodic review of data residency settings.\n13.4 Return and Export. Upon termination or expiration, Vendor will make Company Data available for\nexport for 30 days in a commercially reasonable format.\n13.5 Deletion. Vendor will securely delete Company Data from active systems within 60 days after the export\nperiod ends or Company requests deletion, except for legal retention and backups.\n13.6 Backups. If Company Data remains in backups, Vendor will protect it under this Addendum and delete it\nper backup rotation schedules.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p8_1",
+        "page_number": 8,
+        "section_title": "13. Data Minimization; Hosting Location; Retention; Return/Deletion",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1151,
+      "token_count": 220
+    },
+    "29": {
+      "vector_id": 29,
+      "chunk_id": "page_7_table_1",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_7_table_1",
+        "page_number": 8,
+        "section_title": "Table: page_7_table_1",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "30": {
+      "vector_id": 30,
+      "chunk_id": "file_1_p9_0",
+      "file_id": 1,
+      "content": "13.7 Deletion Certification. Upon request, Vendor will certify deletion in writing.\nData Lifecycle Flow (chart).\nStage Description Control\nIngest data received/created validation + encryption\nUse processing for Services RBAC + logging\nShare Subprocessor transfers transfer approval; contract flow-down\nStore at rest encryption + segmentation\nArchive backups access restricted + rotation\nDispose deletion secure wipe + certification",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p9_0",
+        "page_number": 9,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 431,
+      "token_count": 77
+    },
+    "31": {
+      "vector_id": 31,
+      "chunk_id": "file_1_p9_1",
+      "file_id": 1,
+      "content": "Vendor will flow down obligations to Subprocessors, remain responsible for their acts and omissions, and\nprovide 30 days\u2019 notice for new Subprocessors with a 15-day objection period.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p9_1",
+        "page_number": 9,
+        "section_title": "14. Subprocessors and Fourth Parties",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 182,
+      "token_count": 38
+    },
+    "32": {
+      "vector_id": 32,
+      "chunk_id": "file_1_p9_2",
+      "file_id": 1,
+      "content": "Vendor will maintain and test an incident response plan annually and will notify Company within 72 hours after\nbecoming aware of a Security Incident, provide ongoing updates, and deliver a written incident report within 10\nbusiness days after containment.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p9_2",
+        "page_number": 9,
+        "section_title": "15. Incident Response and Breach Notification",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 255,
+      "token_count": 47
+    },
+    "33": {
+      "vector_id": 33,
+      "chunk_id": "file_1_p9_3",
+      "file_id": 1,
+      "content": "Vendor will maintain and annually test BC/DR plans meeting the RPO/RTO targets below:\nComponent RPO RTO\nCore service 24 hours 48 hours\nIdentity 8 hours 24 hours\nLogs 24 hours 72 hours",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p9_3",
+        "page_number": 9,
+        "section_title": "16. Business Continuity and Disaster Recovery",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 183,
+      "token_count": 49
+    },
+    "34": {
+      "vector_id": 34,
+      "chunk_id": "file_1_p9_4",
+      "file_id": 1,
+      "content": "Vendor will maintain an annual SOC 2 Type II report covering the In-Scope Environment (or ISO/IEC 27001\ncertification as an acceptable alternative), provide reports upon request, and support targeted audits in the event\nof a Security Incident or material breach.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p9_4",
+        "page_number": 9,
+        "section_title": "17. Audit, Assurance, and Compliance Support",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 262,
+      "token_count": 55
+    },
+    "35": {
+      "vector_id": 35,
+      "chunk_id": "file_1_p9_5",
+      "file_id": 1,
+      "content": "Vendor will notify Company of legally binding requests for Company Data (unless prohibited) and comply with",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p9_5",
+        "page_number": 9,
+        "section_title": "18. Regulatory Requests and Legal Holds",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 107,
+      "token_count": 18
+    },
+    "36": {
+      "vector_id": 36,
+      "chunk_id": "page_8_table_0",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_8_table_0",
+        "page_number": 9,
+        "section_title": "Table: page_8_table_0",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "37": {
+      "vector_id": 37,
+      "chunk_id": "page_9_table_0",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_9_table_0",
+        "page_number": 9,
+        "section_title": "Table: page_9_table_0",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "38": {
+      "vector_id": 38,
+      "chunk_id": "file_1_p10_0",
+      "file_id": 1,
+      "content": "Company legal holds to the extent lawful.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p10_0",
+        "page_number": 10,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 41,
+      "token_count": 8
+    },
+    "39": {
+      "vector_id": 39,
+      "chunk_id": "file_1_p10_1",
+      "file_id": 1,
+      "content": "Vendor will reimburse Company for reasonable response costs for Security Incidents caused by Vendor breach,\nnegligence, or willful misconduct, and will maintain $5,000,000 cyber/privacy insurance.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p10_1",
+        "page_number": 10,
+        "section_title": "19. Financial Responsibility; Incident Costs; Insurance",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 196,
+      "token_count": 40
+    },
+    "40": {
+      "vector_id": 40,
+      "chunk_id": "file_1_p10_2",
+      "file_id": 1,
+      "content": "Company may seek injunctive relief. If Vendor\u2019s security posture presents an imminent risk to Company Data,\nCompany may require Vendor to suspend affected processing until mitigated.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p10_2",
+        "page_number": 10,
+        "section_title": "20. Remedies; Equitable Relief",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 182,
+      "token_count": 33
+    },
+    "41": {
+      "vector_id": 41,
+      "chunk_id": "file_1_p10_3",
+      "file_id": 1,
+      "content": "This Addendum continues for the Term of the Agreement. Vendor\u2019s obligations survive termination or\nexpiration for as long as Vendor retains Company Data.\nExhibit A \u2014 Control Matrix (Detailed)\nVendor will maintain controls that meet or exceed the following minimum requirements for the In-Scope\nEnvironment.\nControl Domain Control Requirement Minimum Standard Evidence Examples\nGovernance Written security program aligned to ISO/NIST policies; security charter\nAsset Mgmt inventory of in-scope assets quarterly reviewed CMDB export; tagging reports\nAccess RBAC + least privilege enforced IAM policies; access reviews\nMFA MFA for privileged/prod required IdP settings\nPassword Mgmt password standard + vault per Section 6.6 password policy; vault logs\nAuthN/AuthZ modern protocols + RBAC per Section 6.7 SSO config; role model\nCrypto encrypt at rest/in transit TLS 1.2+; AES-256 configs; KMS policies\nSecrets vaulting + rotation no hardcoding vault logs; scan reports\nPatch patching cadence risk-based patch reports\nVuln Mgmt scanning + SLAs per Exhibit G scan + ticket exports\nMonitoring centralized logs + alerting implemented SIEM dashboards\nMalware EDR/anti-malware per Section 8.3 EDR coverage reports",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p10_3",
+        "page_number": 10,
+        "section_title": "21. Term; Survival",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1204,
+      "token_count": 261
+    },
+    "42": {
+      "vector_id": 42,
+      "chunk_id": "page_9_table_1",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_9_table_1",
+        "page_number": 10,
+        "section_title": "Table: page_9_table_1",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "43": {
+      "vector_id": 43,
+      "chunk_id": "file_1_p11_0",
+      "file_id": 1,
+      "content": "Control Domain Control Requirement Minimum Standard Evidence Examples\nNetwork segmentation + secure admin bastion + logging diagrams; session logs\nRecords retention + legal hold per Section 12.4 retention schedule\nBackup tested backups annual test min test summary\nIncident tested IR plan annual tabletop tabletop report\nTraining annual awareness required completion records\nSubprocessors flow-down contracts required contract excerpts\nData Location US-only commitment enforced region guardrails evidence\nExhibit B \u2014 Security Metrics Pack (Quarterly) (Sample Data\nStructure)\nMetric Definition Q1 Q2 Q3 Q4\nCritical vulns past SLA # open critical vulns older than SLA 0 1 0 0\nHigh vulns past SLA # open high vulns older than SLA 3 2 1 2\nPatch compliance % assets patched within policy 96% 95% 97% 96%\nMFA coverage % privileged accounts with MFA 100% 100% 100% 100%\nEDR coverage (admin endpoints) % admin endpoints reporting healthy agent 100% 99% 100% 100%\nPassword vault usage % privileged credentials stored in vault 100% 100% 100% 100%\nIR tabletop completion tabletop performed? Y N N Y\nExhibit C \u2014 Data Flow and Control Mapping (Text Chart)\nStep Data Movement Example Control Points\n1 Company \u2192 Service ingress API upload TLS; auth; rate limiting\n2 Ingress \u2192 Application request processing RBAC; input validation",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p11_0",
+        "page_number": 11,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1314,
+      "token_count": 302
+    },
+    "44": {
+      "vector_id": 44,
+      "chunk_id": "page_10_table_0",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_10_table_0",
+        "page_number": 11,
+        "section_title": "Table: page_10_table_0",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "45": {
+      "vector_id": 45,
+      "chunk_id": "page_11_table_1",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_11_table_1",
+        "page_number": 11,
+        "section_title": "Table: page_11_table_1",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "46": {
+      "vector_id": 46,
+      "chunk_id": "file_1_p12_0",
+      "file_id": 1,
+      "content": "Step Data Movement Example Control Points\n3 Application \u2192 Database store records encryption at rest; access logs\n4 Application \u2192 Subprocessor SMS/email alerts TLS; transfer approval; subprocessor contract\n5 Application \u2192 Logs/SIEM audit events centralized logging; retention\n6 Backup/Archive snapshots restricted access; rotation\n7 Export/Delete termination export window; secure deletion\nExhibit D \u2014 Subprocessor Register (Expanded)\nBreach\nContract\nNotice\nSubprocessor Service Data Categories Regions Certs/Reports Flow-down\nto\nConfirmed\nVendor\nbusiness confidential; SOC 1/2/3;\nAmazon Web United 48\nhosting/compute/storage Personal Information; ISO/IEC Y\nServices, Inc. States hours\ncredentials/secrets 27001\nPersonal Information United 48\nTwilio Inc. SMS notifications SOC 2 Type II Y\n(phone numbers) States hours\nPersonal Information\n(emails); business United 48\nSendGrid, Inc. email delivery SOC 2 Type II Y\nconfidential (message States hours\ncontent)\nFunctional limited telemetry;\nUnited 72\nSoftware, Inc. error monitoring user identifiers SOC 2 Type II Y\nStates hours\n(Sentry) (where configured)\nExhibit E \u2014 Security Contacts (Semi-Structured)\nEscalation\nRole Name/Title Email Phone\nHours\nVendor Security Maya Chen, Director of +1 (415)\nsecurity@nimbusridge.example 24x7\nPOC Information Security 555-0142\nVendor Legal Daniel R. Price, Senior +1 (415) Business\nlegal@nimbusridge.example\nPOC Counsel 555-0199 hours",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p12_0",
+        "page_number": 12,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1419,
+      "token_count": 333
+    },
+    "47": {
+      "vector_id": 47,
+      "chunk_id": "page_11_table_2",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_11_table_2",
+        "page_number": 12,
+        "section_title": "Table: page_11_table_2",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "48": {
+      "vector_id": 48,
+      "chunk_id": "page_12_table_1",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_12_table_1",
+        "page_number": 12,
+        "section_title": "Table: page_12_table_1",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "49": {
+      "vector_id": 49,
+      "chunk_id": "file_1_p13_0",
+      "file_id": 1,
+      "content": "Escalation\nRole Name/Title Email Phone\nHours\nCompany Alicia Gomez, Head of +1 (415)\ncyberrisk@redwoodpeak.example 24x7\nSecurity POC Cyber Risk 555-0108\nCompany Legal Jordan Patel, Associate +1 (415) Business\nlegal@redwoodpeak.example\nPOC General Counsel 555-0120 hours\nExhibit F \u2014 Compliance Mapping Worksheet (Sample)\nInternal\nRequirement Summary Contract Reference Evidence Status\nRequirement ID\nMFA required for all\nSection 6.2; Exhibit G SSO enforcement export;\nIRM-IAM-001 privileged and production Compliant\n(IAM-01/IAM-02) bastion MFA config\naccess\nPassword vaulting + break- Section 6.6; Exhibit G vault access logs; rotation\nIRM-PASS-003 Compliant\nglass rotation (PASS-01/PASS-02) record\nQuarterly in-scope asset Section 9.1\u20139.2;\nIRM-ASSET-001 CMDB export Compliant\ninventory Exhibit G (ASSET-01)\nSecurity logs retained at least Section 12.2; Exhibit G\nIRM-LOG-004 SIEM retention config Compliant\n180 days (LOG-02)\nRecords retention schedule\nIRM-RES-002 Section 12.4 retention schedule Compliant\nmaintained\nTLS enforced for Company Section 7.2; Exhibit G TLS configuration\nIRM-ENC-002 Compliant\nData (CRYP-01) evidence\nSection 13.2\u201313.3;\nIRM-LOC-001 US-only data residency region policy evidence Compliant\nExhibit G (LOC-01)\nSection 8.3; Exhibit G\nIRM-MAL-001 EDR on admin endpoints EDR coverage report Compliant\n(MAL-01)\nExhibit G \u2014 Security Schedule (Numbered Requirements)\nThe requirements in this Exhibit G are minimum requirements for the In-Scope Environment. Vendor will\nmaintain written policies/procedures and operational controls sufficient to meet these requirements.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p13_0",
+        "page_number": 13,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1587,
+      "token_count": 423
+    },
+    "50": {
+      "vector_id": 50,
+      "chunk_id": "page_12_table_2",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_12_table_2",
+        "page_number": 13,
+        "section_title": "Table: page_12_table_2",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "51": {
+      "vector_id": 51,
+      "chunk_id": "file_1_p14_0",
+      "file_id": 1,
+      "content": "G1. Governance and Risk Management\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nMaintain a written information\nGOV- ISO 27001 or NIST CSF security program\nsecurity program aligned to a annual review\n01 aligned overview\nrecognized framework\ninclude threats,\nGOV- Perform documented risk risk assessment annual + upon\nvulnerabilities,\n02 assessments for in-scope systems summary material change\nlikelihood/impact\napprovals +\nGOV- Maintain a security exception continuous;\ncompensating controls + exception register\n03 process and register review quarterly\nexpiry\nGOV- training completion\nMaintain security awareness training on hire + annual refresh annual\n04 report\nGOV- Personnel screening for Vendor background checks to the screening policy + on hire; periodic\n05 Personnel with access extent permitted by law attestation where lawful\nG2. Asset and Configuration Management\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nASSET- Maintain inventory of in- include cloud accounts,\nasset inventory export quarterly\n01 scope assets clusters, databases\nASSET- Maintain secure CIS benchmarks or baseline standard + annual + continuous\n02 configuration baselines equivalent drift report monitoring\nASSET- Prohibit default passwords enforced at build templates; audit\ncontinuous\n03 and insecure defaults build/provision results\nG3. Identity and Access Management\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nIAM- Enforce MFA for MFA required for all privileged MFA policy + enforcement\ncontinuous\n01 privileged access accounts evidence\nIAM- Enforce MFA for MFA required for production bastion/SSO config\ncontinuous\n02 production access console/shell access evidence\nIAM- roles defined; no broad admin by semi-\nLeast privilege and RBAC role matrix + access review\n03 default annual",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p14_0",
+        "page_number": 14,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1825,
+      "token_count": 364
+    },
+    "52": {
+      "vector_id": 52,
+      "chunk_id": "page_13_table_1",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_13_table_1",
+        "page_number": 14,
+        "section_title": "Table: page_13_table_1",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "53": {
+      "vector_id": 53,
+      "chunk_id": "file_1_p15_0",
+      "file_id": 1,
+      "content": "ID Requirement Minimum Standard Evidence/Deliverable Frequency\nIAM- Deprovision access disable within 24 hours of\ndeprovision tickets/logs continuous\n04 promptly termination\nIAM-\nPrivileged access reviews formal review and attestation access review report quarterly\n05\nIAM- Shared admin accounts permitted only with documented\nexception register entry continuous\n06 restricted need + logging\nG3A. Password Management (Added)\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nPASS- Password length/strength admin 14+ chars; password standard\nannual review\n01 standard others 12+ excerpt\nPASS- vault + rotation every vault logs + rotation quarterly\nBreak-glass credential controls\n02 90 days record verification\nPASS-\nBrute force protections lockout/rate limiting configuration evidence continuous\n03\nPASS- Prohibit known-compromised policy + tool output\nscreening/controls continuous\n04 passwords summary\nG4. Cryptography and Secrets\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nCRYP- Encrypt Company Data architecture/config\nTLS 1.2+ continuous\n01 in transit evidence\nCRYP- Encrypt Company Data at storage encryption\nAES-256 or equivalent continuous\n02 rest evidence\nCRYP- Key management restricted access; separation of duties annual\nKMS policy\n03 controls where feasible review\nCRYP-\nKey rotation rotate annually or on compromise rotation logs annual\n04\nSECR- no hardcoding; access-controlled vault policy + scan\nCentral secrets vault continuous\n01 vault results",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p15_0",
+        "page_number": 15,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1495,
+      "token_count": 308
+    },
+    "54": {
+      "vector_id": 54,
+      "chunk_id": "file_1_p16_0",
+      "file_id": 1,
+      "content": "G5. Vulnerability and Patch Management\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nVULN- Vulnerability authenticated scanning where\nscan summaries monthly\n01 scanning feasible\nVULN- independent test of in-scope pen test executive\nPenetration testing annual\n02 app/env summary\nVULN- risk-based patching of in-scope\nPatch management patch compliance report monthly\n03 systems\nVULN-\nRemediation SLAs Critical 7d; High 30d; Medium 60d SLA metrics (Exhibit B) monthly/quarterly\n04\nG6. Logging, Monitoring, Detection, and Records\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nLOG- Centralize logs for in-scope\nSIEM or centralized logging logging architecture annual review\n01 systems\nLOG- retention\nRetain logs minimum 180 days continuous\n02 configuration\nLOG- alerting for suspicious auth, quarterly\nMonitor for material events alert catalogue\n03 privilege use review\nLOG- NTP or equivalent across in-scope configuration\nTime synchronization continuous\n04 systems evidence\nREC- schedule (Section\nRecords retention schedule documented + enforced annual review\n01 12.4)\nREC- procedure +\nLegal hold support preserve records when notified per request\n02 attestation\nG7. Incident Response and Reporting\nID Requirement Minimum Standard Evidence/Deliverable Frequency\ndocumented + role\nIR-01 Maintain incident response plan IR plan (summary) annual review\nassignments\nIR-02 Test incident response tabletop or simulation tabletop report annual",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p16_0",
+        "page_number": 16,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1466,
+      "token_count": 319
+    },
+    "55": {
+      "vector_id": 55,
+      "chunk_id": "file_1_p17_0",
+      "file_id": 1,
+      "content": "ID Requirement Minimum Standard Evidence/Deliverable Frequency\nNotify Company of Security\nIR-03 within 72 hours of awareness incident notice per incident\nIncidents\nIR-04 Provide incident report RCA + corrective actions written incident report per incident\nG8. Business Continuity and Disaster Recovery\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nBCDR- Maintain BC/DR\nappropriate to Services BC/DR plan summary annual review\n01 plans\nBCDR- Annual recovery test backup restore + failover\ntest summary annual\n02 testing where feasible\nBCDR- Meet RPO/RTO annual + upon material\nper Section 16 BC/DR results\n03 targets change\nG9. Subprocessor and Supply Chain Security\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nSUP- Flow-down security no less protective than this per\ncontract excerpts\n01 obligations Addendum Subprocessor\nSUP- register with data categories + quarterly\nSubprocessor inventory Exhibit D\n02 locations update\nSUP-\nSubprocessor notice 30 days prior notice notice records per change\n03\nG10. Data Lifecycle Controls\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nDATA-01 Data minimization only data needed for Services design docs continuous\nDATA-02 Export on termination 30-day export window export procedure per termination\ndelete within 60 days after export\nDATA-03 Deletion deletion certification per termination\nwindow",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p17_0",
+        "page_number": 17,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1385,
+      "token_count": 286
+    },
+    "56": {
+      "vector_id": 56,
+      "chunk_id": "file_1_p18_0",
+      "file_id": 1,
+      "content": "G11. Data Location (Added)\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nLOC- US-only hosting for US-only for primary, DR, residency config continuous; review\n01 Company Data backups, logs evidence quarterly\nLOC- Controls to prevent out-of- guardrails/policies + policy-as-code or config\nquarterly\n02 region storage review summary\nLOC- Company written consent\nLocation change approval approval record per change\n03 required\nG12. Malware Protection (Added)\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nEDR/anti-malware on admin\nMAL-01 100% coverage coverage report monthly\nendpoints\nMAL-02 Malware alerting and response documented workflow runbook excerpt annual review\nMAL-03 Tamper protection + updates enabled configuration evidence continuous\nG13. Network Authentication and Authorization (Added)\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nNET- Secure admin network\nbastion/secure gateway + MFA architecture diagram annual review\n01 access\nNET- Network-level strong identity controls for SSO/ZTNA config\ncontinuous\n02 authentication remote admin evidence\nNET- Authorization at service semi-annual\nRBAC enforced; least privilege role model + tests\n03 layer review\nExhibit H \u2014 Risk Acceptance & Remediation Plan (Template +\nSample Entries)\nH1. Purpose and Use\nThis Exhibit H documents (a) identified control gaps or deviations from Exhibit G or other requirements in this\nAddendum, (b) Vendor\u2019s compensating controls and remediation plan, and (c) Company\u2019s time-bound Risk\nAcceptance, if any. Risk Acceptance is not a waiver of Vendor\u2019s obligations; it is a conditional, temporary",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p18_0",
+        "page_number": 18,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1636,
+      "token_count": 351
+    },
+    "57": {
+      "vector_id": 57,
+      "chunk_id": "file_1_p19_0",
+      "file_id": 1,
+      "content": "accommodation subject to the terms of this Exhibit H.\nH2. Workflow (Text Chart)\nStep Action Owner Output\n1 Identify gap Company or Vendor finding record\n2 Assess risk and scope Vendor (with Company input) risk rating + impact statement\n3 Define compensating controls Vendor control description + evidence\n4 Define remediation plan Vendor milestones + due dates\nApprove/accept risk (if\n5 Company written acceptance + expiry\napplicable)\n6 Track to closure Vendor status updates\n7 Validate completion Company closure confirmation\nH3. Risk Register (Sample Structure)\nRisk\nRemediation\nRisk Finding / Requiremen Inheren Compensatin Targe Acceptanc\nScope Plan & Status\nID Gap t Ref t Risk g Controls t Date e\nMilestones\nExpiration\nAccess limited\nto 2 named\nadmins; IP (1) Replace\nBreak-\nallowlist; console with\nglass on-\nsession MFA-capable\ncall Exhibit G 1 internal\nRA- logging; tool (Mar 15, Jun\npaging (IAM-01 / tool used Jun 30,\n2026 Medium quarterly 2026). (2) 15, Open\nconsole IAM-02 / by on-call 2026\n-001 access review; Decommissio 2026\ndoes not PASS-02) SREs\nrotate break- n legacy\nsupport\nglass console (Jun",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p19_0",
+        "page_number": 19,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1111,
+      "token_count": 285
+    },
+    "58": {
+      "vector_id": 58,
+      "chunk_id": "file_1_p19_1",
+      "file_id": 1,
+      "content": "credentials 15, 2026).\nevery 30 days\nuntil fixed\n(1) Extend\nNetwork Production\nnon-prod flow\nRA- logs Exhibit G VPC flow logs retained Apr In\nlog retention May 31,\n2026 retained (LOG-02 / logs for Low 180 days; non- 30, Progres\nto 180 days 2026\n-002 only 90 REC-01) non-prod prod contains 2026 s\n(Apr 30,\ndays due no Company\n2026).\nto vendor Data; alerting",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p19_1",
+        "page_number": 19,
+        "section_title": "MFA",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 356,
+      "token_count": 117
+    },
+    "59": {
+      "vector_id": 59,
+      "chunk_id": "page_14_table_0",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_14_table_0",
+        "page_number": 19,
+        "section_title": "Table: page_14_table_0",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "60": {
+      "vector_id": 60,
+      "chunk_id": "page_19_table_0",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_19_table_0",
+        "page_number": 19,
+        "section_title": "Table: page_19_table_0",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "61": {
+      "vector_id": 61,
+      "chunk_id": "file_1_p20_0",
+      "file_id": 1,
+      "content": "Risk\nRemediation\nRisk Finding / Requiremen Inheren Compensatin Targe Acceptanc\nScope Plan & Status\nID Gap t Ref t Risk g Controls t Date e\nMilestones\nExpiration\ndefault enabled\n(1) Run\ntabletop\nfailover\nexercise (Feb\nAnnual\nBackups 28, 2026). (2)\nBC/DR\nIdentity verified; Execute\ntest for\nRA- Exhibit G componen failover technical Apr\nidentity May 31,\n2026 (BCDR-02 / t used for Medium runbook failover test in 30, Open\ncomponen 2026\n-003 BCDR-03) admin updated; staging (Mar 2026\nt not\nSSO monitoring 31, 2026). (3)\ncompleted\ntested Document\nin 2025\nresults and\nremediate\nfindings (Apr\n30, 2026).\nH4. Remediation Plan Status Reporting (Semi-Structured)\nVendor will provide Company with status updates for each open Risk ID at least monthly (or more frequently\nfor High/Critical risks), including:\nField Example Value\nRisk ID RA-2026-001\nCurrent status In Progress\nLast update date February 20, 2026\nNext milestone Replace console with MFA-capable tool\nMilestone due date March 15, 2026\nBlockers/Dependencies Procurement approval; vendor migration support\naccess review report; IP allowlist policy; vault rotation\nEvidence available\nlog\nRevised target date (if any) none",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p20_0",
+        "page_number": 20,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1170,
+      "token_count": 330
+    },
+    "62": {
+      "vector_id": 62,
+      "chunk_id": "page_19_table_1",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_19_table_1",
+        "page_number": 20,
+        "section_title": "Table: page_19_table_1",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "63": {
+      "vector_id": 63,
+      "chunk_id": "page_20_table_1",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_20_table_1",
+        "page_number": 20,
+        "section_title": "Table: page_20_table_1",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "64": {
+      "vector_id": 64,
+      "chunk_id": "file_1_p21_0",
+      "file_id": 1,
+      "content": "H5. Risk Acceptance Terms\n(a) Form of Acceptance. Any Risk Acceptance must be in writing (email acceptable) by Company\u2019s Head of\nCyber Risk or delegate.\n(b) No Expansion. Risk Acceptance applies only to the specific scope described in the Risk Register and does\nnot extend to other systems, data, or services.\n(c) Expiration. Each Risk Acceptance expires on the earlier of (i) completion of remediation validated by\nCompany, (ii) the Risk Acceptance Expiration date in the Risk Register, or (iii) termination of the Agreement.\n(d) Revocation. Company may revoke Risk Acceptance upon written notice if (i) Vendor fails to meet a\nmilestone without reasonable justification, (ii) compensating controls are not maintained, or (iii) new\ninformation materially increases the risk.\n(e) Interim Controls. Vendor will maintain compensating controls until remediation is complete and validated.\nH6. Acknowledgement and Sign-Off\nCompany Approval (Risk Acceptance Authority)\nName: Alicia Gomez\nTitle: Head of Cyber Risk\nSignature: /s/ Alicia Gomez\nDate: January 15, 2026\nVendor Remediation Owner\nName: Maya Chen\nTitle: Director of Information Security\nSignature: /s/ Maya Chen\nDate: January 15, 2026\nSignatures",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p21_0",
+        "page_number": 21,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1198,
+      "token_count": 280
+    },
+    "65": {
+      "vector_id": 65,
+      "chunk_id": "file_1_p21_1",
+      "file_id": 1,
+      "content": "By: /s/ Jordan Patel\nTitle: Associate General Counsel\nDate: January 15, 2026",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p21_1",
+        "page_number": 21,
+        "section_title": "COMPANY: Redwood Peak Financial, Inc.",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
       },
       "content_length": 76,
+      "token_count": 23
+    },
+    "66": {
+      "vector_id": 66,
+      "chunk_id": "file_1_p21_2",
+      "file_id": 1,
+      "content": "By: /s/ Maya Chen\nTitle: Director of Information Security\nDate: January 15, 2026",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p21_2",
+        "page_number": 21,
+        "section_title": "VENDOR: Nimbus Ridge Technologies, LLC",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 80,
+      "token_count": 24
+    },
+    "67": {
+      "vector_id": 67,
+      "chunk_id": "file_1_p1_0",
+      "file_id": 1,
+      "content": "Information Security and Technology Risk Addendum\nThis Information Security and Technology Risk Addendum (this \u201cAddendum\u201d) is entered into as of January 15,\n2026 (the \u201cAddendum Effective Date\u201d) by and between Redwood Peak Financial, Inc., a Delaware corporation\n(\u201cCompany\u201d), and Nimbus Ridge Technologies, LLC, a California limited liability company (\u201cVendor\u201d). This\nAddendum is incorporated into and forms part of the Master Services Agreement dated January 10, 2026 (the\n\u201cAgreement\u201d). Capitalized terms not defined in this Addendum have the meanings given in the Agreement.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p1_0",
+        "page_number": 1,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 575,
+      "token_count": 121
+    },
+    "68": {
+      "vector_id": 68,
+      "chunk_id": "file_1_p1_1",
+      "file_id": 1,
+      "content": "If there is a conflict between this Addendum and the Agreement relating to information security, confidentiality,\nprivacy, audit, incident response, or audit/assurance deliverables, this Addendum controls for that subject\nmatter.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p1_1",
+        "page_number": 1,
+        "section_title": "1. Order of Precedence",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 229,
+      "token_count": 44
+    },
+    "69": {
+      "vector_id": 69,
+      "chunk_id": "file_1_p1_2",
+      "file_id": 1,
+      "content": "2.1 Scope. This Addendum applies to Vendor\u2019s provision of the services described in the Agreement (the\n\u201cServices\u201d) and to all systems, networks, applications, endpoints, facilities, personnel, and Subprocessors used\nto store, process, transmit, or otherwise access Company Data (the \u201cIn-Scope Environment\u201d).\n2.2 Service Description (semi-structured). The parties intend the following summary to describe the\noperational scope for security purposes (to be updated as needed by written agreement):\nField Value\nService name NimbusVault Cloud File Collaboration\nService type SaaS\nHosting model Multi-tenant\nHosting provider(s) Amazon Web Services (AWS)\nPrimary regions US-West (Oregon), US-East (N. Virginia)\nAuthorized data locations United States only\nCustomer/admin access method SSO (SAML 2.0) and local administrative accounts (restricted)\nSupport model 24x7 for Sev 1/Sev 2; business hours for general tickets\nProduction access Restricted; just-in-time elevation via bastion and approval workflow\nSubprocessors (high level) AWS (hosting), Twilio (SMS), SendGrid (email), Sentry (error monitoring)\n2.3 Data Categories (semi-structured). The parties classify Company Data as follows:",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p1_2",
+        "page_number": 1,
+        "section_title": "2. Scope and Covered Environments",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1183,
+      "token_count": 259
+    },
+    "70": {
+      "vector_id": 70,
+      "chunk_id": "file_1_p2_0",
+      "file_id": 1,
+      "content": "Included?\nData Category Examples Special Handling\n(Y/N)\npricing, contracts, internal financial encrypt at rest/in transit;\nBusiness confidential Y\nreports limited access\nemployee names, emails, phone access logs; least privilege;\nPersonal Information Y\nnumbers breach notice\nSensitive Personal not permitted; block/filters\nN SSN, precise geolocation\nInformation where feasible\nAPI tokens for SSO provisioning, admin vaulting; rotation; restricted\nCredentials/secrets Y\nrecovery codes viewing\nPayment card data\nN PAN, cardholder data not permitted\n(PCI)\nHealth data (PHI) N medical records not permitted\nSource code N repos, build artifacts not applicable\nOther regulated data N none not applicable\n2.4 In-Scope Components and Records (semi-structured). For clarity in audit and IRM reviews, the\nfollowing components and records are included in-scope to the extent they store, process, transmit, or provide\nadministrative access to Company Data:\nIncluded In-\nComponent/Record Type Notes\nScope?\nProduction application services Y NimbusVault production workloads\nProduction databases/storage Y object storage and relational DB\nIdentity provider and SSO\nY SAML SSO + admin auth\nintegration\nBastion/jump host / ZTNA\nY administrative pathway\ngateway\nEnd-user devices used for\nY Vendor-admin managed devices only\nadministration",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p2_0",
+        "page_number": 2,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1320,
+      "token_count": 276
+    },
+    "71": {
+      "vector_id": 71,
+      "chunk_id": "page_1_table_0",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_1_table_0",
+        "page_number": 2,
+        "section_title": "Table: page_1_table_0",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "72": {
+      "vector_id": 72,
+      "chunk_id": "page_2_table_0",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_2_table_0",
+        "page_number": 2,
+        "section_title": "Table: page_2_table_0",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "73": {
+      "vector_id": 73,
+      "chunk_id": "file_1_p3_0",
+      "file_id": 1,
+      "content": "Included In-\nComponent/Record Type Notes\nScope?\nSecurity logs (auth, admin, data\nY see Section 11 and Section 12\naccess)\nBackups and snapshots Y retention and deletion rules apply\nmust not contain Company Data except as expressly\nNon-production environments Y (limited)\napproved in writing",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p3_0",
+        "page_number": 3,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 289,
+      "token_count": 62
+    },
+    "74": {
+      "vector_id": 74,
+      "chunk_id": "file_1_p3_1",
+      "file_id": 1,
+      "content": "3.1 \u201cCompany Data\u201d means all data or information (including Personal Information) that Company or its\ncustomers/users provides or makes available to Vendor, or that Vendor accesses, collects, receives, stores,\ntransmits, generates, or processes on Company\u2019s behalf in connection with the Agreement, including\nauthentication data, keys/tokens, and security telemetry relating to Company\u2019s environment.\n3.2 \u201cPersonal Information\u201d has the meaning in applicable privacy law, including the California Consumer\nPrivacy Act, as amended (\u201cCCPA\u201d).\n3.3 \u201cSecurity Incident\u201d means any actual or reasonably suspected (a) unauthorized access to, acquisition of,\ndisclosure of, alteration of, loss of, or destruction of Company Data; (b) compromise of Vendor\u2019s or\nSubprocessor\u2019s In-Scope Environment; (c) ransomware, extortion, or malware event impacting the Services or\nCompany Data; or (d) material weakness that is reasonably likely to result in (a)\u2013(c).\n3.4 \u201cSecurity Documentation\u201d means Vendor policies, procedures, standards, audit/certification reports,\nsummaries of penetration tests, vulnerability management metrics, incident response plans, BC/DR plans, and\nother materials reasonably necessary to validate compliance with this Addendum.\n3.5 \u201cSubprocessor\u201d means any third party (including Vendor Affiliates) that processes Company Data on\nVendor\u2019s behalf.\n3.6 \u201cConfidential Information\u201d includes Company Data and any Security Documentation or findings\nexchanged under this Addendum.\n3.7 \u201cRisk Acceptance\u201d means Company\u2019s written acceptance of a defined security risk associated with a\ndocumented noncompliance with this Addendum, subject to (a) a defined scope, (b) compensating controls, (c)\na time-bound remediation plan, and (d) an expiration date.\n3.8 \u201cVendor Personnel\u201d means Vendor employees, contractors, and agents who access Company Data or\nadminister the In-Scope Environment.\n3.9 \u201cAuthentication Data\u201d means passwords, passphrases, MFA secrets, recovery codes, API tokens, session\ntokens, and cryptographic keys used to authenticate or authorize access.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p3_1",
+        "page_number": 3,
+        "section_title": "3. Definitions",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 2062,
+      "token_count": 442
+    },
+    "75": {
+      "vector_id": 75,
+      "chunk_id": "file_1_p3_2",
+      "file_id": 1,
+      "content": "4.1 Security Program. Vendor will maintain and follow a written information security program aligned to\nrecognized standards (e.g., ISO/IEC 27001, NIST CSF, or equivalent), appropriate to the Services and\nCompany Data.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p3_2",
+        "page_number": 3,
+        "section_title": "4. Security Governance and Program Requirements",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 218,
+      "token_count": 50
+    },
+    "76": {
+      "vector_id": 76,
+      "chunk_id": "file_1_p4_0",
+      "file_id": 1,
+      "content": "4.2 Security Ownership. Vendor will maintain a designated security leader responsible for oversight of the\nprogram and for compliance with this Addendum.\n4.3 Policy Framework. Vendor will maintain policies and procedures addressing, at minimum: asset\nmanagement; access control; cryptography; physical and environmental security; operations security;\ncommunications security; secure development (if applicable); supplier relationships; incident management;\nbusiness continuity; records management; and compliance.\n4.4 Risk Assessment. Vendor will perform and document risk assessments at least annually and upon material\nchanges to the In-Scope Environment.\n4.5 Exception Management. Vendor will maintain an exception process for deviations from security standards\n(including Exhibit G), with documented business justification, risk assessment, compensating controls, owner\napproval, and planned remediation dates.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p4_0",
+        "page_number": 4,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 914,
+      "token_count": 159
+    },
+    "77": {
+      "vector_id": 77,
+      "chunk_id": "file_1_p4_1",
+      "file_id": 1,
+      "content": "5.1 Baseline. Vendor will implement and maintain safeguards designed to protect confidentiality, integrity, and\navailability of Company Data, including the minimum controls in this Addendum and the Security Schedule in\nExhibit G.\n5.2 No Material Degradation. Vendor will not materially reduce the effectiveness of safeguards applicable to\nCompany Data during the Term.\n5.3 Control Objectives.\nObjective Outcome\nConfidentiality Company Data accessed only by authorized users for authorized purposes\nIntegrity Company Data and systems protected from unauthorized modification\nAvailability Services resilient; recovery processes meet agreed objectives\nAccountability Actions affecting Company Data traceable via logs and controls",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p4_1",
+        "page_number": 4,
+        "section_title": "5. Control Baseline and Minimum Security Requirements",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 726,
+      "token_count": 128
+    },
+    "78": {
+      "vector_id": 78,
+      "chunk_id": "file_1_p4_2",
+      "file_id": 1,
+      "content": "6.1 Least Privilege. Vendor will implement least-privilege access and role-based access controls (RBAC) for\nthe In-Scope Environment.\n6.2 MFA. Vendor will enforce multi-factor authentication (MFA) for (a) privileged accounts, (b) remote access,\nand (c) all access to production environments.\n6.3 Privileged Access Management. Vendor will control and monitor privileged access, including: (a)\nprohibiting shared privileged accounts except where technically necessary and logged; (b) implementing just-in-\ntime access or time-bound elevation where feasible; and (c) logging privileged session activity.\n6.4 Account Lifecycle. Vendor will revoke access within 24 hours after personnel termination or role change\nthat removes the need for access.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p4_2",
+        "page_number": 4,
+        "section_title": "6. Identity, Access, Authentication, and Password Management",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 742,
+      "token_count": 158
+    },
+    "79": {
+      "vector_id": 79,
+      "chunk_id": "page_2_table_1",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_2_table_1",
+        "page_number": 4,
+        "section_title": "Table: page_2_table_1",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "80": {
+      "vector_id": 80,
+      "chunk_id": "file_1_p5_0",
+      "file_id": 1,
+      "content": "6.5 Access Reviews. Vendor will conduct privileged access reviews at least quarterly and general access\nreviews at least semi-annually.\n6.6 Password Management Standard. Vendor will maintain and enforce a written password standard for any\npassword-based authentication used for the Services or the In-Scope Environment (including administrative\naccounts and \u201cbreak-glass\u201d accounts). At a minimum, Vendor will: (a) require passwords/passphrases of at least\n14 characters for administrative accounts and at least 12 characters for other accounts, or, where supported,\nenforce equivalent strength via modern authentication controls; (b) prohibit the use of default vendor passwords\nand prohibit known-compromised passwords through screening controls; (c) require secure storage of\npasswords using salted hashing for any stored credentials and prohibit plaintext storage; (d) implement account\nlockout or rate limiting to mitigate brute force attacks; (e) prohibit password sharing, and prohibit reuse of\nprivileged passwords across systems; (f) store administrative passwords and recovery codes only in a\ncentralized approved vault with access logging; and (g) rotate \u201cbreak-glass\u201d credentials at least every 90 days\nand upon any suspected compromise or personnel change affecting authorized custodians.\n6.7 Authentication and Authorization Protocols. Vendor will use modern protocols for authentication and\nauthorization for the Services as follows: (a) End-user authentication. SAML 2.0 SSO is supported and is the\ndefault for Company; local user accounts (if enabled) must enforce MFA and password controls consistent with\nSection 6.6. (b) API authentication. API access will use OAuth 2.0 bearer tokens or signed tokens, with\nscoped permissions and configurable expiration. (c) Administrative access. Administrative access to\nproduction will occur only via the approved bastion/secure gateway with MFA and session logging. (d)\nAuthorization. Vendor will enforce RBAC within the application and administrative tooling and will document\nthe role model for Company upon request.\nAuthentication/Authorization Summary Table.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p5_0",
+        "page_number": 5,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 2120,
+      "token_count": 418
+    },
+    "81": {
+      "vector_id": 81,
+      "chunk_id": "file_1_p5_1",
+      "file_id": 1,
+      "content": "Access Type Protocol/Method Authorization Model Logging\nRequired\nEnd-user UI SAML 2.0 SSO Y RBAC (tenant roles) auth + role changes\nLocal UI accounts (if\npassword + MFA Y RBAC auth + role changes\nenabled)\nN/A (token- token issuance + API calls\nAPI access OAuth 2.0 tokens scopes/claims\nbased) (where feasible)\nVendor admin to least privilege + JIT\nbastion + MFA Y session logs + admin actions\nproduction elevation",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p5_1",
+        "page_number": 5,
+        "section_title": "MFA",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 413,
+      "token_count": 105
+    },
+    "82": {
+      "vector_id": 82,
+      "chunk_id": "file_1_p5_2",
+      "file_id": 1,
+      "content": "7.1 Encryption. Vendor will encrypt Company Data in transit and at rest.\n7.2 Data in Transit Requirements (TLS). Vendor will enforce encryption in transit for all external and\ninternal transmissions of Company Data over untrusted networks, including: (a) Company-to-Service\nconnections (web and API); (b) Service-to-Subprocessor transmissions (e.g., email/SMS providers) to the extent\nthey carry Company Data; and (c) administrative connections to production systems. Vendor will use TLS 1.2\nor higher (TLS 1.3 where feasible), will not knowingly enable insecure cipher suites, and will manage\ncertificates using documented procedures.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p5_2",
+        "page_number": 5,
+        "section_title": "7. Encryption and Key Management",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 635,
+      "token_count": 138
+    },
+    "83": {
+      "vector_id": 83,
+      "chunk_id": "page_4_table_0",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_4_table_0",
+        "page_number": 5,
+        "section_title": "Table: page_4_table_0",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "84": {
+      "vector_id": 84,
+      "chunk_id": "file_1_p6_0",
+      "file_id": 1,
+      "content": "7.3 Key Rotation. Vendor will rotate encryption keys at least annually and upon suspected compromise.\n7.4 Secrets Management. Vendor will use a centralized secrets vault and prohibit hardcoding secrets.\nCrypto/Key \u201cchart\u201d.\nItem Requirement Minimum Standard\nTLS In transit encryption TLS 1.2+ (prefer 1.3)\nAt rest Storage encryption AES-256 (or equivalent)\nKey access Restricted least privilege + MFA\nKey rotation Regular annual + on compromise\nSecret storage Centralized KMS-backed secrets vault",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p6_0",
+        "page_number": 6,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 495,
+      "token_count": 104
+    },
+    "85": {
+      "vector_id": 85,
+      "chunk_id": "file_1_p6_1",
+      "file_id": 1,
+      "content": "8.1 Segmentation. Vendor will segment environments to reduce blast radius (e.g., separate production from\nnon-production, restrict east-west traffic).\n8.2 Remote Administration. Vendor will restrict administrative access through controlled pathways (e.g.,\nbastion hosts, secure jump boxes, ZTNA), with MFA and logging.\n8.3 Malware Protection (EDR/Anti-Malware). Vendor will implement and maintain malware protection\ncontrols appropriate to the In-Scope Environment, including: (a) endpoint detection and response (EDR) or anti-\nmalware on all Vendor-managed endpoints used to administer production and on in-scope servers where\nfeasible; (b) automatic signature/agent updates and tamper protection; (c) alerting to security operations for\nmalware detections and suspicious execution; (d) documented response procedures, including\nisolation/quarantine, eradication, and post-incident review; and (e) periodic verification of agent coverage for\nin-scope endpoints.\nMalware/EDR Coverage Table (contractual minimums).\nMonitoring/Alertin\nAsset Type Coverage Requirement Evidence Example\ng\nEDR console coverage\nVendor admin workstations 100% EDR coverage real-time alerts\nreport\nBastion/jump hosts EDR where feasible real-time alerts host agent inventory\nProduction malware controls appropriate to\nalerting integrated security tooling summary\nservers/containers platform",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p6_1",
+        "page_number": 6,
+        "section_title": "8. Network Security, Segmentation, and Malware Protection",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1364,
+      "token_count": 291
+    },
+    "86": {
+      "vector_id": 86,
+      "chunk_id": "page_5_table_0",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_5_table_0",
+        "page_number": 6,
+        "section_title": "Table: page_5_table_0",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "87": {
+      "vector_id": 87,
+      "chunk_id": "page_6_table_0",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_6_table_0",
+        "page_number": 6,
+        "section_title": "Table: page_6_table_0",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "88": {
+      "vector_id": 88,
+      "chunk_id": "file_1_p7_0",
+      "file_id": 1,
+      "content": "Monitoring/Alertin\nAsset Type Coverage Requirement Evidence Example\ng\nEmail ingress/egress\nanti-phishing/malware filtering alerting + quarantine email security settings\n(Vendor)",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p7_0",
+        "page_number": 7,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 177,
+      "token_count": 38
+    },
+    "89": {
+      "vector_id": 89,
+      "chunk_id": "file_1_p7_1",
+      "file_id": 1,
+      "content": "9.1 Asset Inventory. Vendor will maintain an inventory of in-scope assets, including cloud\naccounts/subscriptions, production workloads, databases, and security tooling. The inventory will identify\nenvironment (prod/non-prod), owner, and criticality.\n9.2 Inventory Review. Vendor will review and reconcile the in-scope asset inventory at least quarterly and\nupon material changes.\n9.3 Secure Configuration Baselines. Vendor will maintain secure configuration baselines (e.g., CIS\nbenchmarks or equivalent) for in-scope systems and will remediate material drift in a timely manner.\nAsset Inventory Minimum Fields (semi-structured).\nField Example\nAsset ID aws-prod-eks-01\nAsset type Kubernetes cluster\nEnvironment Production\nData sensitivity Company Data (Confidential + Personal Information)\nOwner Platform Engineering\nRegion us-west-2\nLast reviewed Dec 31, 2025",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p7_1",
+        "page_number": 7,
+        "section_title": "9. IT Asset Management and Secure Configuration",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 861,
+      "token_count": 181
+    },
+    "90": {
+      "vector_id": 90,
+      "chunk_id": "file_1_p7_2",
+      "file_id": 1,
+      "content": "Vendor will maintain secure SDLC practices and change management for production changes affecting\nCompany Data.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p7_2",
+        "page_number": 7,
+        "section_title": "10. Secure Development and Change Management (if applicable)",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 111,
       "token_count": 18
+    },
+    "91": {
+      "vector_id": 91,
+      "chunk_id": "file_1_p7_3",
+      "file_id": 1,
+      "content": "Vendor will scan for vulnerabilities, remediate based on risk, and meet the remediation SLAs in Exhibit G.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p7_3",
+        "page_number": 7,
+        "section_title": "11. Vulnerability Management",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 106,
+      "token_count": 23
+    },
+    "92": {
+      "vector_id": 92,
+      "chunk_id": "file_1_p7_4",
+      "file_id": 1,
+      "content": "12.1 Logging. Vendor will collect and retain security-relevant logs for systems processing Company Data,\nincluding authentication, authorization, privileged actions, and access to production data where feasible.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p7_4",
+        "page_number": 7,
+        "section_title": "12. Logging, Monitoring, Records Management, and Retention",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 211,
+      "token_count": 36
+    },
+    "93": {
+      "vector_id": 93,
+      "chunk_id": "page_6_table_1",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_6_table_1",
+        "page_number": 7,
+        "section_title": "Table: page_6_table_1",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "94": {
+      "vector_id": 94,
+      "chunk_id": "file_1_p8_0",
+      "file_id": 1,
+      "content": "12.2 Log Retention. Vendor will retain security logs for at least 180 days, unless a longer period is required by\nlaw or mutually agreed for a specific investigation or legal hold.\n12.3 Monitoring. Vendor will monitor for anomalous activity and maintain alerting for material events\naffecting Company Data.\n12.4 Records Management. Vendor will maintain a records management program covering Company Data,\nSecurity Documentation, and security logs, including: (a) documented retention periods and disposal methods;\n(b) procedures to preserve records subject to legal hold or investigation; (c) access controls and auditability for\nrecords; and (d) deletion and disposal consistent with Section 13 (Return/Deletion) and Exhibit G (DATA\ncontrols).\nRecords Retention Schedule (sample, contractual minimums).\nMinimum Storage Location\nRecord Type Notes\nRetention (typical)\nSecurity logs (auth/admin/data extend for investigations/legal\n180 days SIEM/log platform\naccess) holds\nIncident reports and RCA 3 years GRC/IR repository includes corrective actions\nAccess review evidence 2 years GRC repository privileged reviews quarterly\nAsset inventory snapshots 2 years CMDB exports quarterly reviews\nvendor management\nSubprocessor diligence artifacts 3 years contracts, reports summaries\nrepository",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p8_0",
+        "page_number": 8,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1288,
+      "token_count": 256
+    },
+    "95": {
+      "vector_id": 95,
+      "chunk_id": "file_1_p8_1",
+      "file_id": 1,
+      "content": "13.1 Minimization. Vendor will collect and process only the minimum Company Data necessary to perform the\nServices.\n13.2 Hosting Location Commitment. Vendor will store and process Company Data only in the United States\n(including primary hosting, disaster recovery, backups, and log storage), and will not relocate Company Data\noutside the United States without Company\u2019s prior written consent.\n13.3 Location Controls. Vendor will maintain technical and organizational controls designed to enforce the\nhosting location commitment, including: region restrictions within cloud accounts, configuration\nguardrails/policies, and periodic review of data residency settings.\n13.4 Return and Export. Upon termination or expiration, Vendor will make Company Data available for\nexport for 30 days in a commercially reasonable format.\n13.5 Deletion. Vendor will securely delete Company Data from active systems within 60 days after the export\nperiod ends or Company requests deletion, except for legal retention and backups.\n13.6 Backups. If Company Data remains in backups, Vendor will protect it under this Addendum and delete it\nper backup rotation schedules.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p8_1",
+        "page_number": 8,
+        "section_title": "13. Data Minimization; Hosting Location; Retention; Return/Deletion",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1151,
+      "token_count": 220
+    },
+    "96": {
+      "vector_id": 96,
+      "chunk_id": "page_7_table_1",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_7_table_1",
+        "page_number": 8,
+        "section_title": "Table: page_7_table_1",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "97": {
+      "vector_id": 97,
+      "chunk_id": "file_1_p9_0",
+      "file_id": 1,
+      "content": "13.7 Deletion Certification. Upon request, Vendor will certify deletion in writing.\nData Lifecycle Flow (chart).\nStage Description Control\nIngest data received/created validation + encryption\nUse processing for Services RBAC + logging\nShare Subprocessor transfers transfer approval; contract flow-down\nStore at rest encryption + segmentation\nArchive backups access restricted + rotation\nDispose deletion secure wipe + certification",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p9_0",
+        "page_number": 9,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 431,
+      "token_count": 77
+    },
+    "98": {
+      "vector_id": 98,
+      "chunk_id": "file_1_p9_1",
+      "file_id": 1,
+      "content": "Vendor will flow down obligations to Subprocessors, remain responsible for their acts and omissions, and\nprovide 30 days\u2019 notice for new Subprocessors with a 15-day objection period.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p9_1",
+        "page_number": 9,
+        "section_title": "14. Subprocessors and Fourth Parties",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 182,
+      "token_count": 38
+    },
+    "99": {
+      "vector_id": 99,
+      "chunk_id": "file_1_p9_2",
+      "file_id": 1,
+      "content": "Vendor will maintain and test an incident response plan annually and will notify Company within 72 hours after\nbecoming aware of a Security Incident, provide ongoing updates, and deliver a written incident report within 10\nbusiness days after containment.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p9_2",
+        "page_number": 9,
+        "section_title": "15. Incident Response and Breach Notification",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 255,
+      "token_count": 47
+    },
+    "100": {
+      "vector_id": 100,
+      "chunk_id": "file_1_p9_3",
+      "file_id": 1,
+      "content": "Vendor will maintain and annually test BC/DR plans meeting the RPO/RTO targets below:\nComponent RPO RTO\nCore service 24 hours 48 hours\nIdentity 8 hours 24 hours\nLogs 24 hours 72 hours",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p9_3",
+        "page_number": 9,
+        "section_title": "16. Business Continuity and Disaster Recovery",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 183,
+      "token_count": 49
+    },
+    "101": {
+      "vector_id": 101,
+      "chunk_id": "file_1_p9_4",
+      "file_id": 1,
+      "content": "Vendor will maintain an annual SOC 2 Type II report covering the In-Scope Environment (or ISO/IEC 27001\ncertification as an acceptable alternative), provide reports upon request, and support targeted audits in the event\nof a Security Incident or material breach.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p9_4",
+        "page_number": 9,
+        "section_title": "17. Audit, Assurance, and Compliance Support",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 262,
+      "token_count": 55
+    },
+    "102": {
+      "vector_id": 102,
+      "chunk_id": "file_1_p9_5",
+      "file_id": 1,
+      "content": "Vendor will notify Company of legally binding requests for Company Data (unless prohibited) and comply with",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p9_5",
+        "page_number": 9,
+        "section_title": "18. Regulatory Requests and Legal Holds",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 107,
+      "token_count": 18
+    },
+    "103": {
+      "vector_id": 103,
+      "chunk_id": "page_8_table_0",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_8_table_0",
+        "page_number": 9,
+        "section_title": "Table: page_8_table_0",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "104": {
+      "vector_id": 104,
+      "chunk_id": "page_9_table_0",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_9_table_0",
+        "page_number": 9,
+        "section_title": "Table: page_9_table_0",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "105": {
+      "vector_id": 105,
+      "chunk_id": "file_1_p10_0",
+      "file_id": 1,
+      "content": "Company legal holds to the extent lawful.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p10_0",
+        "page_number": 10,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 41,
+      "token_count": 8
+    },
+    "106": {
+      "vector_id": 106,
+      "chunk_id": "file_1_p10_1",
+      "file_id": 1,
+      "content": "Vendor will reimburse Company for reasonable response costs for Security Incidents caused by Vendor breach,\nnegligence, or willful misconduct, and will maintain $5,000,000 cyber/privacy insurance.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p10_1",
+        "page_number": 10,
+        "section_title": "19. Financial Responsibility; Incident Costs; Insurance",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 196,
+      "token_count": 40
+    },
+    "107": {
+      "vector_id": 107,
+      "chunk_id": "file_1_p10_2",
+      "file_id": 1,
+      "content": "Company may seek injunctive relief. If Vendor\u2019s security posture presents an imminent risk to Company Data,\nCompany may require Vendor to suspend affected processing until mitigated.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p10_2",
+        "page_number": 10,
+        "section_title": "20. Remedies; Equitable Relief",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 182,
+      "token_count": 33
+    },
+    "108": {
+      "vector_id": 108,
+      "chunk_id": "file_1_p10_3",
+      "file_id": 1,
+      "content": "This Addendum continues for the Term of the Agreement. Vendor\u2019s obligations survive termination or\nexpiration for as long as Vendor retains Company Data.\nExhibit A \u2014 Control Matrix (Detailed)\nVendor will maintain controls that meet or exceed the following minimum requirements for the In-Scope\nEnvironment.\nControl Domain Control Requirement Minimum Standard Evidence Examples\nGovernance Written security program aligned to ISO/NIST policies; security charter\nAsset Mgmt inventory of in-scope assets quarterly reviewed CMDB export; tagging reports\nAccess RBAC + least privilege enforced IAM policies; access reviews\nMFA MFA for privileged/prod required IdP settings\nPassword Mgmt password standard + vault per Section 6.6 password policy; vault logs\nAuthN/AuthZ modern protocols + RBAC per Section 6.7 SSO config; role model\nCrypto encrypt at rest/in transit TLS 1.2+; AES-256 configs; KMS policies\nSecrets vaulting + rotation no hardcoding vault logs; scan reports\nPatch patching cadence risk-based patch reports\nVuln Mgmt scanning + SLAs per Exhibit G scan + ticket exports\nMonitoring centralized logs + alerting implemented SIEM dashboards\nMalware EDR/anti-malware per Section 8.3 EDR coverage reports",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p10_3",
+        "page_number": 10,
+        "section_title": "21. Term; Survival",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1204,
+      "token_count": 261
+    },
+    "109": {
+      "vector_id": 109,
+      "chunk_id": "page_9_table_1",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_9_table_1",
+        "page_number": 10,
+        "section_title": "Table: page_9_table_1",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "110": {
+      "vector_id": 110,
+      "chunk_id": "file_1_p11_0",
+      "file_id": 1,
+      "content": "Control Domain Control Requirement Minimum Standard Evidence Examples\nNetwork segmentation + secure admin bastion + logging diagrams; session logs\nRecords retention + legal hold per Section 12.4 retention schedule\nBackup tested backups annual test min test summary\nIncident tested IR plan annual tabletop tabletop report\nTraining annual awareness required completion records\nSubprocessors flow-down contracts required contract excerpts\nData Location US-only commitment enforced region guardrails evidence\nExhibit B \u2014 Security Metrics Pack (Quarterly) (Sample Data\nStructure)\nMetric Definition Q1 Q2 Q3 Q4\nCritical vulns past SLA # open critical vulns older than SLA 0 1 0 0\nHigh vulns past SLA # open high vulns older than SLA 3 2 1 2\nPatch compliance % assets patched within policy 96% 95% 97% 96%\nMFA coverage % privileged accounts with MFA 100% 100% 100% 100%\nEDR coverage (admin endpoints) % admin endpoints reporting healthy agent 100% 99% 100% 100%\nPassword vault usage % privileged credentials stored in vault 100% 100% 100% 100%\nIR tabletop completion tabletop performed? Y N N Y\nExhibit C \u2014 Data Flow and Control Mapping (Text Chart)\nStep Data Movement Example Control Points\n1 Company \u2192 Service ingress API upload TLS; auth; rate limiting\n2 Ingress \u2192 Application request processing RBAC; input validation",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p11_0",
+        "page_number": 11,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1314,
+      "token_count": 302
+    },
+    "111": {
+      "vector_id": 111,
+      "chunk_id": "page_10_table_0",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_10_table_0",
+        "page_number": 11,
+        "section_title": "Table: page_10_table_0",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "112": {
+      "vector_id": 112,
+      "chunk_id": "page_11_table_1",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_11_table_1",
+        "page_number": 11,
+        "section_title": "Table: page_11_table_1",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "113": {
+      "vector_id": 113,
+      "chunk_id": "file_1_p12_0",
+      "file_id": 1,
+      "content": "Step Data Movement Example Control Points\n3 Application \u2192 Database store records encryption at rest; access logs\n4 Application \u2192 Subprocessor SMS/email alerts TLS; transfer approval; subprocessor contract\n5 Application \u2192 Logs/SIEM audit events centralized logging; retention\n6 Backup/Archive snapshots restricted access; rotation\n7 Export/Delete termination export window; secure deletion\nExhibit D \u2014 Subprocessor Register (Expanded)\nBreach\nContract\nNotice\nSubprocessor Service Data Categories Regions Certs/Reports Flow-down\nto\nConfirmed\nVendor\nbusiness confidential; SOC 1/2/3;\nAmazon Web United 48\nhosting/compute/storage Personal Information; ISO/IEC Y\nServices, Inc. States hours\ncredentials/secrets 27001\nPersonal Information United 48\nTwilio Inc. SMS notifications SOC 2 Type II Y\n(phone numbers) States hours\nPersonal Information\n(emails); business United 48\nSendGrid, Inc. email delivery SOC 2 Type II Y\nconfidential (message States hours\ncontent)\nFunctional limited telemetry;\nUnited 72\nSoftware, Inc. error monitoring user identifiers SOC 2 Type II Y\nStates hours\n(Sentry) (where configured)\nExhibit E \u2014 Security Contacts (Semi-Structured)\nEscalation\nRole Name/Title Email Phone\nHours\nVendor Security Maya Chen, Director of +1 (415)\nsecurity@nimbusridge.example 24x7\nPOC Information Security 555-0142\nVendor Legal Daniel R. Price, Senior +1 (415) Business\nlegal@nimbusridge.example\nPOC Counsel 555-0199 hours",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p12_0",
+        "page_number": 12,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1419,
+      "token_count": 333
+    },
+    "114": {
+      "vector_id": 114,
+      "chunk_id": "page_11_table_2",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_11_table_2",
+        "page_number": 12,
+        "section_title": "Table: page_11_table_2",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "115": {
+      "vector_id": 115,
+      "chunk_id": "page_12_table_1",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_12_table_1",
+        "page_number": 12,
+        "section_title": "Table: page_12_table_1",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "116": {
+      "vector_id": 116,
+      "chunk_id": "file_1_p13_0",
+      "file_id": 1,
+      "content": "Escalation\nRole Name/Title Email Phone\nHours\nCompany Alicia Gomez, Head of +1 (415)\ncyberrisk@redwoodpeak.example 24x7\nSecurity POC Cyber Risk 555-0108\nCompany Legal Jordan Patel, Associate +1 (415) Business\nlegal@redwoodpeak.example\nPOC General Counsel 555-0120 hours\nExhibit F \u2014 Compliance Mapping Worksheet (Sample)\nInternal\nRequirement Summary Contract Reference Evidence Status\nRequirement ID\nMFA required for all\nSection 6.2; Exhibit G SSO enforcement export;\nIRM-IAM-001 privileged and production Compliant\n(IAM-01/IAM-02) bastion MFA config\naccess\nPassword vaulting + break- Section 6.6; Exhibit G vault access logs; rotation\nIRM-PASS-003 Compliant\nglass rotation (PASS-01/PASS-02) record\nQuarterly in-scope asset Section 9.1\u20139.2;\nIRM-ASSET-001 CMDB export Compliant\ninventory Exhibit G (ASSET-01)\nSecurity logs retained at least Section 12.2; Exhibit G\nIRM-LOG-004 SIEM retention config Compliant\n180 days (LOG-02)\nRecords retention schedule\nIRM-RES-002 Section 12.4 retention schedule Compliant\nmaintained\nTLS enforced for Company Section 7.2; Exhibit G TLS configuration\nIRM-ENC-002 Compliant\nData (CRYP-01) evidence\nSection 13.2\u201313.3;\nIRM-LOC-001 US-only data residency region policy evidence Compliant\nExhibit G (LOC-01)\nSection 8.3; Exhibit G\nIRM-MAL-001 EDR on admin endpoints EDR coverage report Compliant\n(MAL-01)\nExhibit G \u2014 Security Schedule (Numbered Requirements)\nThe requirements in this Exhibit G are minimum requirements for the In-Scope Environment. Vendor will\nmaintain written policies/procedures and operational controls sufficient to meet these requirements.",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p13_0",
+        "page_number": 13,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1587,
+      "token_count": 423
+    },
+    "117": {
+      "vector_id": 117,
+      "chunk_id": "page_12_table_2",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_12_table_2",
+        "page_number": 13,
+        "section_title": "Table: page_12_table_2",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "118": {
+      "vector_id": 118,
+      "chunk_id": "file_1_p14_0",
+      "file_id": 1,
+      "content": "G1. Governance and Risk Management\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nMaintain a written information\nGOV- ISO 27001 or NIST CSF security program\nsecurity program aligned to a annual review\n01 aligned overview\nrecognized framework\ninclude threats,\nGOV- Perform documented risk risk assessment annual + upon\nvulnerabilities,\n02 assessments for in-scope systems summary material change\nlikelihood/impact\napprovals +\nGOV- Maintain a security exception continuous;\ncompensating controls + exception register\n03 process and register review quarterly\nexpiry\nGOV- training completion\nMaintain security awareness training on hire + annual refresh annual\n04 report\nGOV- Personnel screening for Vendor background checks to the screening policy + on hire; periodic\n05 Personnel with access extent permitted by law attestation where lawful\nG2. Asset and Configuration Management\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nASSET- Maintain inventory of in- include cloud accounts,\nasset inventory export quarterly\n01 scope assets clusters, databases\nASSET- Maintain secure CIS benchmarks or baseline standard + annual + continuous\n02 configuration baselines equivalent drift report monitoring\nASSET- Prohibit default passwords enforced at build templates; audit\ncontinuous\n03 and insecure defaults build/provision results\nG3. Identity and Access Management\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nIAM- Enforce MFA for MFA required for all privileged MFA policy + enforcement\ncontinuous\n01 privileged access accounts evidence\nIAM- Enforce MFA for MFA required for production bastion/SSO config\ncontinuous\n02 production access console/shell access evidence\nIAM- roles defined; no broad admin by semi-\nLeast privilege and RBAC role matrix + access review\n03 default annual",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p14_0",
+        "page_number": 14,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1825,
+      "token_count": 364
+    },
+    "119": {
+      "vector_id": 119,
+      "chunk_id": "page_13_table_1",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_13_table_1",
+        "page_number": 14,
+        "section_title": "Table: page_13_table_1",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "120": {
+      "vector_id": 120,
+      "chunk_id": "file_1_p15_0",
+      "file_id": 1,
+      "content": "ID Requirement Minimum Standard Evidence/Deliverable Frequency\nIAM- Deprovision access disable within 24 hours of\ndeprovision tickets/logs continuous\n04 promptly termination\nIAM-\nPrivileged access reviews formal review and attestation access review report quarterly\n05\nIAM- Shared admin accounts permitted only with documented\nexception register entry continuous\n06 restricted need + logging\nG3A. Password Management (Added)\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nPASS- Password length/strength admin 14+ chars; password standard\nannual review\n01 standard others 12+ excerpt\nPASS- vault + rotation every vault logs + rotation quarterly\nBreak-glass credential controls\n02 90 days record verification\nPASS-\nBrute force protections lockout/rate limiting configuration evidence continuous\n03\nPASS- Prohibit known-compromised policy + tool output\nscreening/controls continuous\n04 passwords summary\nG4. Cryptography and Secrets\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nCRYP- Encrypt Company Data architecture/config\nTLS 1.2+ continuous\n01 in transit evidence\nCRYP- Encrypt Company Data at storage encryption\nAES-256 or equivalent continuous\n02 rest evidence\nCRYP- Key management restricted access; separation of duties annual\nKMS policy\n03 controls where feasible review\nCRYP-\nKey rotation rotate annually or on compromise rotation logs annual\n04\nSECR- no hardcoding; access-controlled vault policy + scan\nCentral secrets vault continuous\n01 vault results",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p15_0",
+        "page_number": 15,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1495,
+      "token_count": 308
+    },
+    "121": {
+      "vector_id": 121,
+      "chunk_id": "file_1_p16_0",
+      "file_id": 1,
+      "content": "G5. Vulnerability and Patch Management\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nVULN- Vulnerability authenticated scanning where\nscan summaries monthly\n01 scanning feasible\nVULN- independent test of in-scope pen test executive\nPenetration testing annual\n02 app/env summary\nVULN- risk-based patching of in-scope\nPatch management patch compliance report monthly\n03 systems\nVULN-\nRemediation SLAs Critical 7d; High 30d; Medium 60d SLA metrics (Exhibit B) monthly/quarterly\n04\nG6. Logging, Monitoring, Detection, and Records\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nLOG- Centralize logs for in-scope\nSIEM or centralized logging logging architecture annual review\n01 systems\nLOG- retention\nRetain logs minimum 180 days continuous\n02 configuration\nLOG- alerting for suspicious auth, quarterly\nMonitor for material events alert catalogue\n03 privilege use review\nLOG- NTP or equivalent across in-scope configuration\nTime synchronization continuous\n04 systems evidence\nREC- schedule (Section\nRecords retention schedule documented + enforced annual review\n01 12.4)\nREC- procedure +\nLegal hold support preserve records when notified per request\n02 attestation\nG7. Incident Response and Reporting\nID Requirement Minimum Standard Evidence/Deliverable Frequency\ndocumented + role\nIR-01 Maintain incident response plan IR plan (summary) annual review\nassignments\nIR-02 Test incident response tabletop or simulation tabletop report annual",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p16_0",
+        "page_number": 16,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1466,
+      "token_count": 319
+    },
+    "122": {
+      "vector_id": 122,
+      "chunk_id": "file_1_p17_0",
+      "file_id": 1,
+      "content": "ID Requirement Minimum Standard Evidence/Deliverable Frequency\nNotify Company of Security\nIR-03 within 72 hours of awareness incident notice per incident\nIncidents\nIR-04 Provide incident report RCA + corrective actions written incident report per incident\nG8. Business Continuity and Disaster Recovery\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nBCDR- Maintain BC/DR\nappropriate to Services BC/DR plan summary annual review\n01 plans\nBCDR- Annual recovery test backup restore + failover\ntest summary annual\n02 testing where feasible\nBCDR- Meet RPO/RTO annual + upon material\nper Section 16 BC/DR results\n03 targets change\nG9. Subprocessor and Supply Chain Security\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nSUP- Flow-down security no less protective than this per\ncontract excerpts\n01 obligations Addendum Subprocessor\nSUP- register with data categories + quarterly\nSubprocessor inventory Exhibit D\n02 locations update\nSUP-\nSubprocessor notice 30 days prior notice notice records per change\n03\nG10. Data Lifecycle Controls\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nDATA-01 Data minimization only data needed for Services design docs continuous\nDATA-02 Export on termination 30-day export window export procedure per termination\ndelete within 60 days after export\nDATA-03 Deletion deletion certification per termination\nwindow",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p17_0",
+        "page_number": 17,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1385,
+      "token_count": 286
+    },
+    "123": {
+      "vector_id": 123,
+      "chunk_id": "file_1_p18_0",
+      "file_id": 1,
+      "content": "G11. Data Location (Added)\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nLOC- US-only hosting for US-only for primary, DR, residency config continuous; review\n01 Company Data backups, logs evidence quarterly\nLOC- Controls to prevent out-of- guardrails/policies + policy-as-code or config\nquarterly\n02 region storage review summary\nLOC- Company written consent\nLocation change approval approval record per change\n03 required\nG12. Malware Protection (Added)\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nEDR/anti-malware on admin\nMAL-01 100% coverage coverage report monthly\nendpoints\nMAL-02 Malware alerting and response documented workflow runbook excerpt annual review\nMAL-03 Tamper protection + updates enabled configuration evidence continuous\nG13. Network Authentication and Authorization (Added)\nID Requirement Minimum Standard Evidence/Deliverable Frequency\nNET- Secure admin network\nbastion/secure gateway + MFA architecture diagram annual review\n01 access\nNET- Network-level strong identity controls for SSO/ZTNA config\ncontinuous\n02 authentication remote admin evidence\nNET- Authorization at service semi-annual\nRBAC enforced; least privilege role model + tests\n03 layer review\nExhibit H \u2014 Risk Acceptance & Remediation Plan (Template +\nSample Entries)\nH1. Purpose and Use\nThis Exhibit H documents (a) identified control gaps or deviations from Exhibit G or other requirements in this\nAddendum, (b) Vendor\u2019s compensating controls and remediation plan, and (c) Company\u2019s time-bound Risk\nAcceptance, if any. Risk Acceptance is not a waiver of Vendor\u2019s obligations; it is a conditional, temporary",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p18_0",
+        "page_number": 18,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1636,
+      "token_count": 351
+    },
+    "124": {
+      "vector_id": 124,
+      "chunk_id": "file_1_p19_0",
+      "file_id": 1,
+      "content": "accommodation subject to the terms of this Exhibit H.\nH2. Workflow (Text Chart)\nStep Action Owner Output\n1 Identify gap Company or Vendor finding record\n2 Assess risk and scope Vendor (with Company input) risk rating + impact statement\n3 Define compensating controls Vendor control description + evidence\n4 Define remediation plan Vendor milestones + due dates\nApprove/accept risk (if\n5 Company written acceptance + expiry\napplicable)\n6 Track to closure Vendor status updates\n7 Validate completion Company closure confirmation\nH3. Risk Register (Sample Structure)\nRisk\nRemediation\nRisk Finding / Requiremen Inheren Compensatin Targe Acceptanc\nScope Plan & Status\nID Gap t Ref t Risk g Controls t Date e\nMilestones\nExpiration\nAccess limited\nto 2 named\nadmins; IP (1) Replace\nBreak-\nallowlist; console with\nglass on-\nsession MFA-capable\ncall Exhibit G 1 internal\nRA- logging; tool (Mar 15, Jun\npaging (IAM-01 / tool used Jun 30,\n2026 Medium quarterly 2026). (2) 15, Open\nconsole IAM-02 / by on-call 2026\n-001 access review; Decommissio 2026\ndoes not PASS-02) SREs\nrotate break- n legacy\nsupport\nglass console (Jun",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p19_0",
+        "page_number": 19,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1111,
+      "token_count": 285
+    },
+    "125": {
+      "vector_id": 125,
+      "chunk_id": "file_1_p19_1",
+      "file_id": 1,
+      "content": "credentials 15, 2026).\nevery 30 days\nuntil fixed\n(1) Extend\nNetwork Production\nnon-prod flow\nRA- logs Exhibit G VPC flow logs retained Apr In\nlog retention May 31,\n2026 retained (LOG-02 / logs for Low 180 days; non- 30, Progres\nto 180 days 2026\n-002 only 90 REC-01) non-prod prod contains 2026 s\n(Apr 30,\ndays due no Company\n2026).\nto vendor Data; alerting",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p19_1",
+        "page_number": 19,
+        "section_title": "MFA",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 356,
+      "token_count": 117
+    },
+    "126": {
+      "vector_id": 126,
+      "chunk_id": "page_14_table_0",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_14_table_0",
+        "page_number": 19,
+        "section_title": "Table: page_14_table_0",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "127": {
+      "vector_id": 127,
+      "chunk_id": "page_19_table_0",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_19_table_0",
+        "page_number": 19,
+        "section_title": "Table: page_19_table_0",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "128": {
+      "vector_id": 128,
+      "chunk_id": "file_1_p20_0",
+      "file_id": 1,
+      "content": "Risk\nRemediation\nRisk Finding / Requiremen Inheren Compensatin Targe Acceptanc\nScope Plan & Status\nID Gap t Ref t Risk g Controls t Date e\nMilestones\nExpiration\ndefault enabled\n(1) Run\ntabletop\nfailover\nexercise (Feb\nAnnual\nBackups 28, 2026). (2)\nBC/DR\nIdentity verified; Execute\ntest for\nRA- Exhibit G componen failover technical Apr\nidentity May 31,\n2026 (BCDR-02 / t used for Medium runbook failover test in 30, Open\ncomponen 2026\n-003 BCDR-03) admin updated; staging (Mar 2026\nt not\nSSO monitoring 31, 2026). (3)\ncompleted\ntested Document\nin 2025\nresults and\nremediate\nfindings (Apr\n30, 2026).\nH4. Remediation Plan Status Reporting (Semi-Structured)\nVendor will provide Company with status updates for each open Risk ID at least monthly (or more frequently\nfor High/Critical risks), including:\nField Example Value\nRisk ID RA-2026-001\nCurrent status In Progress\nLast update date February 20, 2026\nNext milestone Replace console with MFA-capable tool\nMilestone due date March 15, 2026\nBlockers/Dependencies Procurement approval; vendor migration support\naccess review report; IP allowlist policy; vault rotation\nEvidence available\nlog\nRevised target date (if any) none",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p20_0",
+        "page_number": 20,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1170,
+      "token_count": 330
+    },
+    "129": {
+      "vector_id": 129,
+      "chunk_id": "page_19_table_1",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_19_table_1",
+        "page_number": 20,
+        "section_title": "Table: page_19_table_1",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "130": {
+      "vector_id": 130,
+      "chunk_id": "page_20_table_1",
+      "file_id": 1,
+      "content": "",
+      "content_type": "table",
+      "metadata": {
+        "chunk_id": "page_20_table_1",
+        "page_number": 20,
+        "section_title": "Table: page_20_table_1",
+        "content_type": "table",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 0,
+      "token_count": 0
+    },
+    "131": {
+      "vector_id": 131,
+      "chunk_id": "file_1_p21_0",
+      "file_id": 1,
+      "content": "H5. Risk Acceptance Terms\n(a) Form of Acceptance. Any Risk Acceptance must be in writing (email acceptable) by Company\u2019s Head of\nCyber Risk or delegate.\n(b) No Expansion. Risk Acceptance applies only to the specific scope described in the Risk Register and does\nnot extend to other systems, data, or services.\n(c) Expiration. Each Risk Acceptance expires on the earlier of (i) completion of remediation validated by\nCompany, (ii) the Risk Acceptance Expiration date in the Risk Register, or (iii) termination of the Agreement.\n(d) Revocation. Company may revoke Risk Acceptance upon written notice if (i) Vendor fails to meet a\nmilestone without reasonable justification, (ii) compensating controls are not maintained, or (iii) new\ninformation materially increases the risk.\n(e) Interim Controls. Vendor will maintain compensating controls until remediation is complete and validated.\nH6. Acknowledgement and Sign-Off\nCompany Approval (Risk Acceptance Authority)\nName: Alicia Gomez\nTitle: Head of Cyber Risk\nSignature: /s/ Alicia Gomez\nDate: January 15, 2026\nVendor Remediation Owner\nName: Maya Chen\nTitle: Director of Information Security\nSignature: /s/ Maya Chen\nDate: January 15, 2026\nSignatures",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p21_0",
+        "page_number": 21,
+        "section_title": null,
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 1198,
+      "token_count": 280
+    },
+    "132": {
+      "vector_id": 132,
+      "chunk_id": "file_1_p21_1",
+      "file_id": 1,
+      "content": "By: /s/ Jordan Patel\nTitle: Associate General Counsel\nDate: January 15, 2026",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p21_1",
+        "page_number": 21,
+        "section_title": "COMPANY: Redwood Peak Financial, Inc.",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 76,
+      "token_count": 23
+    },
+    "133": {
+      "vector_id": 133,
+      "chunk_id": "file_1_p21_2",
+      "file_id": 1,
+      "content": "By: /s/ Maya Chen\nTitle: Director of Information Security\nDate: January 15, 2026",
+      "content_type": "text",
+      "metadata": {
+        "chunk_id": "file_1_p21_2",
+        "page_number": 21,
+        "section_title": "VENDOR: Nimbus Ridge Technologies, LLC",
+        "content_type": "text",
+        "source_filename": "Sample Contract.pdf"
+      },
+      "content_length": 80,
+      "token_count": 24
     }
   },
   "file_mappings": {
@@ -88,20 +2152,536 @@
         "vector_id": 0
       },
       {
-        "chunk_id": "file_1_p1_0",
+        "chunk_id": "file_1_p1_1",
         "vector_id": 1
       },
       {
-        "chunk_id": "file_1_p1_1",
+        "chunk_id": "file_1_p1_2",
         "vector_id": 2
       },
       {
-        "chunk_id": "file_1_p1_2",
+        "chunk_id": "file_1_p2_0",
         "vector_id": 3
       },
       {
-        "chunk_id": "file_1_p1_3",
+        "chunk_id": "page_1_table_0",
         "vector_id": 4
+      },
+      {
+        "chunk_id": "page_2_table_0",
+        "vector_id": 5
+      },
+      {
+        "chunk_id": "file_1_p3_0",
+        "vector_id": 6
+      },
+      {
+        "chunk_id": "file_1_p3_1",
+        "vector_id": 7
+      },
+      {
+        "chunk_id": "file_1_p3_2",
+        "vector_id": 8
+      },
+      {
+        "chunk_id": "file_1_p4_0",
+        "vector_id": 9
+      },
+      {
+        "chunk_id": "file_1_p4_1",
+        "vector_id": 10
+      },
+      {
+        "chunk_id": "file_1_p4_2",
+        "vector_id": 11
+      },
+      {
+        "chunk_id": "page_2_table_1",
+        "vector_id": 12
+      },
+      {
+        "chunk_id": "file_1_p5_0",
+        "vector_id": 13
+      },
+      {
+        "chunk_id": "file_1_p5_1",
+        "vector_id": 14
+      },
+      {
+        "chunk_id": "file_1_p5_2",
+        "vector_id": 15
+      },
+      {
+        "chunk_id": "page_4_table_0",
+        "vector_id": 16
+      },
+      {
+        "chunk_id": "file_1_p6_0",
+        "vector_id": 17
+      },
+      {
+        "chunk_id": "file_1_p6_1",
+        "vector_id": 18
+      },
+      {
+        "chunk_id": "page_5_table_0",
+        "vector_id": 19
+      },
+      {
+        "chunk_id": "page_6_table_0",
+        "vector_id": 20
+      },
+      {
+        "chunk_id": "file_1_p7_0",
+        "vector_id": 21
+      },
+      {
+        "chunk_id": "file_1_p7_1",
+        "vector_id": 22
+      },
+      {
+        "chunk_id": "file_1_p7_2",
+        "vector_id": 23
+      },
+      {
+        "chunk_id": "file_1_p7_3",
+        "vector_id": 24
+      },
+      {
+        "chunk_id": "file_1_p7_4",
+        "vector_id": 25
+      },
+      {
+        "chunk_id": "page_6_table_1",
+        "vector_id": 26
+      },
+      {
+        "chunk_id": "file_1_p8_0",
+        "vector_id": 27
+      },
+      {
+        "chunk_id": "file_1_p8_1",
+        "vector_id": 28
+      },
+      {
+        "chunk_id": "page_7_table_1",
+        "vector_id": 29
+      },
+      {
+        "chunk_id": "file_1_p9_0",
+        "vector_id": 30
+      },
+      {
+        "chunk_id": "file_1_p9_1",
+        "vector_id": 31
+      },
+      {
+        "chunk_id": "file_1_p9_2",
+        "vector_id": 32
+      },
+      {
+        "chunk_id": "file_1_p9_3",
+        "vector_id": 33
+      },
+      {
+        "chunk_id": "file_1_p9_4",
+        "vector_id": 34
+      },
+      {
+        "chunk_id": "file_1_p9_5",
+        "vector_id": 35
+      },
+      {
+        "chunk_id": "page_8_table_0",
+        "vector_id": 36
+      },
+      {
+        "chunk_id": "page_9_table_0",
+        "vector_id": 37
+      },
+      {
+        "chunk_id": "file_1_p10_0",
+        "vector_id": 38
+      },
+      {
+        "chunk_id": "file_1_p10_1",
+        "vector_id": 39
+      },
+      {
+        "chunk_id": "file_1_p10_2",
+        "vector_id": 40
+      },
+      {
+        "chunk_id": "file_1_p10_3",
+        "vector_id": 41
+      },
+      {
+        "chunk_id": "page_9_table_1",
+        "vector_id": 42
+      },
+      {
+        "chunk_id": "file_1_p11_0",
+        "vector_id": 43
+      },
+      {
+        "chunk_id": "page_10_table_0",
+        "vector_id": 44
+      },
+      {
+        "chunk_id": "page_11_table_1",
+        "vector_id": 45
+      },
+      {
+        "chunk_id": "file_1_p12_0",
+        "vector_id": 46
+      },
+      {
+        "chunk_id": "page_11_table_2",
+        "vector_id": 47
+      },
+      {
+        "chunk_id": "page_12_table_1",
+        "vector_id": 48
+      },
+      {
+        "chunk_id": "file_1_p13_0",
+        "vector_id": 49
+      },
+      {
+        "chunk_id": "page_12_table_2",
+        "vector_id": 50
+      },
+      {
+        "chunk_id": "file_1_p14_0",
+        "vector_id": 51
+      },
+      {
+        "chunk_id": "page_13_table_1",
+        "vector_id": 52
+      },
+      {
+        "chunk_id": "file_1_p15_0",
+        "vector_id": 53
+      },
+      {
+        "chunk_id": "file_1_p16_0",
+        "vector_id": 54
+      },
+      {
+        "chunk_id": "file_1_p17_0",
+        "vector_id": 55
+      },
+      {
+        "chunk_id": "file_1_p18_0",
+        "vector_id": 56
+      },
+      {
+        "chunk_id": "file_1_p19_0",
+        "vector_id": 57
+      },
+      {
+        "chunk_id": "file_1_p19_1",
+        "vector_id": 58
+      },
+      {
+        "chunk_id": "page_14_table_0",
+        "vector_id": 59
+      },
+      {
+        "chunk_id": "page_19_table_0",
+        "vector_id": 60
+      },
+      {
+        "chunk_id": "file_1_p20_0",
+        "vector_id": 61
+      },
+      {
+        "chunk_id": "page_19_table_1",
+        "vector_id": 62
+      },
+      {
+        "chunk_id": "page_20_table_1",
+        "vector_id": 63
+      },
+      {
+        "chunk_id": "file_1_p21_0",
+        "vector_id": 64
+      },
+      {
+        "chunk_id": "file_1_p21_1",
+        "vector_id": 65
+      },
+      {
+        "chunk_id": "file_1_p21_2",
+        "vector_id": 66
+      },
+      {
+        "chunk_id": "file_1_p1_0",
+        "vector_id": 67
+      },
+      {
+        "chunk_id": "file_1_p1_1",
+        "vector_id": 68
+      },
+      {
+        "chunk_id": "file_1_p1_2",
+        "vector_id": 69
+      },
+      {
+        "chunk_id": "file_1_p2_0",
+        "vector_id": 70
+      },
+      {
+        "chunk_id": "page_1_table_0",
+        "vector_id": 71
+      },
+      {
+        "chunk_id": "page_2_table_0",
+        "vector_id": 72
+      },
+      {
+        "chunk_id": "file_1_p3_0",
+        "vector_id": 73
+      },
+      {
+        "chunk_id": "file_1_p3_1",
+        "vector_id": 74
+      },
+      {
+        "chunk_id": "file_1_p3_2",
+        "vector_id": 75
+      },
+      {
+        "chunk_id": "file_1_p4_0",
+        "vector_id": 76
+      },
+      {
+        "chunk_id": "file_1_p4_1",
+        "vector_id": 77
+      },
+      {
+        "chunk_id": "file_1_p4_2",
+        "vector_id": 78
+      },
+      {
+        "chunk_id": "page_2_table_1",
+        "vector_id": 79
+      },
+      {
+        "chunk_id": "file_1_p5_0",
+        "vector_id": 80
+      },
+      {
+        "chunk_id": "file_1_p5_1",
+        "vector_id": 81
+      },
+      {
+        "chunk_id": "file_1_p5_2",
+        "vector_id": 82
+      },
+      {
+        "chunk_id": "page_4_table_0",
+        "vector_id": 83
+      },
+      {
+        "chunk_id": "file_1_p6_0",
+        "vector_id": 84
+      },
+      {
+        "chunk_id": "file_1_p6_1",
+        "vector_id": 85
+      },
+      {
+        "chunk_id": "page_5_table_0",
+        "vector_id": 86
+      },
+      {
+        "chunk_id": "page_6_table_0",
+        "vector_id": 87
+      },
+      {
+        "chunk_id": "file_1_p7_0",
+        "vector_id": 88
+      },
+      {
+        "chunk_id": "file_1_p7_1",
+        "vector_id": 89
+      },
+      {
+        "chunk_id": "file_1_p7_2",
+        "vector_id": 90
+      },
+      {
+        "chunk_id": "file_1_p7_3",
+        "vector_id": 91
+      },
+      {
+        "chunk_id": "file_1_p7_4",
+        "vector_id": 92
+      },
+      {
+        "chunk_id": "page_6_table_1",
+        "vector_id": 93
+      },
+      {
+        "chunk_id": "file_1_p8_0",
+        "vector_id": 94
+      },
+      {
+        "chunk_id": "file_1_p8_1",
+        "vector_id": 95
+      },
+      {
+        "chunk_id": "page_7_table_1",
+        "vector_id": 96
+      },
+      {
+        "chunk_id": "file_1_p9_0",
+        "vector_id": 97
+      },
+      {
+        "chunk_id": "file_1_p9_1",
+        "vector_id": 98
+      },
+      {
+        "chunk_id": "file_1_p9_2",
+        "vector_id": 99
+      },
+      {
+        "chunk_id": "file_1_p9_3",
+        "vector_id": 100
+      },
+      {
+        "chunk_id": "file_1_p9_4",
+        "vector_id": 101
+      },
+      {
+        "chunk_id": "file_1_p9_5",
+        "vector_id": 102
+      },
+      {
+        "chunk_id": "page_8_table_0",
+        "vector_id": 103
+      },
+      {
+        "chunk_id": "page_9_table_0",
+        "vector_id": 104
+      },
+      {
+        "chunk_id": "file_1_p10_0",
+        "vector_id": 105
+      },
+      {
+        "chunk_id": "file_1_p10_1",
+        "vector_id": 106
+      },
+      {
+        "chunk_id": "file_1_p10_2",
+        "vector_id": 107
+      },
+      {
+        "chunk_id": "file_1_p10_3",
+        "vector_id": 108
+      },
+      {
+        "chunk_id": "page_9_table_1",
+        "vector_id": 109
+      },
+      {
+        "chunk_id": "file_1_p11_0",
+        "vector_id": 110
+      },
+      {
+        "chunk_id": "page_10_table_0",
+        "vector_id": 111
+      },
+      {
+        "chunk_id": "page_11_table_1",
+        "vector_id": 112
+      },
+      {
+        "chunk_id": "file_1_p12_0",
+        "vector_id": 113
+      },
+      {
+        "chunk_id": "page_11_table_2",
+        "vector_id": 114
+      },
+      {
+        "chunk_id": "page_12_table_1",
+        "vector_id": 115
+      },
+      {
+        "chunk_id": "file_1_p13_0",
+        "vector_id": 116
+      },
+      {
+        "chunk_id": "page_12_table_2",
+        "vector_id": 117
+      },
+      {
+        "chunk_id": "file_1_p14_0",
+        "vector_id": 118
+      },
+      {
+        "chunk_id": "page_13_table_1",
+        "vector_id": 119
+      },
+      {
+        "chunk_id": "file_1_p15_0",
+        "vector_id": 120
+      },
+      {
+        "chunk_id": "file_1_p16_0",
+        "vector_id": 121
+      },
+      {
+        "chunk_id": "file_1_p17_0",
+        "vector_id": 122
+      },
+      {
+        "chunk_id": "file_1_p18_0",
+        "vector_id": 123
+      },
+      {
+        "chunk_id": "file_1_p19_0",
+        "vector_id": 124
+      },
+      {
+        "chunk_id": "file_1_p19_1",
+        "vector_id": 125
+      },
+      {
+        "chunk_id": "page_14_table_0",
+        "vector_id": 126
+      },
+      {
+        "chunk_id": "page_19_table_0",
+        "vector_id": 127
+      },
+      {
+        "chunk_id": "file_1_p20_0",
+        "vector_id": 128
+      },
+      {
+        "chunk_id": "page_19_table_1",
+        "vector_id": 129
+      },
+      {
+        "chunk_id": "page_20_table_1",
+        "vector_id": 130
+      },
+      {
+        "chunk_id": "file_1_p21_0",
+        "vector_id": 131
+      },
+      {
+        "chunk_id": "file_1_p21_1",
+        "vector_id": 132
+      },
+      {
+        "chunk_id": "file_1_p21_2",
+        "vector_id": 133
       }
     ]
   }
